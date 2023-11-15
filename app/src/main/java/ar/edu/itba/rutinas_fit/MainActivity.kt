@@ -1,6 +1,7 @@
 package ar.edu.itba.rutinas_fit
 
 import android.os.Bundle
+import android.view.WindowInsets
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,12 +12,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import ar.edu.itba.rutinas_fit.ui.theme.Rutinas_FitTheme
-
+//import androidx.compose.foundation.layout.Side
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+//import androidx.compose.foundation.layout.ColumnScopeInstance.weight
+
+//import androidx.compose.foundation.layout.BoxScopeInstance.align
+//import androidx.compose.foundation.layout.BoxScopeInstance.align
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
@@ -25,7 +31,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -107,6 +118,82 @@ fun MainHeader(modifier: Modifier) {
             )
     }
 }
+@Composable
+fun NavBar(modifier: Modifier) {
+    Box (
+        modifier = Modifier
+            .height(1.dp)
+            .fillMaxWidth()
+            .background(Color(1f,1f,1f,0.1f))
+            .border(1.dp, Color(1f,1f,1f,0.1f))
+            .zIndex(4f)
+
+    )
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .background(
+                Color(20,20,20)
+            )
+            .zIndex(1f),
+    ){
+//        Text(
+//            text = "Mis Rutinas",
+//            color = Color.White,
+//            fontFamily = FontFamily.SansSerif,
+//            fontSize = 30.sp,
+//            fontWeight = FontWeight.Bold,
+//            textAlign = TextAlign.Center,
+//            modifier = Modifier
+//                .padding(Dp(10f))
+//                .align(Alignment.BottomStart)
+//                .zIndex(2f)
+//        )
+        LazyRow(
+            modifier = Modifier
+                .fillMaxSize(),
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            item () {
+                Icon(imageVector = Icons.Default.Home, contentDescription = null, modifier = Modifier.zIndex(3f).size(44.dp), tint = Color.White)
+            }
+            item {
+                Icon(imageVector = Icons.Default.Search, contentDescription = null, modifier = Modifier.zIndex(3f).size(44.dp) ,  tint = Color.White)
+            }
+        item {
+            Icon(imageVector = Icons.Default.List, contentDescription = null, modifier = Modifier.zIndex(3f).size(44.dp) , tint = Color.White)
+
+        }
+
+            item {
+                Icon(imageVector = Icons.Default.AccountCircle, contentDescription = null, modifier = Modifier.zIndex(3f).size(44.dp) , tint = Color.White)
+            }
+
+//
+//                Button(
+//                    onClick = {
+//                        // Handle button click
+//                    },
+//                    colors = ButtonDefaults.buttonColors(
+//                        containerColor = Color(0.1f, 0.1f, 0.1f, alpha = 0.95f),  // Set the text color
+//                        contentColor = Color(134, 196, 0)
+//                    ),
+//                    modifier = Modifier
+//                        .padding(8.dp)
+//                        .fillMaxWidth()
+//                ) {
+//                    Text(
+//                        text="Ver rutina",
+//                        fontSize = 16.sp,
+//                        fontFamily = FontFamily.SansSerif,
+//                    )
+//                }
+//            }
+    }
+}}
+
 
 @Composable
 fun CardElem(modifier : Modifier, imageResourceId: Int) {
@@ -148,56 +235,6 @@ fun CardElem(modifier : Modifier, imageResourceId: Int) {
            )
 
        }
-        LazyColumn(
-            modifier= Modifier.fillMaxHeight()
-                .zIndex(2f)
-                .fillMaxHeight(0.8f)
-                .fillMaxWidth(0.4f)
-                .align(Alignment.BottomEnd),
-            verticalArrangement = Arrangement.Bottom
-        ){
-            item {
-
-                Button(
-                    onClick = {
-                        // Handle button click
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0.1f, 0.1f, 0.1f, alpha = 0.95f),  // Set the text color
-                        contentColor = Color(134, 196, 0)
-                    ),
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth()
-                ) {
-                    Text(
-                        text="Ver rutina",
-                        fontSize = 16.sp,
-                        fontFamily = FontFamily.SansSerif,
-                    )
-                }
-            }
-            item {
-                Button(
-                    onClick = {
-                        // Handle button click
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0.1f, 0.1f, 0.1f, alpha = 0.95f),  // Set the text color
-                        contentColor = Color(134, 196, 0)
-                    ),
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth()
-                ) {
-                    Text(
-                        text="Ejecutar",
-                        fontSize = 16.sp,
-                        fontFamily = FontFamily.SansSerif,
-                    )
-                }
-            }
-        }
         Image(
             painter = backgroundImage,
             contentDescription = null,
@@ -216,24 +253,39 @@ fun StartPageBody() {
         modifier = Modifier.background(Color.Transparent)
     )
 
-    Box (
-        modifier = Modifier.padding(vertical = Dp(70f),horizontal = Dp(10F)),
-    ) {
-        LazyColumn (
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(vertical = Dp(5f)),
-               verticalArrangement = Arrangement.spacedBy(Dp(25f))
-        ) {
-            items(10) { i -> CardElem (
-                modifier = Modifier
-                    .padding(vertical = Dp(120f))
-                    .background(color = Color.Transparent),
-                imageResourceId =  R.drawable.gymimg
-            )
+
+            Box(
+                modifier = Modifier.padding(vertical = Dp(70f), horizontal = Dp(10F)),
+            ) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(vertical = Dp(5f)),
+                    verticalArrangement = Arrangement.spacedBy(Dp(25f))
+                ) {
+                    items(10) { i ->
+                        CardElem(
+                            modifier = Modifier
+                                .padding(vertical = Dp(120f))
+                                .background(color = Color.Transparent),
+                            imageResourceId = R.drawable.gymimg
+                        )
+                    }
+                }
             }
-        }
-    }
+            Box (
+                modifier = Modifier
+                    .fillMaxHeight(0.14f)
+                    .align(Alignment.BottomCenter)
+            )
+            {
+
+                NavBar(
+                    modifier = Modifier
+                        .background(Color.White)
+                )
+            }
+
     }
 }
 
