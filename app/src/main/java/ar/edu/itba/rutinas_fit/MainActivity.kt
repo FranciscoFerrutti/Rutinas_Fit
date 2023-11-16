@@ -62,7 +62,6 @@ class MainActivity : ComponentActivity() {
                     val context = LocalContext.current
                     val navController = rememberNavController()
                     MyNavGraph(navController = navController)
-                    navController.navigate("login")
                 }
             }
         }

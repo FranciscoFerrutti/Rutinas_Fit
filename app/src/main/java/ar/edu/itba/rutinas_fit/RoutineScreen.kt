@@ -108,16 +108,30 @@ fun RoutineDesc(navController: NavController) {
 @Composable
 fun RoutineScreen(navController : NavController) {
     Box (modifier = Modifier.fillMaxSize()) {
-        LazyColumn() {
-            item {
+        Column() {
                 Box (
-                modifier = Modifier.height(300.dp).width(400.dp).background(Color.White
-                )
-            ) {
+                modifier = Modifier.height(300.dp).width(400.dp).background(Color(10,10,10)))
+                {
+                    Column (modifier = Modifier.align(Alignment.Center)){
+                        Text(
+                            text = "Nombre Rutina",
+                            color = Color.White,
+                            fontFamily = FontFamily.SansSerif,
+                            fontSize = 18.sp,
+                            modifier = Modifier
+                                .padding(Dp(15f))
+                        )
+                        Text(
+                            text = "11 Ejercicios",
+                            color = Color.White,
+                            fontFamily = FontFamily.SansSerif,
+                            fontSize = 18.sp,
+                            modifier = Modifier
+                                .padding(Dp(15f))
+                        )
+                    }
+                }
 
-            }
-        }
-        item {
             LazyColumn(
                 modifier = Modifier
                     .height(400.dp)
@@ -134,7 +148,7 @@ fun RoutineScreen(navController : NavController) {
                         imageResourceId = R.drawable.gymimg
                     )
                 }
-            }}
+            }
         }
     Box (
         modifier = Modifier
