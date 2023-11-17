@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "ar.edu.itba.rutinas_fit"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "ar.edu.itba.rutinas_fit"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -20,6 +20,13 @@ android {
         }
     }
 
+    buildFeatures {
+        buildConfig = true
+        compose = true
+        // Es necesario activar la opción de compilación buildConfig para que se genere la clase
+        // autogenerada BuilConfig con los parámetros de configuración.
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -27,6 +34,20 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            // No usar localhost o la IP 127.0.0.1 porque es la interfaz de loopback
+            // del emulador. La forma de salir del emulador para acceder al localhost
+            // de host del mismo es usando la IP 10.0.2.2.
+            buildConfigField("String", "API_BASE_URL",
+                "\"http://192.168.0.4:8080/api/\"")
+        }
+        debug {
+            debug {
+                // No usar localhost o la IP 127.0.0.1 porque es la interfaz de loopback
+                // del emulador. La forma de salir del emulador para acceder al localhost
+                // de host del mismo es usando la IP 10.0.2.2.
+                buildConfigField("String", "API_BASE_URL",
+                    "\"http://192.168.0.4:8080/api/\"")
+            }
         }
     }
     compileOptions {
@@ -36,9 +57,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        compose = true
-    }
+
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
     }
@@ -60,6 +79,15 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("androidx.navigation:navigation-runtime-ktx:2.7.5")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
+    implementation("androidx.activity:activity-compose:1.8.0")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+    implementation("com.google.accompanist:accompanist-swiperefresh:0.27.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

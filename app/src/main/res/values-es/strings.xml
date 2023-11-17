@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Rutinas_Fit</string>
+    <string name="login">INGRESAR</string>
+    <string name="logout">SALIR</string>
+    <string name="get_current_user">OBTENER USUARIO ACTUAL</string>
+    <string name="get_all_sports">OBTENER TODOS LOS DEPORTES</string>
+    <string name="get_current_sport">OBTENER DEPORTE ACTUAL</string>
+    <string name="add_sport">AÑADIR DEPORTE</string>
+    <string name="modify_sport">MODIFICAR DEPORTE</string>
+    <string name="delete_sport">BORRAR DEPORTE</string>
+    <string name="dismiss">DESCARTAR</string>
+</resources>
