@@ -88,7 +88,7 @@ fun CardElem(navController : NavController, modifier : Modifier, imageResourceId
         Box(
             modifier = Modifier
                 .background(color = Color.Transparent)
-                .height(height = Dp(200F))
+                .height(height = Dp(150f))
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(16.dp))
                 .clickable {
@@ -98,8 +98,8 @@ fun CardElem(navController : NavController, modifier : Modifier, imageResourceId
         ) {
             Box(
                 modifier = Modifier
-                    .background(Color(0.10f, 0.10f, 0.10f, alpha = 0.5f))
-                    .fillMaxHeight(0.25f)
+                    .background(Color(0.10f, 0.10f, 0.10f, alpha = 0.7f))
+                    .fillMaxHeight(0.35f)
                     .fillMaxWidth()
                     .zIndex(2f)
 
@@ -110,16 +110,16 @@ fun CardElem(navController : NavController, modifier : Modifier, imageResourceId
                     fontFamily = FontFamily.SansSerif,
                     fontSize = 18.sp,
                     modifier = Modifier
-                        .padding(Dp(5f))
+                        .padding(horizontal = Dp(8f), vertical = 5.dp)
                 )
                 Text(
                     text = "❚ Dificultad",
                     color = Color(174, 255, 0),
                     fontFamily = FontFamily.SansSerif,
-                    fontSize = 14.sp,
+                    fontSize = 16.sp,
                     modifier = Modifier
                         .align(Alignment.BottomStart)
-                        .padding(horizontal = Dp(8f), vertical = Dp(2f))
+                        .padding(horizontal = Dp(10f), vertical = Dp(4f))
                 )
 
             }

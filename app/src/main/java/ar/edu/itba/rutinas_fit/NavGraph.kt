@@ -28,5 +28,11 @@ fun MyNavGraph(navController: NavHostController) {
         composable("login") {
             LoginRegisterScreen()
         }
+        composable("exercise") {
+            ExerciseScreen(navController)
+        }
+        composable("rest") {
+            RestScreen()
+        }
     }
 }
