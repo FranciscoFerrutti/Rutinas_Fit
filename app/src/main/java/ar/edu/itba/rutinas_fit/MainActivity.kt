@@ -76,3 +76,12 @@ fun navigateToRoutine(navController : NavController){
 fun navigateToHome(navController : NavController){
     navController.navigate("home")
 }
+
+fun navigateToExercise(navController : NavController){
+    navController.navigate("exercise")
+}
+
+fun navigateToRest(navController : NavController){
+    navController.navigate("rest")
+}
+
