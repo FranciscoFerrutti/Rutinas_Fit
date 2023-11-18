@@ -26,10 +26,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginRegisterScreen() {
+fun LoginRegisterScreen(navController: NavController) {
     var isLoginMode by remember { mutableStateOf(true) }
     var username by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -96,7 +97,7 @@ fun LoginRegisterScreen() {
         Button(
             onClick = {
                 if (isLoginMode) {
-                    handleLogin(username, password)
+                    handleLogin(navController, username, password)
                 } else {
                     handleRegister(username, email, password, confirmPassword)
                 }
@@ -118,8 +119,9 @@ fun LoginRegisterScreen() {
 }
 
 
-private fun handleLogin(username: String, password: String) {
+private fun handleLogin(navController: NavController,username: String, password: String) {
     // TODO: Implement login logic here
+    navigateToHome(navController)
 }
 
 private fun handleRegister(username: String, email: String, password: String, confirmPassword: String) {

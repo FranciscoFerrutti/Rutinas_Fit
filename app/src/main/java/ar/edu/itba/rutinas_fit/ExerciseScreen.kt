@@ -111,7 +111,7 @@ fun ExerciseScreen(navController : NavController) {
 //                    .align(Alignment.Center)
                     )
                     Button(onClick = {
-                        navController.navigate("rest")
+                        navigateToRest(navController)
                     },
                         modifier = Modifier
                             .width(140.dp)

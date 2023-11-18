@@ -48,6 +48,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import ar.edu.itba.rutinas_fit.navigation.MyNavHost
+import ar.edu.itba.rutinas_fit.navigation.Screen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +63,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val context = LocalContext.current
                     val navController = rememberNavController()
-                    MyNavGraph(navController = navController)
+                    MyNavHost(navController = navController)
                 }
             }
         }
@@ -70,18 +72,18 @@ class MainActivity : ComponentActivity() {
 
 
 fun navigateToRoutine(navController : NavController){
-    navController.navigate("routine")
+    navController.navigate(Screen.Routine.route)
 }
 
 fun navigateToHome(navController : NavController){
-    navController.navigate("home")
+    navController.navigate(Screen.Home.route)
 }
 
 fun navigateToExercise(navController : NavController){
-    navController.navigate("exercise")
+    navController.navigate(Screen.Exercise.route)
 }
 
 fun navigateToRest(navController : NavController){
-    navController.navigate("rest")
+    navController.navigate(Screen.Rest.route)
 }
 
