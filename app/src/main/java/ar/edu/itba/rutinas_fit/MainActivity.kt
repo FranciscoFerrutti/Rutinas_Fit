@@ -86,6 +86,12 @@ fun navigateToExercise(navController : NavController){
 fun navigateToRest(navController : NavController){
     navController.navigate(Screen.Rest.route)
 }
+fun navigateToProfile(navController : NavController){
+    navController.navigate(Screen.Profile.route)
+}
+fun naviagteToSearch(navController : NavController){
+    navController.navigate(Screen.Search.route)
+}
 
 fun navigateToProfile(navController: NavController) {
     navController.navigate(Screen.Profile.route)
