@@ -66,6 +66,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import ar.edu.itba.rutinas_fit.navigation.navigateToRest
 import components.NavBar
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
@@ -179,7 +180,7 @@ fun ExerciseScreen(navController : NavController) {
                         }
                         Button(
                             onClick = {
-                                navController.navigate("rest")
+                                navigateToRest(navController)
                             },
                             modifier = Modifier
                                 .width(140.dp)
