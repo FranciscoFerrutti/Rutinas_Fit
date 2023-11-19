@@ -10,11 +10,12 @@ import ar.edu.itba.rutinas_fit.HomePageScreen
 import ar.edu.itba.rutinas_fit.LoginRegisterScreen
 import ar.edu.itba.rutinas_fit.RestScreen
 import ar.edu.itba.rutinas_fit.RoutineScreen
+import ar.edu.itba.rutinas_fit.UserProfileScreen
 
 @Composable
 fun MyNavHost(
     navController: NavHostController,
-    startDestination: String = "home"
+    startDestination: String = "profile"
 ) {
     NavHost(
         navController = navController,
@@ -27,7 +28,7 @@ fun MyNavHost(
             //SearchScreen()
         }
         composable(Screen.Profile.route) {
-            //ProfileScreen()
+            UserProfileScreen(navController)
         }
         composable(Screen.Favorite.route) {
             //ListScreen()

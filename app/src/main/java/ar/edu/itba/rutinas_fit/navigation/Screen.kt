@@ -28,4 +28,5 @@ sealed class Screen(val title: String, val icon: ImageVector, val route: String)
     object Rest: Screen("Rest", Icons.Filled.Favorite, "rest")
     object Login: Screen("Login", Icons.Filled.Favorite, "login")
 
+
 }

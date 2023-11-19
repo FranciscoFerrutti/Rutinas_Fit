@@ -87,3 +87,7 @@ fun navigateToRest(navController : NavController){
     navController.navigate(Screen.Rest.route)
 }
 
+fun navigateToProfile(navController: NavController) {
+    navController.navigate(Screen.Profile.route)
+}
+
