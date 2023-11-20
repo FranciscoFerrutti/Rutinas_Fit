@@ -1,9 +1,6 @@
 package ar.edu.itba.rutinas_fit.navigation
 
-import ExerciseDetailsScreen
-import ExerciseStep
-import GoalSelectionScreen
-import ImageData
+
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -27,7 +24,7 @@ fun MyNavHost(
     ) {
         composable(Screen.Home.route) {
             HomePageScreen(navController)
-        }
+        }/*
         composable(Screen.Search.route) {
             val imageResource = R.drawable.gymimg
             val imageList = listOf(
@@ -52,7 +49,7 @@ fun MyNavHost(
 
             ExerciseDetailsScreen(exerciseName, difficulty, description, steps)
             //ProfileScreen()
-        }
+        }*/
         composable(Screen.Favorite.route) {
             //ListScreen()
         }

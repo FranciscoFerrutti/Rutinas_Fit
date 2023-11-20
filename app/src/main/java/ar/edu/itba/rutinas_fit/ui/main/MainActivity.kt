@@ -15,8 +15,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ar.edu.itba.rutinas_fit.R
+import ar.edu.itba.rutinas_fit.data.model.Routine
 import ar.edu.itba.rutinas_fit.data.model.Sport
+import ar.edu.itba.rutinas_fit.ui.routine.RoutineViewModel
+import ar.edu.itba.rutinas_fit.ui.routine.canAddRoutine
+import ar.edu.itba.rutinas_fit.ui.routine.canGetCurrentRoutine
 import ar.edu.itba.rutinas_fit.ui.theme.Rutinas_FitTheme
+import ar.edu.itba.rutinas_fit.ui.user.UserViewModel
+import ar.edu.itba.rutinas_fit.ui.user.canGetCurrentUser
 import ar.edu.itba.rutinas_fit.util.getViewModelFactory
 import kotlin.random.Random
 
@@ -58,10 +64,13 @@ fun ActionButton(
 
 @Composable
 fun MainScreen(
-    viewModel: MainViewModel = viewModel(factory = getViewModelFactory())
+    userViewModel: UserViewModel = viewModel(factory = getViewModelFactory()),
+    mainViewModel: MainViewModel = viewModel(factory = getViewModelFactory()),
+    routineViewModel: RoutineViewModel = viewModel(factory = getViewModelFactory())
 ) {
-    val uiState = viewModel.uiState
-
+    val uiState = userViewModel.uiState
+    val routineUiState = routineViewModel.routineState
+    val sportUiState = mainViewModel.sportState
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -71,58 +80,72 @@ fun MainScreen(
             ActionButton(
                 resId = R.string.login,
                 onClick = {
-                    viewModel.login("johndoe", "1234567890")
+                    userViewModel.login("alanna40", "alanna40")
                 })
         } else {
             ActionButton(
                 resId = R.string.logout,
                 onClick = {
-                    viewModel.logout()
+                    userViewModel.logout()
                 })
         }
 
         ActionButton(
             resId = R.string.get_current_user,
-            enabled = uiState.canGetCurrentUser,
+            enabled = sportUiState.canGetCurrentUser,
             onClick = {
-                viewModel.getCurrentUser()
+                userViewModel.getCurrentUser()
             })
         ActionButton(
             resId = R.string.get_all_sports,
-            enabled = uiState.canGetAllSports,
+            enabled = sportUiState.canGetAllSports,
             onClick = {
-                viewModel.getSports()
+                mainViewModel.getSports()
+            })
+        ActionButton(
+            resId = R.string.get_current_user_routines,
+            enabled = routineViewModel.routineState.canGetCurrentRoutine,
+            onClick = {
+                mainViewModel.getSports()
             })
         ActionButton(
             resId = R.string.get_current_sport,
-            enabled = uiState.canGetCurrentSport,
+            enabled = sportUiState.canGetCurrentSport,
             onClick = {
-                val currentSport = uiState.currentSport!!
-                viewModel.getSport(currentSport.id!!)
+                val currentSport = sportUiState.currentSport!!
+                mainViewModel.getSport(currentSport.id!!)
             })
         ActionButton(
             resId = R.string.add_sport,
-            enabled = uiState.canAddSport,
+            enabled = sportUiState.canAddSport,
             onClick = {
                 val random = Random.nextInt(0, 100)
                 val sport = Sport(name = "Sport $random", detail = "Detail $random")
-                viewModel.addOrModifySport(sport)
+                mainViewModel.addOrModifySport(sport)
             })
         ActionButton(
             resId = R.string.modify_sport,
-            enabled = uiState.canModifySport,
+            enabled = sportUiState.canModifySport,
             onClick = {
                 val random = Random.nextInt(0, 100)
-                val currentSport = uiState.currentSport!!
+                val currentSport = sportUiState.currentSport!!
                 val sport = Sport(currentSport.id, currentSport.name, detail = "Detail $random")
-                viewModel.addOrModifySport(sport)
+                mainViewModel.addOrModifySport(sport)
             })
         ActionButton(
             resId = R.string.delete_sport,
-            enabled = uiState.canDeleteSport,
+            enabled = sportUiState.canDeleteSport,
             onClick = {
-                val currentSport = uiState.currentSport!!
-                viewModel.deleteSport(currentSport.id!!)
+                val currentSport = sportUiState.currentSport!!
+                mainViewModel.deleteSport(currentSport.id!!)
+            })
+        ActionButton(
+            resId = R.string.add_routine,
+            enabled = routineUiState.canAddRoutine,
+            onClick = {
+                val random = Random.nextInt(0, 150)
+                val routine = Routine(name = "Routine $random", detail = "Detail $random", isPublic = true, difficulty = "Easy")
+                routineViewModel.addOrModifyRoutine(routine)
             })
         Column(
             modifier = Modifier.fillMaxSize()
@@ -137,7 +160,7 @@ fun MainScreen(
                     .padding(top = 16.dp, start = 16.dp, end = 16.dp),
                 fontSize = 18.sp
             )
-            val currentSportData = uiState.currentSport?.let {
+            val currentSportData = sportUiState.currentSport?.let {
                 "Current Sport: (${it.id}) ${it.name} - ${it.detail}"
             }
             Text(
@@ -148,7 +171,14 @@ fun MainScreen(
                 fontSize = 18.sp
             )
             Text(
-                text = "Total Sports: ${uiState.sports?.size ?: "unknown"}",
+                text = "Total Sports: ${sportUiState.sports?.size ?: "unknown"}",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                fontSize = 18.sp
+            )
+            Text(
+                text = "Total Routines: ${routineUiState.routines?.size ?: "unknown"}",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 16.dp, start = 16.dp, end = 16.dp),

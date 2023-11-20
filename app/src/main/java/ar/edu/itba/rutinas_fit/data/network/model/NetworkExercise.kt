@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 class NetworkExercise(
     @SerializedName("id")
-    var id: Int?,
+    var id: Int? = null,
     @SerializedName("name")
     var name: String,
     @SerializedName("detail")
@@ -13,7 +13,7 @@ class NetworkExercise(
     @SerializedName("type")
     var type: String,
     @SerializedName("date")
-    var date: Int?,
+    var date: Int? = null,
     @SerializedName("metadata")
     var metadata: NetworkExerciseMetadata? = null // we do not use metadata
 ) {

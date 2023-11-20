@@ -1,5 +1,6 @@
 package ar.edu.itba.rutinas_fit.data.repository
 
+import ar.edu.itba.rutinas_fit.data.model.Routine
 import ar.edu.itba.rutinas_fit.data.model.User
 import ar.edu.itba.rutinas_fit.data.network.UserRemoteDataSource
 import kotlinx.coroutines.sync.Mutex
@@ -32,5 +33,17 @@ class UserRepository(
         }
 
         return currentUserMutex.withLock { this.currentUser }
+    }
+
+    suspend fun getCurrentUserRoutines(refresh: Boolean) : List<Routine>? {
+        if (refresh || currentUser == null) {
+            val result = remoteDataSource.getCurrentUserRoutines()
+            // Thread-safe write to latestNews
+            currentUserMutex.withLock {
+                this.currentUser = result.asModel()
+            }
+        }
+
+        return currentUserMutex.withLock { this.currentUser?.routines } // it will throw an exception if currentUser is null
     }
 }

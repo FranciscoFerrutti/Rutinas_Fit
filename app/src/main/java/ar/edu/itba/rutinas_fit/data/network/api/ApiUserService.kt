@@ -17,4 +17,8 @@ interface ApiUserService {
 
     @GET("users/current")
     suspend fun getCurrentUser(): Response<NetworkUser>
+
+    @GET("users/current/routines")
+    suspend fun getCurrentUserRoutines(): Response<NetworkUser>
+
 }

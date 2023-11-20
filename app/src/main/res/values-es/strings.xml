@@ -10,4 +10,6 @@
     <string name="modify_sport">MODIFICAR DEPORTE</string>
     <string name="delete_sport">BORRAR DEPORTE</string>
     <string name="dismiss">DESCARTAR</string>
+    <string name="add_routine">AÑADIR RUTINA</string>
+    <string name="get_current_user_routines">RUTINAS DEL USUARIO ACTUAL</string>
 </resources>

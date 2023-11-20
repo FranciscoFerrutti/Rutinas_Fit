@@ -9,4 +9,6 @@
     <string name="modify_sport">MODIFY SPORT</string>
     <string name="delete_sport">DELETE SPORT</string>
     <string name="dismiss">DISMISS</string>
+    <string name="add_routine">ADD ROUTINE</string>
+    <string name="get_current_user_routines">CURRENT USER ROUTINES</string>
 </resources>

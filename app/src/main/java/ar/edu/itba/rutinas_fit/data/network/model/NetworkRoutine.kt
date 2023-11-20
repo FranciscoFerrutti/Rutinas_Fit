@@ -5,19 +5,19 @@ import com.google.gson.annotations.SerializedName
 
 class NetworkRoutine(
     @SerializedName("id")
-    var id: Int?,
+    var id : Int? = null,
     @SerializedName("name")
-    var name: String,
+    var name : String,
     @SerializedName("detail")
-    var detail: String,
+    var detail : String,
     @SerializedName("date")
-    var date: Int?,
+    var date : Int? = null,
     @SerializedName("score")
-    var score: Int? = null, // we do not use score
+    var score : Int? = null,
     @SerializedName("isPublic")
-    var isPublic: Boolean,
-    @SerializedName("difficulty")
-    var difficulty: String,
+    var isPublic : Boolean,
+    @SerializedName("difficulty" )
+    var difficulty : String,
     @SerializedName("user")
     var user: NetworkUser? = null,
     @SerializedName("category")

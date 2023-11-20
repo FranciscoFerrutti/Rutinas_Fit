@@ -92,8 +92,3 @@ fun navigateToProfile(navController : NavController){
 fun naviagteToSearch(navController : NavController){
     navController.navigate(Screen.Search.route)
 }
-
-fun navigateToProfile(navController: NavController) {
-    navController.navigate(Screen.Profile.route)
-}
-

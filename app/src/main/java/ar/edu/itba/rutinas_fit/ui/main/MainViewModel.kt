@@ -10,6 +10,7 @@ import ar.edu.itba.rutinas_fit.data.model.Error
 import ar.edu.itba.rutinas_fit.data.model.Sport
 import ar.edu.itba.rutinas_fit.data.repository.SportRepository
 import ar.edu.itba.rutinas_fit.data.repository.UserRepository
+import ar.edu.itba.rutinas_fit.ui.user.UserUiState
 import ar.edu.itba.rutinas_fit.util.SessionManager
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -20,9 +21,10 @@ class MainViewModel(
     private val sportRepository: SportRepository
 ) : ViewModel() {
 
-    var uiState by mutableStateOf(MainUiState(isAuthenticated = sessionManager.loadAuthToken() != null))
+    var uiState by mutableStateOf(UserUiState(isAuthenticated = sessionManager.loadAuthToken() != null))
         private set
-
+    var sportState by mutableStateOf(MainUiState(isAuthenticated = sessionManager.loadAuthToken() != null))
+        private set
     fun login(username: String, password: String) = runOnViewModelScope(
         { userRepository.login(username, password) },
         { state, _ -> state.copy(isAuthenticated = true) }
@@ -41,7 +43,7 @@ class MainViewModel(
     )
 
     fun getCurrentUser() = runOnViewModelScope(
-        { userRepository.getCurrentUser(uiState.currentUser == null) },
+        { userRepository.getCurrentUser(sportState.currentUser == null) },
         { state, response -> state.copy(currentUser = response) }
     )
 
@@ -84,13 +86,13 @@ class MainViewModel(
         block: suspend () -> R,
         updateState: (MainUiState, R) -> MainUiState
     ): Job = viewModelScope.launch {
-        uiState = uiState.copy(isFetching = true, error = null)
+        sportState = sportState.copy(isFetching = true, error = null)
         runCatching {
             block()
         }.onSuccess { response ->
-            uiState = updateState(uiState, response).copy(isFetching = false)
+            sportState = updateState(sportState, response).copy(isFetching = false)
         }.onFailure { e ->
-            uiState = uiState.copy(isFetching = false, error = handleError(e))
+            sportState = sportState.copy(isFetching = false, error = handleError(e))
         }
     }
 
