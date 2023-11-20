@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val context = LocalContext.current
                     val navController = rememberNavController()
-                    MyNavHost(navController = navController)
+                    MyNavHost()
                 }
             }
         }
