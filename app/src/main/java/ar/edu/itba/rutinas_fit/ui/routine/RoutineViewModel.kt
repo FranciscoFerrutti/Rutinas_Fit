@@ -10,6 +10,7 @@ import ar.edu.itba.rutinas_fit.data.model.Error
 import ar.edu.itba.rutinas_fit.data.model.Routine
 import ar.edu.itba.rutinas_fit.data.repository.RoutineRepository
 import ar.edu.itba.rutinas_fit.data.repository.UserRepository
+import ar.edu.itba.rutinas_fit.ui.MainUiState
 import ar.edu.itba.rutinas_fit.ui.user.UserUiState
 import ar.edu.itba.rutinas_fit.util.SessionManager
 import kotlinx.coroutines.Job
@@ -20,9 +21,9 @@ class RoutineViewModel(
     private val userRepository: UserRepository,
     private val routineRepository: RoutineRepository
 ) : ViewModel()  {
-    var uiState by mutableStateOf(UserUiState(isAuthenticated = sessionManager.loadAuthToken() != null))
-        private set
-    var routineState by mutableStateOf(RoutineUiState(isAuthenticated = sessionManager.loadAuthToken() != null))
+    //var uiState by mutableStateOf(UserUiState(isAuthenticated = sessionManager.loadAuthToken() != null))
+    //    private set
+    var routineState by mutableStateOf(MainUiState(isAuthenticated = sessionManager.loadAuthToken() != null))
     fun getCurrentUserRoutines() = runOnViewModelScope(
         { userRepository.getCurrentUserRoutines(routineState.routines == null) },
         { state, response -> state.copy(routines = response) }
@@ -57,15 +58,15 @@ class RoutineViewModel(
 
     private fun <R> runOnViewModelScope(
         block: suspend () -> R,
-        updateState: (RoutineUiState, R) -> RoutineUiState
+        updateState: (MainUiState, R) -> MainUiState
     ): Job = viewModelScope.launch {
         routineState = routineState.copy(isFetching = true, error = null)
         runCatching {
             block()
         }.onSuccess { response ->
-            routineState = updateState(routineState, response).copy(isFetching = false)
+            routineState = updateState(routineState, response).copy(isFetching = true)
         }.onFailure { e ->
-            routineState = routineState.copy(isFetching = false, error = handleError(e))
+            routineState = routineState.copy(isFetching = true, error = handleError(e))
         }
     }
 

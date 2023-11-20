@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import ar.edu.itba.rutinas_fit.data.DataSourceException
 import ar.edu.itba.rutinas_fit.data.model.Error
 import ar.edu.itba.rutinas_fit.data.repository.UserRepository
+import ar.edu.itba.rutinas_fit.ui.MainUiState
 import ar.edu.itba.rutinas_fit.ui.routine.RoutineUiState
 import ar.edu.itba.rutinas_fit.util.SessionManager
 import kotlinx.coroutines.Job
@@ -18,7 +19,7 @@ class UserViewModel(
     private val userRepository: UserRepository,
 ) : ViewModel() {
 
-        var uiState by mutableStateOf(UserUiState(isAuthenticated = sessionManager.loadAuthToken() != null))
+        var uiState by mutableStateOf(MainUiState(isAuthenticated = sessionManager.loadAuthToken() != null))
             private set
 
         fun login(username: String, password: String) = runOnViewModelScope(
@@ -44,7 +45,7 @@ class UserViewModel(
 
     private fun <R> runOnViewModelScope(
         block: suspend () -> R,
-        updateState: (UserUiState, R) -> UserUiState
+        updateState: (MainUiState, R) -> MainUiState
     ): Job = viewModelScope.launch {
         uiState = uiState.copy(isFetching = true, error = null)
         runCatching {

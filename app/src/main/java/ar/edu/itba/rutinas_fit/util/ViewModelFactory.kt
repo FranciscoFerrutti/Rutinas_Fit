@@ -10,8 +10,9 @@ import ar.edu.itba.rutinas_fit.data.repository.RoutineRepository
 import ar.edu.itba.rutinas_fit.data.repository.SportRepository
 import ar.edu.itba.rutinas_fit.data.repository.UserRepository
 import ar.edu.itba.rutinas_fit.ui.exercise.ExerciseViewModel
-import ar.edu.itba.rutinas_fit.ui.main.MainViewModel
+import ar.edu.itba.rutinas_fit.ui.sport.SportViewModel
 import ar.edu.itba.rutinas_fit.ui.routine.RoutineViewModel
+import ar.edu.itba.rutinas_fit.ui.user.UserViewModel
 
 class ViewModelFactory constructor(
     private val sessionManager: SessionManager,
@@ -29,8 +30,8 @@ class ViewModelFactory constructor(
         handle: SavedStateHandle
     ) = with(modelClass) {
         when {
-            isAssignableFrom(MainViewModel::class.java) ->
-                MainViewModel(sessionManager, userRepository, sportRepository)
+            isAssignableFrom(SportViewModel::class.java) ->
+                SportViewModel(sessionManager, userRepository, sportRepository)
             //isAssignableFrom(ProfileViewModel::class.java) ->
             //   ProfileViewModel(sessionManager, userRepository, ...)
             // ...
@@ -38,6 +39,8 @@ class ViewModelFactory constructor(
                 RoutineViewModel(sessionManager, userRepository, routineRepository)
             isAssignableFrom(ExerciseViewModel::class.java) ->
                 ExerciseViewModel(sessionManager, userRepository, exerciseRepository)
+            isAssignableFrom(UserViewModel::class.java) ->
+                UserViewModel(sessionManager, userRepository)
             else ->
                 throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
