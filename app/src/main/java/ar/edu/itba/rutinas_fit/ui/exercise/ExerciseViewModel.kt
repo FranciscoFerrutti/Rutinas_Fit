@@ -13,6 +13,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import ar.edu.itba.rutinas_fit.data.model.Error
 import ar.edu.itba.rutinas_fit.data.model.Exercise
+import ar.edu.itba.rutinas_fit.ui.MainUiState
+import ar.edu.itba.rutinas_fit.ui.user.UserUiState
 
 
 class ExerciseViewModel(
@@ -21,12 +23,9 @@ class ExerciseViewModel(
     private val exerciseRepository: ExerciseRepository
 ) : ViewModel() {
 
-    var uiState by mutableStateOf(ExerciseUiState(isAuthenticated = sessionManager.loadAuthToken() != null))
+    var exerciseState by mutableStateOf(MainUiState(isAuthenticated = sessionManager.loadAuthToken() != null))
         private set
-    fun getCurrentUser() = runOnViewModelScope(
-        { userRepository.getCurrentUser(uiState.currentUser == null) },
-        { state, response -> state.copy(currentUser = response) }
-    )
+
     fun getExercises() = runOnViewModelScope(
         { exerciseRepository.getExercises(true) },
         { state, response -> state.copy(exercises = response) }
@@ -54,15 +53,15 @@ class ExerciseViewModel(
     )
     private fun <R> runOnViewModelScope(
         block: suspend () -> R,
-        updateState: (ExerciseUiState, R) -> ExerciseUiState
+        updateState: (MainUiState, R) -> MainUiState
     ): Job = viewModelScope.launch {
-        uiState = uiState.copy(isFetching = true, error = null)
+        exerciseState = exerciseState.copy(isFetching = true, error = null)
         runCatching {
             block()
         }.onSuccess { response ->
-            uiState = updateState(uiState, response).copy(isFetching = false)
+            exerciseState = updateState(exerciseState, response).copy(isFetching = true)
         }.onFailure { e ->
-            uiState = uiState.copy(isFetching = false, error = handleError(e))
+            exerciseState = exerciseState.copy(isFetching = true, error = handleError(e))
         }
     }
 
