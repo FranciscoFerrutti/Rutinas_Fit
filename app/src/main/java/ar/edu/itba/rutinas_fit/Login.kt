@@ -27,6 +27,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import ar.edu.itba.rutinas_fit.navigation.navigateToHome
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

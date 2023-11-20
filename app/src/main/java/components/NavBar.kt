@@ -24,10 +24,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
-import ar.edu.itba.rutinas_fit.naviagteToSearch
-import ar.edu.itba.rutinas_fit.navigateToHome
-import ar.edu.itba.rutinas_fit.navigateToProfile
-import ar.edu.itba.rutinas_fit.navigateToRoutine
+import ar.edu.itba.rutinas_fit.navigation.navigateToHome
+import ar.edu.itba.rutinas_fit.navigation.navigateToProfile
+import ar.edu.itba.rutinas_fit.navigation.navigateToSearch
+
+//import ar.edu.itba.rutinas_fit.naviagteToSearch
+//import ar.edu.itba.rutinas_fit.navigateToHome
+//import ar.edu.itba.rutinas_fit.navigateToProfile
+//import ar.edu.itba.rutinas_fit.navigateToRoutine
 
 @Composable
 fun NavBar(navController: NavController, modifier: Modifier) {
@@ -84,7 +88,7 @@ fun NavBar(navController: NavController, modifier: Modifier) {
                 Icon(imageVector = Icons.Default.Search, contentDescription = null, modifier = Modifier
                     .zIndex(3f)
                     .size(44.dp).clickable {
-                        naviagteToSearch(navController)
+                        navigateToSearch(navController)
                     } ,  tint = Color.White)
             }
             item {
@@ -98,7 +102,7 @@ fun NavBar(navController: NavController, modifier: Modifier) {
                 Icon(imageVector = Icons.Default.AccountCircle, contentDescription = null, modifier = Modifier
                     .zIndex(3f)
                     .size(44.dp).clickable {
-                                           navigateToProfile(navController)
+                        navigateToProfile(navController)
                     } , tint = Color.White)
             }
 
@@ -125,3 +129,4 @@ fun NavBar(navController: NavController, modifier: Modifier) {
         }
     }
 }
+

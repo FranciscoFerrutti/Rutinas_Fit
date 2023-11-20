@@ -2,7 +2,7 @@ package ar.edu.itba.rutinas_fit.navigation
 
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,9 +15,9 @@ import ar.edu.itba.rutinas_fit.RoutineScreen
 
 @Composable
 fun MyNavHost(
-    navController: NavHostController,
     startDestination: String = "home"
 ) {
+    var navController = rememberNavController()
     NavHost(
         navController = navController,
         startDestination = startDestination
@@ -67,4 +67,29 @@ fun MyNavHost(
         }
 
     }
+}
+
+
+
+fun navigateToRoutine(navController : NavController){
+    navController.navigate(Screen.Routine.route)
+}
+
+fun navigateToHome(navController : NavController){
+    navController.navigate(Screen.Home.route)
+}
+
+fun navigateToExercise(navController : NavController){
+    navController.navigate(Screen.Exercise.route)
+}
+
+fun navigateToRest(navController : NavController){
+    navController.navigate(Screen.Rest.route)
+}
+fun navigateToSearch(navController : NavController){
+    navController.navigate(Screen.Search.route)
+}
+
+fun navigateToProfile(navController: NavController) {
+    navController.navigate(Screen.Profile.route)
 }
