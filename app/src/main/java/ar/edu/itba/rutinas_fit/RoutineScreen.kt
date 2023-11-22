@@ -3,6 +3,7 @@ package ar.edu.itba.rutinas_fit
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -14,6 +15,8 @@ import ar.edu.itba.rutinas_fit.ui.theme.Rutinas_FitTheme
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.*
 //import androidx.compose.foundation.layout.BoxScopeInstance.align
 //import androidx.compose.foundation.layout.RowScopeInstance.align
@@ -24,6 +27,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -44,8 +49,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.input.pointer.consumeAllChanges
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.VerticalAlignmentLine
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -177,22 +185,31 @@ fun CycleComp(navController: NavController, cycleId : String){
 }
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RoutineScreen(navController : NavController, routineId : String) {
     var currentCycle by remember { mutableStateOf(0) }
     var totalCycles by remember { mutableStateOf(3) }
+    val pagerState = rememberPagerState {3}
 
     val cycles = listOf(
         Cycle(id = 1, name = "Cycle 1", detail = "Details 1", repetitions = 3, order = 1, type = "Type A"),
         Cycle(id = 2, name = "Cycle 2", detail = "Details 2", repetitions = 2, order = 2, type = "Type B"),
         Cycle(id = 3, name = "Cycle 3", detail = "Details 3", repetitions = 4, order = 3, type = "Type C")
     )
-
+    var height = 0.3f
+    var paddin = 50.dp
+    if (isDeviceInLandscape(LocalContext.current)) {
+        height = 0.38f
+        paddin = 5.dp
+    }
     Box (modifier = Modifier.fillMaxSize()) {
         Column() {
             Box (
                 modifier = Modifier
-                    .height(200.dp)
+                    .fillMaxHeight(
+                        height
+                    )
                     .fillMaxWidth()
                     .background(Color(10, 10, 10)))
             {
@@ -201,7 +218,7 @@ fun RoutineScreen(navController : NavController, routineId : String) {
                         .align(Alignment.Center)
                         .background(Color(0.10f, 0.10f, 0.10f, alpha = 0.5f))
                         .fillMaxSize()
-                        .padding(top = 50.dp),
+                        .padding(top = paddin),
 
 
                     ){
@@ -241,39 +258,94 @@ fun RoutineScreen(navController : NavController, routineId : String) {
                 }
 
             }
-            Box (
-                modifier = Modifier
-                    .height(40.dp)
-                    .fillMaxWidth()
-                    .background(Color(30, 30, 30))
-                    .clip(RoundedCornerShape(48.dp))
-            ) {
 
+            HorizontalPager(state = pagerState,
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(1f)){index ->
+                currentCycle = index
+                Column (modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+                Box (
+                    modifier = Modifier
+                        .height(40.dp)
+                        .fillMaxWidth()
+                        .background(Color(30, 30, 30))
+                        .clip(RoundedCornerShape(48.dp))
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalArrangement = Arrangement.SpaceAround,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        if (currentCycle > 0){
+                            Icon(
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .zIndex(3f)
+                                    .size(44.dp)
+                                    .clickable {
+                                        if (currentCycle > 0)
+                                            currentCycle -= 1
+                                    },
+                                tint = Color.White
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .zIndex(3f)
+                                    .size(44.dp)
+                                    .clickable {
+                                        if (currentCycle > 0)
+                                            currentCycle -= 1
+                                    },
+                                tint = Color.Transparent)
+                        }
 
-                Row(modifier = Modifier.fillMaxSize(),horizontalArrangement = Arrangement.SpaceAround,verticalAlignment = Alignment.CenterVertically) {
-                    Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null, modifier = Modifier
-                        .zIndex(3f)
-                        .size(44.dp)
-                        .clickable{ if (currentCycle > 0)
-                            currentCycle -= 1 },  tint = Color.White)
+                        Text(
+                            text = cycles[currentCycle].name,
+                            color = Color.White,
+                            fontFamily = FontFamily.SansSerif,
+                            fontSize = 22.sp,
 
-                    Text(
-                        text = cycles[currentCycle].name,
-                        color = Color.White,
-                        fontFamily = FontFamily.SansSerif,
-                        fontSize = 22.sp,
-
-                        textAlign = TextAlign.Center
-                    )
-                    Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null, modifier = Modifier
-                        .zIndex(3f)
-                        .size(44.dp)
-                        .clickable{ if (currentCycle < totalCycles - 1)
-                            currentCycle += 1 },  tint = Color.White)
+                            textAlign = TextAlign.Center
+                        )
+                        if (currentCycle < totalCycles - 1){
+                            Icon(
+                                imageVector = Icons.Default.ArrowForward,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .zIndex(3f)
+                                    .size(44.dp)
+                                    .clickable {
+                                        if (currentCycle < totalCycles - 1)
+                                            currentCycle += 1
+                                    },
+                                tint = Color.White
+                            )
+                        } else {
+                                Icon(
+                                    imageVector = Icons.Default.ArrowForward,
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .zIndex(3f)
+                                        .size(44.dp)
+                                        .clickable {
+                                            if (currentCycle < totalCycles - 1)
+                                                currentCycle += 1
+                                        },
+                                    tint = Color.Transparent
+                                )
+                        }
+                    }
+                }
+                    CycleComp(navController, currentCycle.toString())
                 }
             }
 
-            CycleComp(navController, currentCycle.toString())
+//            CycleComp(navController, currentCycle.toString())
         }
         Box (
             modifier = Modifier

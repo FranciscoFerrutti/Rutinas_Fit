@@ -1,6 +1,8 @@
 package ar.edu.itba.rutinas_fit
 
 import android.app.Application
+import android.content.Context
+import android.content.res.Configuration
 import ar.edu.itba.rutinas_fit.data.network.ExerciseRemoteDataSource
 import ar.edu.itba.rutinas_fit.data.network.RoutineRemoteDataSource
 import ar.edu.itba.rutinas_fit.data.network.SportRemoteDataSource
@@ -40,4 +42,9 @@ class MyApplication : Application() {
 
     val exerciseRepository: ExerciseRepository
         get() = ExerciseRepository(exerciseRemoteDataSource)
+}
+
+fun isDeviceInLandscape(context: Context): Boolean {
+    val orientation = context.resources.configuration.orientation
+    return orientation == Configuration.ORIENTATION_LANDSCAPE
 }

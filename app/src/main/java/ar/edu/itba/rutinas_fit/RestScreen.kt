@@ -57,7 +57,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.VerticalAlignmentLine
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
@@ -75,15 +77,23 @@ import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 fun RestScreen() {
     var countdownSeconds by remember { mutableStateOf(12) }
     var isCountdownRunning by remember { mutableStateOf(false) }
+    var clockSize = 300.dp
+    var paddin = 10.dp
+    if (isDeviceInLandscape(LocalContext.current)) {
+        clockSize = 200.dp
+        paddin = 5.dp
+    }
     Rutinas_FitTheme {
         Box(modifier = Modifier.fillMaxSize()) {
-            Column (modifier = Modifier.align(Alignment.TopCenter), horizontalAlignment = Alignment.CenterHorizontally) {
+            Column (modifier = Modifier.align(Alignment.TopCenter),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally){
 
                 Spacer ( modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(0.15f))
                 Text(
-                    text = "Apretá para comenzar la cuenta de descanso.",
+                    text = stringResource(R.string.resttimerstart),
                     color = Color.White,
                     fontFamily = FontFamily.SansSerif,
                     fontSize = 30.sp,
@@ -105,7 +115,7 @@ fun RestScreen() {
                         }
                     }.start() },
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-                    modifier = Modifier.size(300.dp).padding(top=10.dp)
+                    modifier = Modifier.size(clockSize).padding(top=10.dp)
                         .border(
                         width = 2.dp,
                         color = Color.White,

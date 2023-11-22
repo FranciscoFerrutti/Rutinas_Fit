@@ -26,5 +26,7 @@
     <string name="language">Lenguaje</string>
     <string name="darkmode">Modo Oscuro</string>
     <string name="execute">Ejecutar</string>
-
+    <string name="next">Siguiente</string>
+    <string name="timerstart">Apretá para comenzar la cuenta del ejercicio</string>
+    <string name="resttimerstart">Apretá para comenzar la cuenta de descanso.</string>
 </resources>

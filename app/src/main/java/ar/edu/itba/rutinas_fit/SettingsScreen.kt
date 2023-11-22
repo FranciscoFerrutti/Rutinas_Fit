@@ -2,7 +2,10 @@ package ar.edu.itba.rutinas_fit
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
+import android.os.LocaleList
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -48,26 +51,6 @@ fun SettingsScreen(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-
-                ) {
-                Text(
-                    text = stringResource(R.string.language),
-                    fontSize = 30.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-                Switch(
-                    checked = isSpanish,
-                    onCheckedChange = { isSpanish = it; updateLanguage(context, "es") },
-                    modifier = Modifier.padding(8.dp).scale(1.5f)
-                )
-            }
-
-            Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -98,19 +81,4 @@ fun SettingsScreen(navController: NavController) {
             )
         }
     }
-}
-
-private fun updateLanguage(context: Context, languageCode: String) {
-    val locale = Locale(languageCode)
-    Locale.setDefault(locale)
-
-    val configuration = context.resources.configuration
-    configuration.setLocale(locale)
-
-    val wrappedContext = ContextWrapper(context.createConfigurationContext(configuration))
-
-    // Restart the activity to apply the new language
-    val intent = Intent(wrappedContext, MainActivity::class.java)
-    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-    wrappedContext.startActivity(intent)
 }

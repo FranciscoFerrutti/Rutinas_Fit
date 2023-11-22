@@ -25,5 +25,8 @@
     <string name="language">Language</string>
     <string name="darkmode">Dark Mode</string>
     <string name="execute">Execute</string>
+    <string name="next">Next</string>
+    <string name="timerstart">Click here to start countdown</string>
+    <string name="resttimerstart">Click here to start rest countdown</string>
 
 </resources>
