@@ -16,6 +16,8 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,9 +26,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
+import ar.edu.itba.rutinas_fit.navigation.navigateToFavorite
 import ar.edu.itba.rutinas_fit.navigation.navigateToHome
 import ar.edu.itba.rutinas_fit.navigation.navigateToProfile
 import ar.edu.itba.rutinas_fit.navigation.navigateToSearch
+import ar.edu.itba.rutinas_fit.navigation.navigateToSettings
 
 //import ar.edu.itba.rutinas_fit.naviagteToSearch
 //import ar.edu.itba.rutinas_fit.navigateToHome
@@ -92,9 +96,19 @@ fun NavBar(navController: NavController, modifier: Modifier) {
                     } ,  tint = Color.White)
             }
             item {
-                Icon(imageVector = Icons.Default.List, contentDescription = null, modifier = Modifier
+                Icon(imageVector = Icons.Default.Star, contentDescription = null, modifier = Modifier
                     .zIndex(3f)
-                    .size(44.dp) , tint = Color.White)
+                    .size(44.dp).clickable {
+                        navigateToFavorite(navController)
+                    } , tint = Color.White)
+
+            }
+            item {
+                Icon(imageVector = Icons.Default.Settings, contentDescription = null, modifier = Modifier
+                    .zIndex(3f)
+                    .size(44.dp).clickable {
+                        navigateToSettings(navController)
+                    } , tint = Color.White)
 
             }
 

@@ -73,7 +73,7 @@ import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 @Preview
 @Composable
 fun RestScreen() {
-    var countdownSeconds by remember { mutableIntStateOf(12) }
+    var countdownSeconds by remember { mutableStateOf(12) }
     var isCountdownRunning by remember { mutableStateOf(false) }
     Rutinas_FitTheme {
         Box(modifier = Modifier.fillMaxSize()) {

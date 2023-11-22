@@ -14,4 +14,14 @@
     <string name="sign_out">SIGN OUT</string>
     <string name="delete_account">DELETE ACCOUNT</string>
     <string name="save_changes">SAVE CHANGES</string>
+    <string name="date">DATE</string>
+    <string name="score">SCORE</string>
+    <string name="difficulty">DIFFICULTY</string>
+    <string name="category">CATEGORY</string>
+    <string name="orderby">Order by</string>
+    <string name="myroutines">My Routines</string>
+    <string name="searchroutines">Search Routines</string>
+    <string name="favorite">Favorite Routines</string>
+    <string name="language">Language</string>
+    <string name="darkmode">Dark Mode</string>
 </resources>

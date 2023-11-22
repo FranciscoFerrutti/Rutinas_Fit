@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
@@ -27,6 +28,6 @@ sealed class Screen(val title: String, val icon: ImageVector, val route: String)
     object Exercise: Screen("Exercise", Icons.Filled.Favorite, "exercise")
     object Rest: Screen("Rest", Icons.Filled.Favorite, "rest")
     object Login: Screen("Login", Icons.Filled.Favorite, "login")
-
+    object Settings: Screen("Settings", Icons.Filled.Settings, "settings")
 
 }

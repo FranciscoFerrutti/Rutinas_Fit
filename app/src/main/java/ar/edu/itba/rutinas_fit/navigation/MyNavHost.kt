@@ -2,25 +2,25 @@ package ar.edu.itba.rutinas_fit.navigation
 
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import ar.edu.itba.rutinas_fit.ExerciseScreen
+import ar.edu.itba.rutinas_fit.FavoriteScreen
 import ar.edu.itba.rutinas_fit.HomePageScreen
 import ar.edu.itba.rutinas_fit.LoginRegisterScreen
-import ar.edu.itba.rutinas_fit.R
 import ar.edu.itba.rutinas_fit.RestScreen
 import ar.edu.itba.rutinas_fit.RoutineScreen
+import ar.edu.itba.rutinas_fit.SearchScreen
+import ar.edu.itba.rutinas_fit.SettingsScreen
 import ar.edu.itba.rutinas_fit.UserProfileScreen
 
 @Composable
 fun MyNavHost(
-    navController: NavHostController = rememberNavController(),
-    startDestination: String = Screen.Home.route
+    startDestination: String = "home"
 ) {
+    var navController = rememberNavController()
     NavHost(
         navController = navController,
         startDestination = startDestination
@@ -52,36 +52,47 @@ fun MyNavHost(
 
             ExerciseDetailsScreen(exerciseName, difficulty, description, steps)
             //ProfileScreen()
-        }
-        composable(Screen.Favorite.route) {
-            //ListScreen()
         }*/
-        composable(Screen.Routine.route) {
-            RoutineScreen(navController)
+        composable(Screen.Favorite.route) {
+            FavoriteScreen(navController)
         }
-        composable(Screen.Profile.route){
-            UserProfileScreen(navController)
-        }
-        composable(Screen.Search.route){
-            LoginRegisterScreen(navController = navController)
+        composable(Screen.Routine.route + "/{routineId}") {backStackEntry ->
+            val routineId = backStackEntry.arguments?.getString("routineId")
+            RoutineScreen(navController, routineId.orEmpty())
         }
         composable(Screen.Login.route) {
-            LoginRegisterScreen(navController = navController)
-        }/*
+            LoginRegisterScreen(navController)
+        }
         composable(Screen.Exercise.route) {
             ExerciseScreen(navController)
         }
         composable(Screen.Rest.route) {
             RestScreen()
-        }*/
+        }
+        composable(Screen.Search.route) {
+            SearchScreen(navController)
+        }
+        composable(Screen.Profile.route) {
+            UserProfileScreen(navController)
+        }
+        composable(Screen.Settings.route) {
+            SettingsScreen(navController)
+        }
 
     }
 }
 
 
 
-fun navigateToRoutine(navController : NavController){
-    navController.navigate(Screen.Routine.route)
+fun navigateToRoutine(navController : NavController, routineId : String){
+    navController.navigate("${Screen.Routine.route}/$routineId")
+}
+fun navigateToFavorite(navController : NavController){
+    navController.navigate(Screen.Favorite.route)
+}
+
+fun navigateToSettings(navController : NavController){
+    navController.navigate(Screen.Settings.route)
 }
 
 fun navigateToHome(navController : NavController){
@@ -102,7 +113,6 @@ fun navigateToSearch(navController : NavController){
 fun navigateToProfile(navController: NavController) {
     navController.navigate(Screen.Profile.route)
 }
-
 fun navigateToLogin(navController: NavController) {
     navController.navigate(Screen.Login.route)
 }

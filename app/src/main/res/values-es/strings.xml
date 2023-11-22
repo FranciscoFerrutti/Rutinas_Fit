@@ -15,4 +15,14 @@
     <string name="sign_out">CERRAR SESIÓN</string>
     <string name="delete_account">BORRAR CUENTA</string>
     <string name="save_changes">GUARDAR CAMBIOS</string>
+    <string name="date">FECHA</string>
+    <string name="score">PUNTUACION</string>
+    <string name="difficulty">DIFICULTAD</string>
+    <string name="category">DATE</string>
+    <string name="orderby">Ordenar por</string>
+    <string name="myroutines">Mis Rutinas</string>
+    <string name="searchroutines">Buscar Rutinas</string>
+    <string name="favorite">Rutinas Favoritas</string>
+    <string name="language">Lenguaje</string>
+    <string name="darkmode">Modo Oscuro</string>
 </resources>

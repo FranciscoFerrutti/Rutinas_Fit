@@ -65,7 +65,7 @@ import kotlinx.coroutines.selects.select
 import java.util.Date
 
 @Composable
-fun MainHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
+fun FavoriteHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
     var expanded by remember { mutableStateOf(false) }
     var title by remember { mutableStateOf("") }
     var order by remember { mutableStateOf(false) }
@@ -89,7 +89,7 @@ fun MainHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
             .fillMaxWidth()
             .align(Alignment.CenterStart), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly){
             Text(
-                text = stringResource(id = R.string.myroutines),
+                text = stringResource(id = R.string.favorite),
                 color = Color.White,
                 fontFamily = FontFamily.SansSerif,
                 fontSize = 30.sp,
@@ -140,93 +140,12 @@ fun MainHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
 }
 
 @Composable
-fun CardElem(navController : NavController, modifier : Modifier, imageResourceId: Int, routine : Routine) {
-    val backgroundImage: Painter = painterResource(id = imageResourceId)
-    Rutinas_FitTheme {
-
-        Box(
-            modifier = Modifier
-                .background(color = Color.Transparent)
-                .height(height = Dp(150f))
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(16.dp))
-                .clickable {
-                    navigateToRoutine(navController, routine.id.toString())
-                },
-
-            ) {
-            Box(
-                modifier = Modifier
-                    .background(Color(0.10f, 0.10f, 0.10f, alpha = 0.7f))
-                    .fillMaxHeight(0.35f)
-                    .fillMaxWidth()
-                    .zIndex(2f)
-
-            ) {
-                Text(
-                    text = routine.name,
-                    color = Color.White,
-                    fontFamily = FontFamily.SansSerif,
-                    fontSize = 18.sp,
-                    modifier = Modifier
-                        .padding(horizontal = Dp(8f), vertical = 5.dp)
-                )
-                Text(
-                    text = routine.difficulty,
-                    color = Color(174, 255, 0),
-                    fontFamily = FontFamily.SansSerif,
-                    fontSize = 16.sp,
-                    modifier = Modifier
-                        .align(Alignment.BottomStart)
-                        .padding(horizontal = Dp(10f), vertical = Dp(4f))
-                )
-
-            }
-            Image(
-                painter = backgroundImage,
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .zIndex(1f),
-                contentScale = ContentScale.Crop,
-            )
-        }
-    }
-}
-
-@Composable
-fun Routines(navController: NavController, routines : List<Routine>, selectedOption : String){
-    var routinesSorted = getSortedRoutines(routines, selectedOption)
-    Box(
-        modifier = Modifier.padding(vertical = Dp(70f), horizontal = Dp(10F)),
-    ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(vertical = Dp(5f)),
-            verticalArrangement = Arrangement.spacedBy(Dp(25f))
-        ) {
-            items(routinesSorted) { routine ->
-                CardElem(
-                    navController,
-                    modifier = Modifier
-                        .padding(vertical = Dp(120f))
-                        .background(color = Color.Transparent),
-                    imageResourceId = R.drawable.gymimg,
-                    routine = routine
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun HomePageScreen(navController: NavController) {
+fun FavoriteScreen(navController: NavController) {
     var selectedOption by remember { mutableStateOf("") }
     var title by remember { mutableStateOf("") }
 
     Box() {
-        MainHeader(
+        FavoriteHeader(
             modifier = Modifier.background(Color.Transparent),
             onOptionSelected = { selectedOption = it }
         )
