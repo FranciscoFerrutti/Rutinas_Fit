@@ -22,10 +22,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -140,8 +143,10 @@ fun MainHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
 }
 
 @Composable
-fun CardElem(navController : NavController, modifier : Modifier, imageResourceId: Int, routine : Routine) {
+fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: Int, routine: Routine) {
     val backgroundImage: Painter = painterResource(id = imageResourceId)
+    var isFavorite by remember { mutableStateOf(false) }
+    var rating by remember { mutableStateOf(0) }
     Rutinas_FitTheme {
 
         Box(
@@ -161,7 +166,6 @@ fun CardElem(navController : NavController, modifier : Modifier, imageResourceId
                     .fillMaxHeight(0.35f)
                     .fillMaxWidth()
                     .zIndex(2f)
-
             ) {
                 Text(
                     text = routine.name,
@@ -180,19 +184,61 @@ fun CardElem(navController : NavController, modifier : Modifier, imageResourceId
                         .align(Alignment.BottomStart)
                         .padding(horizontal = Dp(10f), vertical = Dp(4f))
                 )
-
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(end = Dp(10f), top = Dp(4f))
+                ) {
+                    // Favorite star
+                    Icon(
+                        imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                        contentDescription = null,
+                        tint = if (isFavorite) Color.Red else Color.Gray,
+                        modifier = Modifier
+                            .size(24.dp)
+                            .clickable {
+                                // Toggle the favorite status
+                                isFavorite = !isFavorite
+                                // TODO: Make API call to update favorite status
+                                // Example: api.updateFavoriteStatus(routine.id, isFavorite)
+                            }
+                    )
+                }
             }
             Image(
                 painter = backgroundImage,
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxSize()
-                    .zIndex(1f),
-                contentScale = ContentScale.Crop,
+                    .clip(RoundedCornerShape(16.dp)),
+                contentScale = ContentScale.Crop
             )
+            Row(
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(start = Dp(10f), bottom = Dp(4f))
+            ) {
+                // Rating stars
+                repeat(5) { index ->
+                    Icon(
+                        imageVector = Icons.Outlined.Star,
+                        contentDescription = null,
+                        tint = if (index < rating) Color.Yellow else Color.Gray,
+                        modifier = Modifier
+                            .size(24.dp)
+                            .clickable {
+                                // Set the rating to the clicked star index + 1
+                                rating = index + 1
+                                // TODO: Make API call to update exercise rating
+                                // Example: api.updateExerciseRating(routine.id, rating)
+                            }
+                    )
+                }
+            }
         }
     }
 }
+
 
 @Composable
 fun Routines(navController: NavController, routines : List<Routine>, selectedOption : String){
