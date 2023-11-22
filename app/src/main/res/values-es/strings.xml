@@ -29,4 +29,6 @@
     <string name="next">Siguiente</string>
     <string name="timerstart">Apretá para comenzar la cuenta del ejercicio</string>
     <string name="resttimerstart">Apretá para comenzar la cuenta de descanso.</string>
+    <string name="exercisereps">Cantidad de repeticiones:</string>
+
 </resources>
