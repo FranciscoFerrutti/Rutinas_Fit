@@ -29,6 +29,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
@@ -81,16 +82,7 @@ fun MainHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
         modifier = Modifier
             .fillMaxWidth()
             .height(Dp(70f))
-            .background(
-                brush = Brush.linearGradient(
-                    colors = listOf(
-                        Color(0xFF000000), // Black with alpha
-                        Color(0xFF008000)  // Green
-                    ),
-                    start = Offset(x = 0f, y = 0f),
-                    end = Offset.Infinite,
-                )
-            )
+            .background(Color(30, 61, 29))
             .zIndex(1f)
     ){
         Row (modifier = Modifier
@@ -200,19 +192,43 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
                         .padding(end = Dp(10f), top = Dp(4f))
                 ) {
                     // Favorite star
-                    Icon(
-                        imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
-                        contentDescription = null,
-                        tint = if (isFavorite) Color.Red else Color.Gray,
+                    Row(
                         modifier = Modifier
-                            .size(24.dp)
-                            .clickable {
-                                // Toggle the favorite status
-                                isFavorite = !isFavorite
-                                // TODO: Make API call to update favorite status
-                                // Example: api.updateFavoriteStatus(routine.id, isFavorite)
-                            }
-                    )
+                            .fillMaxWidth()
+                            .padding(horizontal = Dp(8f), vertical = 5.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        // Share icon
+                        if(routine.isPublic) {
+                            Icon(
+                                imageVector = Icons.Filled.Share,
+                                contentDescription = null,
+                                tint = Color.White,
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .clickable {
+                                        // TODO: Share routine
+                                    }
+                            )
+                        }
+
+
+                        // Favorite star
+                        Icon(
+                            imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                            contentDescription = null,
+                            tint = if (isFavorite) Color.Red else Color.Gray,
+                            modifier = Modifier
+                                .size(24.dp)
+                                .clickable {
+                                    // Toggle the favorite status
+                                    isFavorite = !isFavorite
+                                    // TODO: Make API call to update favorite status
+                                    // Example: api.updateFavoriteStatus(routine.id, isFavorite)
+                                }
+                        )
+                    }
                 }
             }
             Image(

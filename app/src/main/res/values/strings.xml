@@ -28,5 +28,7 @@
     <string name="next">Next</string>
     <string name="timerstart">Click here to start countdown</string>
     <string name="resttimerstart">Click here to start rest countdown</string>
+    <string name="exercisereps">Number of reps:</string>
+    <string name="mode">Change mode</string>
 
 </resources>

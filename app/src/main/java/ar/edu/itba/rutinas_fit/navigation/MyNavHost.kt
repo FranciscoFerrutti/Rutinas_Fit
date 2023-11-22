@@ -15,6 +15,7 @@ import ar.edu.itba.rutinas_fit.RoutineScreen
 import ar.edu.itba.rutinas_fit.SearchScreen
 import ar.edu.itba.rutinas_fit.SettingsScreen
 import ar.edu.itba.rutinas_fit.UserProfileScreen
+import ar.edu.itba.rutinas_fit.ui.routine.RoutineViewModel
 
 @Composable
 fun MyNavHost(
@@ -63,8 +64,10 @@ fun MyNavHost(
         composable(Screen.Login.route) {
             LoginRegisterScreen(navController)
         }
-        composable(Screen.Exercise.route) {
-            ExerciseScreen(navController)
+
+        composable(Screen.Exercise.route + "/{routineId}") {backStackEntry ->
+            val routineId = backStackEntry.arguments?.getString("routineId")
+            ExerciseScreen(navController, routineId.orEmpty())
         }
         composable(Screen.Rest.route) {
             RestScreen()
@@ -99,8 +102,8 @@ fun navigateToHome(navController : NavController){
     navController.navigate(Screen.Home.route)
 }
 
-fun navigateToExercise(navController : NavController){
-    navController.navigate(Screen.Exercise.route)
+fun navigateToExercise(navController : NavController,routineId : String){
+    navController.navigate("${Screen.Exercise.route}/$routineId")
 }
 
 fun navigateToRest(navController : NavController){

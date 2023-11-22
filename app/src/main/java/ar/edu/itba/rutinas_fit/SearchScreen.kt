@@ -74,16 +74,7 @@ fun SearchHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
         modifier = Modifier
             .fillMaxWidth()
             .height(Dp(70f))
-            .background(
-                brush = Brush.linearGradient(
-                    colors = listOf(
-                        Color(0xFF000000), // Black with alpha
-                        Color(0xFF008000)  // Green
-                    ),
-                    start = Offset(x = 0f, y = 0f),
-                    end = Offset.Infinite,
-                )
-            )
+            .background(Color(30, 61, 29))
             .zIndex(1f)
     ){
         Row (modifier = Modifier

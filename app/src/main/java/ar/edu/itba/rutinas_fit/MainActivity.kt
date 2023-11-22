@@ -69,26 +69,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-
-fun navigateToRoutine(navController : NavController){
-    navController.navigate(Screen.Routine.route)
-}
-
-fun navigateToHome(navController : NavController){
-    navController.navigate(Screen.Home.route)
-}
-
-fun navigateToExercise(navController : NavController){
-    navController.navigate(Screen.Exercise.route)
-}
-
-fun navigateToRest(navController : NavController){
-    navController.navigate(Screen.Rest.route)
-}
-fun navigateToProfile(navController : NavController){
-    navController.navigate(Screen.Profile.route)
-}
-fun naviagteToSearch(navController : NavController){
-    navController.navigate(Screen.Search.route)
-}

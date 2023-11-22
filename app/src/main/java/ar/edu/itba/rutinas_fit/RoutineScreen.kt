@@ -68,6 +68,7 @@ import ar.edu.itba.rutinas_fit.data.model.Cycle
 import ar.edu.itba.rutinas_fit.data.model.CycleExercise
 import ar.edu.itba.rutinas_fit.data.model.Exercise
 import ar.edu.itba.rutinas_fit.data.model.Routine
+import ar.edu.itba.rutinas_fit.data.model.RoutineCycle
 import ar.edu.itba.rutinas_fit.navigation.Screen.Exercise.title
 import ar.edu.itba.rutinas_fit.navigation.navigateToExercise
 import components.NavBar
@@ -251,7 +252,7 @@ fun RoutineScreen(navController : NavController, routineId : String) {
 
                     )
                     Button(onClick = {
-                        navigateToExercise(navController)
+                                     navigateToExercise(navController, routineId)
                     },modifier = Modifier
                         .width(140.dp)
                         .height(50.dp)
