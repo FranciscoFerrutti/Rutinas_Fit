@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -135,7 +136,7 @@ fun LoginRegisterScreen(navController: NavController, userViewModel: UserViewMod
                     return@Button
                 }
 
-                if (password != confirmPassword) {
+                if (password != confirmPassword && !isLoginMode) {
                     errorMessage = "Las contraseñas no coinciden"
                     return@Button
                 }
