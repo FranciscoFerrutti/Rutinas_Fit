@@ -89,7 +89,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
     var paddin = 10.dp
     var imWid = 0.7f
     var imHei = 0.3f
-    var mode = 0
+    var mode by remember { mutableStateOf(false) }
 
     val routineCycles = listOf(
         RoutineCycle(routineId = 1, id = 101, name = "Cycle 1", detail = "Details 1", type = "Type A", order = 1, repetitions = 1),
@@ -138,7 +138,6 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                     modifier = Modifier.align(Alignment.TopCenter),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    if (mode == 0) {
 //                        Image(
 //                            painter = painterResource(id = imageResource),
 //                            contentDescription = null,
@@ -169,7 +168,9 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
 //                        .padding(Dp(5f))
 //                    .align(Alignment.Center)
                             )
-                            Box (modifier = Modifier.fillMaxWidth().height(clockSize)){
+                            Box (modifier = Modifier
+                                .fillMaxWidth()
+                                .height(clockSize)){
                                 Text(
                                     text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].repetitions.toString(),
                                     color = Color.White,
@@ -214,6 +215,34 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                     fontFamily = FontFamily.SansSerif,
                                     fontSize = 20.sp
                                 )
+                            }
+                            if (mode){
+                                CycleComp(cycleExercisesList[currentCycleIndex])
+                            }
+                            Box (modifier = Modifier.fillMaxWidth()){
+                                Button(
+                                    onClick = { // aca avmos a tener un array o algo para ver cuantos ejs tiene el ciclo
+                                        mode = !mode
+                                    },
+                                    modifier = Modifier
+                                        .width(125.dp)
+                                        .height(40.dp)
+                                        .align(Alignment.Center)
+                                        .padding(top = 5.dp),
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = Color(
+                                            64,
+                                            117,
+                                            60
+                                        )
+                                    )
+                                ) {
+                                    Text(
+                                        text = stringResource(R.string.mode), color = Color.White,
+                                        fontFamily = FontFamily.SansSerif,
+                                        fontSize = 12.sp
+                                    )
+                                }
                             }
                         } else {
                             var countdownSeconds by remember { mutableStateOf(cycleExercisesList[currentCycleIndex][currentExerciseIndex].duration) }
@@ -316,9 +345,12 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                     fontSize = 20.sp
                                 )
                             }
+                            if (mode){
+                                CycleComp(cycleExercisesList[currentCycleIndex])
+                            }
 
                         }
-                    }
+
                 }
             } else {
                 clockSize = 200.dp
@@ -364,7 +396,9 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
 //                        .padding(Dp(5f))
 //                    .align(Alignment.Center)
                             )
-                            Box (modifier = Modifier.size(clockSize).align(Alignment.CenterHorizontally)){
+                            Box (modifier = Modifier
+                                .size(clockSize)
+                                .align(Alignment.CenterHorizontally)){
                             Text(
                                 text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].repetitions.toString(),
                                 color = Color.White,
@@ -406,6 +440,9 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                     fontFamily = FontFamily.SansSerif,
                                     fontSize = 20.sp
                                 )
+                            }
+                            if (mode){
+                                CycleComp(cycleExercisesList[currentCycleIndex])
                             }
                         }
                     } else {
@@ -498,6 +535,9 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                     fontFamily = FontFamily.SansSerif,
                                     fontSize = 20.sp
                                 )
+                            }
+                            if (mode){
+                                CycleComp(cycleExercisesList[currentCycleIndex])
                             }
                         }
 
