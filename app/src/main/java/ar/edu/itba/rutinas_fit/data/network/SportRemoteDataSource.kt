@@ -4,35 +4,36 @@ import ar.edu.itba.rutinas_fit.data.network.api.ApiSportService
 import ar.edu.itba.rutinas_fit.data.network.model.NetworkPagedContent
 import ar.edu.itba.rutinas_fit.data.network.model.NetworkSport
 
+
 class SportRemoteDataSource(
     private val apiSportService: ApiSportService
 ) : RemoteDataSource() {
 
-    suspend fun getSports(): NetworkPagedContent<NetworkSport> {
+    suspend fun getSports() : NetworkPagedContent<NetworkSport> {
         return handleApiResponse {
             apiSportService.getSports()
         }
     }
 
-    suspend fun getSport(sportId: Int): NetworkSport {
+    suspend fun getSport(sportId: Int) : NetworkSport {
         return handleApiResponse {
             apiSportService.getSport(sportId)
         }
     }
 
-    suspend fun addSport(sport: NetworkSport): NetworkSport {
+    suspend fun addSport(sport: NetworkSport) : NetworkSport {
         return handleApiResponse {
             apiSportService.addSport(sport)
         }
     }
 
-    suspend fun modifySport(sport: NetworkSport): NetworkSport {
+    suspend fun modifySport(sport: NetworkSport) : NetworkSport {
         return handleApiResponse {
             apiSportService.modifySport(sport.id!!, sport)
         }
     }
 
-    suspend fun deleteSport(sportId: Int) {
+    suspend fun deleteSport(sportId: Int){
         handleApiResponse {
             apiSportService.deleteSport(sportId)
         }

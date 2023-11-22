@@ -1,5 +1,6 @@
 package ar.edu.itba.rutinas_fit.data.repository
 
+
 import ar.edu.itba.rutinas_fit.data.model.Sport
 import ar.edu.itba.rutinas_fit.data.network.SportRemoteDataSource
 import kotlinx.coroutines.sync.Mutex
@@ -16,7 +17,7 @@ class SportRepository(
     suspend fun getSports(refresh: Boolean = false): List<Sport> {
         if (refresh || sports.isEmpty()) {
             val result = remoteDataSource.getSports()
-            // Thread-safe write to sports
+            // Thread-safe write to latestNews
             sportsMutex.withLock {
                 this.sports = result.content.map { it.asModel() }
             }

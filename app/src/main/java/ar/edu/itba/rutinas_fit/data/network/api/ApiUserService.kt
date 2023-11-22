@@ -1,12 +1,12 @@
 package ar.edu.itba.rutinas_fit.data.network.api
 
-import ar.edu.itba.rutinas_fit.data.network.model.NetworkCredentials
-import ar.edu.itba.rutinas_fit.data.network.model.NetworkToken
-import ar.edu.itba.rutinas_fit.data.network.model.NetworkUser
+
+import ar.edu.itba.rutinas_fit.data.network.model.*
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 interface ApiUserService {
     @POST("users/login")
@@ -18,7 +18,12 @@ interface ApiUserService {
     @GET("users/current")
     suspend fun getCurrentUser(): Response<NetworkUser>
 
-    @GET("users/current/routines")
-    suspend fun getCurrentUserRoutines(): Response<NetworkUser>
+    @PUT("users/current")
+    suspend fun modifyUser(@Body newName : NetworkName): Response<NetworkUser>
 
+    @POST("users")
+    suspend fun signUp(@Body user : NetworkSignUp) : Response<NetworkUser>
+
+    @POST("users/verify_email")
+    suspend fun verify(@Body data : NetworkVerify) : Response<NetworkVerify>
 }

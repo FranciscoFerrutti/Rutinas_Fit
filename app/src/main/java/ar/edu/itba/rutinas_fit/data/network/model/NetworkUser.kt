@@ -1,13 +1,14 @@
 package ar.edu.itba.rutinas_fit.data.network.model
 
+
 import ar.edu.itba.rutinas_fit.data.model.User
 import com.google.gson.annotations.SerializedName
 import java.util.Date
 
-class NetworkUser(
+class NetworkUser (
 
     @SerializedName("id")
-    var id: Int?,
+    var id: Int,
     @SerializedName("username")
     var username: String,
     @SerializedName("firstName")
@@ -15,7 +16,7 @@ class NetworkUser(
     @SerializedName("lastName")
     var lastName: String,
     @SerializedName("gender")
-    var gender: String,
+    var gender: String? = null,
     @SerializedName("birthdate")
     var birthdate: Date? = null,
     @SerializedName("email")
@@ -27,23 +28,20 @@ class NetworkUser(
     @SerializedName("metadata")
     var metadata: NetworkUserMetadata? = null,
     @SerializedName("date")
-    var date: Date,
+    var date: Date? = null,
     @SerializedName("lastActivity")
     var lastActivity: Date? = null,
     @SerializedName("verified")
     var verified: Boolean
 ) {
 
-    fun asModel(): User {
+    fun asModel() : User {
         return User(
             id = id,
             username = username,
             firstName = firstName,
             lastName = lastName,
-            gender = gender,
             email = email,
-            phone = phone,
-            avatarUrl = avatarUrl,
             lastActivity = lastActivity
         )
     }

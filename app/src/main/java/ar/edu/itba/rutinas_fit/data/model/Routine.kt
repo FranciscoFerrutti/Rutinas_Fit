@@ -4,25 +4,34 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import ar.edu.itba.rutinas_fit.R
 import ar.edu.itba.rutinas_fit.data.network.model.NetworkRoutine
+import com.google.gson.annotations.SerializedName
+import java.util.Date
+
 
 data class Routine(
-    var id: Int? = null,
-    var name: String,
-    var detail: String,
-    var date: Int? = null,
-    var isPublic: Boolean,
-    var difficulty: String
-    //var category: Category, // I think we do not use category
-    // do we need metadata?
-){
+    var id         : Int,
+    var name       : String,
+    var detail     : String,
+    var date       : Date?,
+    var score      : Int?,
+    var isPublic   : Boolean?,
+    var difficulty : String?,
+    var user       : User?,
+    var category   : Category?,
+    var metadata   : String?
+) {
     fun asNetworkModel(): NetworkRoutine {
         return NetworkRoutine(
             id = id,
             name = name,
             detail = detail,
             date = date,
+            score = score,
             isPublic = isPublic,
-            difficulty = difficulty
+            difficulty = difficulty,
+            user = user,
+            category = category,
+            metadata = metadata
         )
     }
 }

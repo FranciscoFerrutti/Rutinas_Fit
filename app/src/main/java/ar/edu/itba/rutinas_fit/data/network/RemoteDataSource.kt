@@ -1,6 +1,6 @@
 package ar.edu.itba.rutinas_fit.data.network
 
-import ar.edu.itba.rutinas_fit.data.DataSourceException
+
 import ar.edu.itba.rutinas_fit.data.network.model.NetworkError
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -20,31 +20,20 @@ abstract class RemoteDataSource {
             }
             response.errorBody()?.let {
                 val gson = Gson()
-                val error = gson.fromJson<NetworkError>(
-                    it.string(),
-                    object : TypeToken<NetworkError?>() {}.type
-                )
+                val error = gson.fromJson<NetworkError>(it.string(), object : TypeToken<NetworkError?>() {}.type)
                 throw DataSourceException(error.code, error.description, error.details)
             }
             throw DataSourceException(UNEXPECTED_ERROR_CODE, "Missing error", null)
         } catch (e: DataSourceException) {
             throw e
         } catch (e: IOException) {
-            throw DataSourceException(
-                CONNECTION_ERROR_CODE,
-                "Connection error",
-                getDetailsFromException(e)
-            )
+            throw DataSourceException(CONNECTION_ERROR_CODE, "Connection error", getDetailsFromException(e))
         } catch (e: Exception) {
-            throw DataSourceException(
-                UNEXPECTED_ERROR_CODE,
-                "Unexpected error",
-                getDetailsFromException(e)
-            )
+            throw DataSourceException(UNEXPECTED_ERROR_CODE, "Unexpected error", getDetailsFromException(e))
         }
     }
 
-    private fun getDetailsFromException(e: Exception): List<String> {
+    private fun getDetailsFromException(e: Exception) : List<String> {
         return if (e.message != null) listOf(e.message!!) else emptyList()
     }
 

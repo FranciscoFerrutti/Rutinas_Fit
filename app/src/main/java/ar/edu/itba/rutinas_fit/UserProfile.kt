@@ -43,19 +43,19 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import ar.edu.itba.rutinas_fit.classes.MainViewModel
 import ar.edu.itba.rutinas_fit.navigation.navigateToLogin
-import ar.edu.itba.rutinas_fit.ui.canLogout
-import ar.edu.itba.rutinas_fit.ui.user.UserViewModel
+
 import ar.edu.itba.rutinas_fit.util.getViewModelFactory
 import components.NavBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UserProfileScreen(navController: NavController, userViewModel: UserViewModel = viewModel(factory = getViewModelFactory())) {
+fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel = viewModel(factory = getViewModelFactory())) {
     //var firstName by remember { mutableStateOf("") }
     // Get the firstName from the logged in user, by using the UserViewModel
-    userViewModel.getCurrentUser() // WE NEED to call getCurrentUser to fetch the data
-    val uiState = userViewModel.uiState
+    mainViewModel.getCurrentUser() // WE NEED to call getCurrentUser to fetch the data
+    val uiState = mainViewModel.uiState
     var firstName = uiState.currentUser?.let {
         it.firstName
     } ?: "No user logged in"
@@ -68,12 +68,9 @@ fun UserProfileScreen(navController: NavController, userViewModel: UserViewModel
     var gender = uiState.currentUser?.let {
         it.email
     } ?: "No user logged in"
-    var phone = uiState.currentUser?.let {
-        it.phone
-    } ?: "No user logged in"
-    var avatarUrl = uiState.currentUser?.let {
+    var avatarUrl = "" /*uiState.currentUser?.let {
         it.avatarUrl
-    } ?: "No user logged in"
+    } ?: "No user logged in"*/
 
     val textFieldColors = TextFieldDefaults.outlinedTextFieldColors(
         cursorColor = Color.White,
@@ -189,10 +186,10 @@ fun UserProfileScreen(navController: NavController, userViewModel: UserViewModel
                 }
                 Button(
                     onClick = {
-                        if(uiState.canLogout){
-                            userViewModel.logout()
+                        mainViewModel.logout()
+                        //if (!mainViewModel.uiState.isAuthenticated) {
                             navigateToLogin(navController)
-                        }
+                        //}
                     },
                     colors = ButtonDefaults.buttonColors(Color(0xFF388E3C))
                 ) {

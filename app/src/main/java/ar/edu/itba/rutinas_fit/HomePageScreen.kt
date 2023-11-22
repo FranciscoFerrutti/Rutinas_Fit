@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
+import ar.edu.itba.rutinas_fit.data.model.*
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.List
@@ -56,16 +57,20 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import ar.edu.itba.rutinas_fit.classes.MainViewModel
 import ar.edu.itba.rutinas_fit.data.model.Routine
-import ar.edu.itba.rutinas_fit.data.model.getSortedRoutines
+
 import ar.edu.itba.rutinas_fit.navigation.Screen
 import ar.edu.itba.rutinas_fit.navigation.navigateToRoutine
 import ar.edu.itba.rutinas_fit.ui.theme.Rutinas_FitTheme
+import ar.edu.itba.rutinas_fit.util.getViewModelFactory
 import components.NavBar
 import kotlinx.coroutines.selects.select
 import java.util.Date
+import java.util.Locale
 
 @Composable
 fun MainHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
@@ -176,7 +181,12 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
                         .padding(horizontal = Dp(8f), vertical = 5.dp)
                 )
                 Text(
-                    text = routine.difficulty,
+                    text = routine.difficulty?.replaceFirstChar {
+                        if (it.isLowerCase()) it.titlecase(
+                            Locale.ROOT
+                        ) else it.toString()
+                    }
+                        ?: "",
                     color = Color(174, 255, 0),
                     fontFamily = FontFamily.SansSerif,
                     fontSize = 16.sp,
@@ -267,7 +277,7 @@ fun Routines(navController: NavController, routines : List<Routine>, selectedOpt
 }
 
 @Composable
-fun HomePageScreen(navController: NavController) {
+fun HomePageScreen(navController: NavController, mainViewModel: MainViewModel = viewModel(factory = getViewModelFactory())) {
     var selectedOption by remember { mutableStateOf("") }
     var title by remember { mutableStateOf("") }
 
@@ -277,9 +287,9 @@ fun HomePageScreen(navController: NavController) {
             onOptionSelected = { selectedOption = it }
         )
         val routines = listOf(
-            Routine(name = "Routine 1", detail = "Details", date = 20220101, isPublic = true, difficulty = "Hard"),
-            Routine(name = "Routine 2", detail = "Details", date = 20220102, isPublic = true, difficulty = "Medium"),
-            Routine(name = "Routine 3", detail = "Details", date = 20220103, isPublic = true, difficulty = "Easy")
+            Routine(id= 1, name = "Routine 1", detail = "Details", date = Date(), isPublic = true, difficulty = "Hard", category= null, score=2, metadata = null, user = null),
+            Routine(id= 1, name = "Routine 2", detail = "Details", date = Date(), isPublic = true, difficulty = "Medium", category= null, score=2, metadata = null, user = null),
+            Routine(id= 1, name = "Routine 3", detail = "Details", date = Date(), isPublic = true, difficulty = "Easy", category= null, score=2, metadata = null, user = null)
         )
         Routines(navController,routines, selectedOption)
 

@@ -2,6 +2,7 @@ package ar.edu.itba.rutinas_fit.data.model
 
 import ar.edu.itba.rutinas_fit.data.network.model.NetworkSport
 
+
 class Sport(
     var id: Int? = null,
     var name: String,

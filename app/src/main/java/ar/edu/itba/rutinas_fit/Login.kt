@@ -32,8 +32,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import ar.edu.itba.rutinas_fit.navigation.navigateToHome
 import androidx.compose.ui.tooling.preview.Preview
-import ar.edu.itba.rutinas_fit.ui.canLogin
-import ar.edu.itba.rutinas_fit.ui.user.UserViewModel
+import ar.edu.itba.rutinas_fit.classes.MainViewModel
 import ar.edu.itba.rutinas_fit.util.ViewModelFactory
 import ar.edu.itba.rutinas_fit.util.getViewModelFactory
 
@@ -47,7 +46,7 @@ fun LoginRegisterScreenPreview() {
 }
 
 @Composable
-fun LoginRegisterScreen(navController: NavController, userViewModel: UserViewModel = viewModel(factory = getViewModelFactory())) {
+fun LoginRegisterScreen(navController: NavController, mainViewModel: MainViewModel = viewModel(factory = getViewModelFactory())) {
     var isLoginMode by remember { mutableStateOf(true) }
     var name by remember { mutableStateOf("") }
     var username by remember { mutableStateOf("") }
@@ -55,7 +54,6 @@ fun LoginRegisterScreen(navController: NavController, userViewModel: UserViewMod
     var dateOfBirth by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
-    val uiState = userViewModel.uiState
     var errorMessage by remember { mutableStateOf("") }
 
     Column(
@@ -130,6 +128,7 @@ fun LoginRegisterScreen(navController: NavController, userViewModel: UserViewMod
 
         Button(
             onClick = {
+                mainViewModel.login(username, password)
                 // Input validation checks
                 if (email.isNotBlank() && !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     errorMessage = "Correo inválido"
@@ -144,12 +143,8 @@ fun LoginRegisterScreen(navController: NavController, userViewModel: UserViewMod
 
                 // Continue with registration or login based on the mode
                 if (isLoginMode) {
-                    if(uiState.canLogin){
-                        userViewModel.login(username, password)
-                        navigateToHome(navController)
-                    } else {
-                        userViewModel.logout()
-                    }
+                    mainViewModel.login(username, password)
+                    navigateToHome(navController)
                 } else {
                     handleRegister(
                         navController = navController,

@@ -55,8 +55,10 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import ar.edu.itba.rutinas_fit.data.model.Category
 import ar.edu.itba.rutinas_fit.data.model.Routine
-import ar.edu.itba.rutinas_fit.data.model.getSortedRoutines
+import ar.edu.itba.rutinas_fit.data.model.User
+
 import ar.edu.itba.rutinas_fit.navigation.Screen
 import ar.edu.itba.rutinas_fit.navigation.navigateToRoutine
 import ar.edu.itba.rutinas_fit.ui.theme.Rutinas_FitTheme
@@ -150,9 +152,9 @@ fun FavoriteScreen(navController: NavController) {
             onOptionSelected = { selectedOption = it }
         )
         val routines = listOf(
-            Routine(name = "Routine 1", detail = "Details", date = 20220101, isPublic = true, difficulty = "Hard"),
-            Routine(name = "Routine 2", detail = "Details", date = 20220102, isPublic = true, difficulty = "Medium"),
-            Routine(name = "Routine 3", detail = "Details", date = 20220103, isPublic = true, difficulty = "Easy")
+            Routine(id= 1, name = "Routine 1", detail = "Details", date = Date(), isPublic = true, difficulty = "Hard", category= null, score=2, metadata = null, user = null),
+            Routine(id= 1, name = "Routine 2", detail = "Details", date = Date(), isPublic = true, difficulty = "Medium", category= null, score=2, metadata = null, user = null),
+            Routine(id= 1, name = "Routine 3", detail = "Details", date = Date(), isPublic = true, difficulty = "Easy", category= null, score=2, metadata = null, user = null)
         )
         Routines(navController,routines, selectedOption)
 

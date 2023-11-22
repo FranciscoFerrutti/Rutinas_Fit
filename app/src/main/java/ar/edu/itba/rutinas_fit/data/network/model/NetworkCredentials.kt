@@ -2,10 +2,10 @@ package ar.edu.itba.rutinas_fit.data.network.model
 
 import com.google.gson.annotations.SerializedName
 
-data class NetworkCredentials(
+data class NetworkCredentials (
 
     @SerializedName("username")
-    var username: String,
+    var username : String,
     @SerializedName("password")
-    var password: String
+    var password : String
 )

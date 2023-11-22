@@ -14,12 +14,12 @@ object RetrofitClient {
     @Volatile
     private var instance: Retrofit? = null
 
-    private fun getInstance(context: Context): Retrofit =
+    private fun getInstance(context: Context) : Retrofit =
         instance ?: synchronized(this) {
-            instance ?: buildRetrofit(context).also { instance = it }
+            instance ?: buildRetrofit(context).also { instance = it}
         }
 
-    private fun buildRetrofit(context: Context): Retrofit {
+    private fun buildRetrofit(context: Context) : Retrofit {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
             .setLevel(HttpLoggingInterceptor.Level.BODY)
 
@@ -39,19 +39,21 @@ object RetrofitClient {
             .build()
     }
 
-    fun getApiUserService(context: Context): ApiUserService {
+    fun getApiUserService(context: Context) : ApiUserService {
         return getInstance(context).create(ApiUserService::class.java)
     }
 
-    fun getApiSportService(context: Context): ApiSportService {
+    fun getApiSportService(context: Context) : ApiSportService {
         return getInstance(context).create(ApiSportService::class.java)
     }
 
-    fun getApiRoutineService(context: Context): ApiRoutineService {
+    fun getApiRoutineService(context: Context) : ApiRoutineService {
         return getInstance(context).create(ApiRoutineService::class.java)
     }
-
-    fun getApiExerciseService(context: Context): ApiExerciseService {
-        return getInstance(context).create(ApiExerciseService::class.java)
+    fun getApiCycleService(context: Context) : ApiCycleService {
+        return getInstance(context).create(ApiCycleService::class.java)
+    }
+    fun getApiCycleExerciseService(context: Context) : ApiCycleExerciseService {
+        return getInstance(context).create(ApiCycleExerciseService::class.java)
     }
 }

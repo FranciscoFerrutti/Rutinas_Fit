@@ -1,52 +1,67 @@
 package ar.edu.itba.rutinas_fit.data.network
 
+import ar.edu.itba.rutinas_fit.data.model.Review
 import ar.edu.itba.rutinas_fit.data.network.api.ApiRoutineService
 import ar.edu.itba.rutinas_fit.data.network.model.NetworkPagedContent
+import ar.edu.itba.rutinas_fit.data.network.model.NetworkReview
 import ar.edu.itba.rutinas_fit.data.network.model.NetworkRoutine
+
 
 class RoutineRemoteDataSource(
     private val apiRoutineService: ApiRoutineService
 ) : RemoteDataSource() {
-    suspend fun getRoutines(): NetworkPagedContent<NetworkRoutine> {
+
+    suspend fun getRoutines() : NetworkPagedContent<NetworkRoutine> {
         return handleApiResponse {
             apiRoutineService.getRoutines()
         }
     }
 
-    suspend fun getRoutine(sportId: Int): NetworkRoutine {
+    suspend fun getRoutine(routineId: Int) : NetworkRoutine {
         return handleApiResponse {
-            apiRoutineService.getRoutine(sportId)
+            apiRoutineService.getRoutine(routineId)
         }
     }
 
-    suspend fun addRoutine(sport: NetworkRoutine): NetworkRoutine {
+    suspend fun addRoutine(routine: NetworkRoutine) : NetworkRoutine {
         return handleApiResponse {
-            apiRoutineService.addRoutine(sport)
+            apiRoutineService.addRoutine(routine)
         }
     }
 
-    suspend fun modifyRoutine(sport: NetworkRoutine): NetworkRoutine {
+    suspend fun modifyRoutine(routine: NetworkRoutine) : NetworkRoutine {
         return handleApiResponse {
-            apiRoutineService.modifyRoutine(sport.id!!, sport)
+            apiRoutineService.modifyRoutine(routine.id!!, routine)
         }
     }
 
-    suspend fun deleteRoutine(sportId: Int) {
+    suspend fun deleteRoutine(routineId: Int){
         handleApiResponse {
-            apiRoutineService.deleteRoutine(sportId)
+            apiRoutineService.deleteRoutine(routineId)
         }
     }
 
-    // we add the cycleRoutines api's endpoints here
-    suspend fun getCycleRoutines(routineId: Int): NetworkPagedContent<NetworkRoutine> {
+    suspend fun getFavourites() : NetworkPagedContent<NetworkRoutine>{
         return handleApiResponse {
-            apiRoutineService.getCycleRoutines(routineId)
+            apiRoutineService.getFavourites()
         }
     }
 
-    suspend fun getCycleRoutine(routineId: Int, cycleId: Int): NetworkRoutine {
-        return handleApiResponse {
-            apiRoutineService.getCycleRoutine(routineId, cycleId)
+    suspend fun deleteFromFavourites(routineId : Int){
+        handleApiResponse {
+            apiRoutineService.deleteFromFavourites(routineId)
+        }
+    }
+
+    suspend fun addToFavourites(routineId: Int){
+        handleApiResponse {
+            apiRoutineService.addToFavourites(routineId)
+        }
+    }
+
+    suspend fun reviewRoutine(review : NetworkReview, routineId : Int){
+        handleApiResponse {
+            apiRoutineService.reviewRoutine(routineId,review)
         }
     }
 }

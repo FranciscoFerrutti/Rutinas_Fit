@@ -151,9 +151,9 @@ fun SearchScreen(navController: NavController) {
             onOptionSelected = { selectedOption = it }
         )
         val routines = listOf(
-            Routine(name = "Routine 1", detail = "Details", date = 20220101, isPublic = true, difficulty = "Hard"),
-            Routine(name = "Routine 2", detail = "Details", date = 20220102, isPublic = true, difficulty = "Medium"),
-            Routine(name = "Routine 3", detail = "Details", date = 20220103, isPublic = true, difficulty = "Easy")
+            Routine(id= 1, name = "Routine 1", detail = "Details", date = Date(), isPublic = true, difficulty = "Hard", category= null, score=2, metadata = null, user = null),
+            Routine(id= 1, name = "Routine 2", detail = "Details", date = Date(), isPublic = true, difficulty = "Medium", category= null, score=2, metadata = null, user = null),
+            Routine(id= 1, name = "Routine 3", detail = "Details", date = Date(), isPublic = true, difficulty = "Easy", category= null, score=2, metadata = null, user = null)
         )
         Routines(navController,routines, selectedOption)
 

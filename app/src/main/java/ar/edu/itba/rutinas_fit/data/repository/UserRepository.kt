@@ -1,7 +1,10 @@
 package ar.edu.itba.rutinas_fit.data.repository
 
-import ar.edu.itba.rutinas_fit.data.model.Routine
+
+import ar.edu.itba.rutinas_fit.data.model.Name
+import ar.edu.itba.rutinas_fit.data.model.SignUp
 import ar.edu.itba.rutinas_fit.data.model.User
+import ar.edu.itba.rutinas_fit.data.model.Verify
 import ar.edu.itba.rutinas_fit.data.network.UserRemoteDataSource
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -23,7 +26,16 @@ class UserRepository(
         remoteDataSource.logout()
     }
 
-    suspend fun getCurrentUser(refresh: Boolean) : User? {
+    suspend fun signUp(data: SignUp){
+        remoteDataSource.signUp(data.asNetworkModel())
+    }
+
+    suspend fun verify(data: Verify){
+        remoteDataSource.verify(data.asNetworkModel())
+    }
+
+
+    suspend fun getCurrentUser(refresh: Boolean) : User? {//si refresh es true se llama a la api, sino no
         if (refresh || currentUser == null) {
             val result = remoteDataSource.getCurrentUser()
             // Thread-safe write to latestNews
@@ -35,15 +47,12 @@ class UserRepository(
         return currentUserMutex.withLock { this.currentUser }
     }
 
-    suspend fun getCurrentUserRoutines(refresh: Boolean) : List<Routine>? {
-        if (refresh || currentUser == null) {
-            val result = remoteDataSource.getCurrentUserRoutines()
-            // Thread-safe write to latestNews
-            currentUserMutex.withLock {
-                this.currentUser = result.asModel()
-            }
-        }
+    suspend fun modifyUser(newName: Name){
+        remoteDataSource.modifyUser(newName.asNetworkModel())
 
-        return currentUserMutex.withLock { this.currentUser?.routines } // it will throw an exception if currentUser is null
+        currentUserMutex.withLock {
+            this.currentUser = null
+        }
     }
 }
+

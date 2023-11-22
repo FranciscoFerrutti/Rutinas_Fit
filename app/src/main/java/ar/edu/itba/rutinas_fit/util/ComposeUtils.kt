@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSavedStateRegistryOwner
-//import ar.edu.itba.rutinas_fit.MyApplication
-import ar.edu.itba.rutinas_fit.MainActivity
 import ar.edu.itba.rutinas_fit.MyApplication
 
 @Composable
@@ -15,14 +13,7 @@ fun getViewModelFactory(defaultArgs: Bundle? = null): ViewModelFactory {
     val userRepository = application.userRepository
     val sportRepository = application.sportRepository
     val routineRepository = application.routineRepository
-    val exerciseRepository = application.exerciseRepository
-    return ViewModelFactory(
-        sessionManager,
-        userRepository,
-        sportRepository,
-        routineRepository,
-        exerciseRepository,
-        LocalSavedStateRegistryOwner.current,
-        defaultArgs
-    )
+    val cycleRepository = application.cycleRepository
+    val cycleExerciseRepository = application.cycleExerciseRepository
+    return ViewModelFactory(sessionManager, userRepository, sportRepository, routineRepository,cycleRepository,cycleExerciseRepository, LocalSavedStateRegistryOwner.current, defaultArgs)
 }

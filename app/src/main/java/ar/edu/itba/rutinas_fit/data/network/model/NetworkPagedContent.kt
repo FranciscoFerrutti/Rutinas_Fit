@@ -2,7 +2,7 @@ package ar.edu.itba.rutinas_fit.data.network.model
 
 import com.google.gson.annotations.SerializedName
 
-data class NetworkPagedContent<T>(
+class NetworkPagedContent<T> (
 
     @SerializedName("totalCount")
     var totalCount: Int,
@@ -11,11 +11,12 @@ data class NetworkPagedContent<T>(
     @SerializedName("direction")
     var direction: String? = null,
     @SerializedName("content")
-    var content: List<T> = arrayListOf(),
+    var content : List<T> = arrayListOf(),
     @SerializedName("size")
-    var size: Int,
+    var size : Int,
     @SerializedName("page")
-    var page: Int,
+    var page : Int,
     @SerializedName("isLastPage")
-    var isLastPage: Boolean
+    var isLastPage : Boolean
+
 )

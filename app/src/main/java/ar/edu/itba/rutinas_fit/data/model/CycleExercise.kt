@@ -1,23 +1,22 @@
 package ar.edu.itba.rutinas_fit.data.model
 
+import ar.edu.itba.rutinas_fit.data.network.model.NetworkCycle
 import ar.edu.itba.rutinas_fit.data.network.model.NetworkCycleExercise
+import com.google.gson.annotations.SerializedName
 
 data class CycleExercise(
-    var cycleId: Int?,
-    var exerciseId: Int?,
-    var order: Int,
-    var duration: Int,
-    var repetitions: Int,
-    var exercise: Exercise?
+    var order       : Int     ,
+    var duration    : Int     ,
+    var repetitions : Int     ,
+    var exercise    : Exercise
 ){
-    fun asNetworkModel(): NetworkCycleExercise {
+    fun asNetworkModel() : NetworkCycleExercise {
         return NetworkCycleExercise(
-            cycleId = cycleId,
-            exerciseId = exerciseId,
-            order = order,
-            duration = duration,
-            repetitions = repetitions,
-            exercise = exercise?.asNetworkModel()
+            order           =order           ,
+            duration        =duration        ,
+            repetitions     =repetitions     ,
+            exercise        =exercise
+
         )
     }
 }
