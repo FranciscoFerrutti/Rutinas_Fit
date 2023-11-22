@@ -72,14 +72,14 @@ import androidx.navigation.compose.rememberNavController
 import ar.edu.itba.rutinas_fit.data.model.Cycle
 import ar.edu.itba.rutinas_fit.data.model.CycleExercise
 import ar.edu.itba.rutinas_fit.data.model.Exercise
-import ar.edu.itba.rutinas_fit.data.model.RoutineCycle
+
 import ar.edu.itba.rutinas_fit.navigation.navigateToRest
 import ar.edu.itba.rutinas_fit.navigation.navigateToRoutine
-import ar.edu.itba.rutinas_fit.ui.canGetRoutineCycles
-import ar.edu.itba.rutinas_fit.ui.exercise.ExerciseViewModel
-import ar.edu.itba.rutinas_fit.ui.routine.RoutineViewModel
+
+
 import components.NavBar
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
+import java.util.Date
 
 
 @Composable
@@ -92,32 +92,32 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
     var mode by remember { mutableStateOf(false) }
 
     val routineCycles = listOf(
-        RoutineCycle(routineId = 1, id = 101, name = "Cycle 1", detail = "Details 1", type = "Type A", order = 1, repetitions = 1),
-        RoutineCycle(routineId = 1, id = 102, name = "Cycle 2", detail = "Details 2", type = "Type B", order = 2, repetitions = 1),
-        RoutineCycle(routineId = 1, id = 103, name = "Cycle 3", detail = "Details 3", type = "Type C", order = 3, repetitions = 1),
+        Cycle(id = 101, name = "Cycle 1", detail = "Details 1", type = "Type A", order = 1, repetitions = 1, metadata = null),
+        Cycle(id = 101, name = "Cycle 2", detail = "Details 2", type = "Type B", order = 2, repetitions = 1, metadata = null),
+        Cycle(id = 101, name = "Cycle 3", detail = "Details 3", type = "Type C", order = 3, repetitions = 1, metadata = null)
         // Add more objects as needed
     )
 
     val cycleExercisesList = listOf(
         // Cycle 1
         listOf(
-            CycleExercise(cycleId = 1, exerciseId = 1, order = 1, duration = 0, repetitions = 8, exercise = Exercise(id = 1, name = "Exercise A1", detail = "Details A1", type = "Type A", date = 20220101)),
-            CycleExercise(cycleId = 1, exerciseId = 2, order = 2, duration = 0, repetitions = 10, exercise = Exercise(id = 2, name = "Exercise A2", detail = "Details A2", type = "Type A", date = 20220102)),
-            CycleExercise(cycleId = 1, exerciseId = 3, order = 3, duration = 15, repetitions = 0, exercise = Exercise(id = 3, name = "Exercise A3", detail = "Details A3", type = "Type A", date = 20220103))
+            CycleExercise(order = 1, duration = 0, repetitions = 8, exercise = Exercise(id = 1, name = "Exercise A1", detail = "Details A1", type = "Type A", date = Date(), metadata = null)),
+            CycleExercise(order = 2, duration = 0, repetitions = 10, exercise = Exercise(id = 2, name = "Exercise A2", detail = "Details A2", type = "Type A", date = Date(), metadata = null)),
+            CycleExercise(order = 3, duration = 15, repetitions = 0, exercise = Exercise(id = 3, name = "Exercise A3", detail = "Details A3", type = "Type A", date = Date(), metadata = null))
         ),
 
         // Cycle 2
         listOf(
-            CycleExercise(cycleId = 2, exerciseId = 4, order = 1, duration = 0, repetitions = 14, exercise = Exercise(id = 4, name = "Exercise B1", detail = "Details B1", type = "Type B", date = 20220104)),
-            CycleExercise(cycleId = 2, exerciseId = 5, order = 2, duration = 0, repetitions = 5, exercise = Exercise(id = 5, name = "Exercise B2", detail = "Details B2", type = "Type B", date = 20220105)),
-            CycleExercise(cycleId = 2, exerciseId = 6, order = 3, duration = 0, repetitions = 5, exercise = Exercise(id = 6, name = "Exercise B3", detail = "Details B3", type = "Type B", date = 20220106))
+            CycleExercise(order = 1, duration = 0, repetitions = 8, exercise = Exercise(id = 4, name = "Exercise B1", detail = "Details B1", type = "Type B", date = Date(), metadata = null)),
+            CycleExercise(order = 2, duration = 0, repetitions = 10, exercise = Exercise(id = 5, name = "Exercise B2", detail = "Details B2", type = "Type B", date = Date(), metadata = null)),
+            CycleExercise(order = 3, duration = 15, repetitions = 0, exercise = Exercise(id = 6, name = "Exercise B3", detail = "Details B3", type = "Type B", date = Date(), metadata = null))
         ),
 
         // Cycle 3
         listOf(
-            CycleExercise(cycleId = 3, exerciseId = 7, order = 1, duration = 0, repetitions = 4, exercise = Exercise(id = 7, name = "Exercise C1", detail = "Details C1", type = "Type C", date = 20220107)),
-            CycleExercise(cycleId = 3, exerciseId = 8, order = 2, duration = 0, repetitions = 2, exercise = Exercise(id = 8, name = "Exercise C2", detail = "Details C2", type = "Type C", date = 20220108)),
-            CycleExercise(cycleId = 3, exerciseId = 9, order = 3, duration = 20, repetitions = 0, exercise = Exercise(id = 9, name = "Exercise C3", detail = "Details C3", type = "Type C", date = 20220109))
+            CycleExercise(order = 1, duration = 0, repetitions = 8, exercise = Exercise(id = 7, name = "Exercise C1", detail = "Details C1", type = "Type C", date = Date(), metadata = null)),
+            CycleExercise(order = 2, duration = 0, repetitions = 10, exercise = Exercise(id = 8, name = "Exercise C2", detail = "Details C2", type = "Type C", date = Date(), metadata = null)),
+            CycleExercise(order = 3, duration = 15, repetitions = 0, exercise = Exercise(id = 9, name = "Exercise C3", detail = "Details C3", type = "Type C", date = Date(), metadata = null))
         )
     )
 
@@ -150,7 +150,8 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
 //                        )
                         if (cycleExercisesList[currentCycleIndex][currentExerciseIndex].duration == 0) {
                             Text(
-                                text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].exercise?.name ?: "N/A",
+                                text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].exercise.name
+                                    ?: "N/A",
                                 color = Color.White,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 48.sp,
@@ -159,7 +160,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
 //                    .align(Alignment.Center)
                             )
                             Text(
-                                text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].exercise!!.detail,
+                                text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].exercise.detail,
                                 color = Color.White,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 22.sp,

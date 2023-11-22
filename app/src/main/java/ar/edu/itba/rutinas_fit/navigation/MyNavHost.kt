@@ -15,7 +15,7 @@ import ar.edu.itba.rutinas_fit.RoutineScreen
 import ar.edu.itba.rutinas_fit.SearchScreen
 import ar.edu.itba.rutinas_fit.SettingsScreen
 import ar.edu.itba.rutinas_fit.UserProfileScreen
-import ar.edu.itba.rutinas_fit.ui.routine.RoutineViewModel
+
 
 @Composable
 fun MyNavHost(

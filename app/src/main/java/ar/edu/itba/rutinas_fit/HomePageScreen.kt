@@ -200,7 +200,7 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
                         horizontalArrangement = Arrangement.End
                     ) {
                         // Share icon
-                        if(routine.isPublic) {
+                        if(routine.isPublic!!) {
                             Icon(
                                 imageVector = Icons.Filled.Share,
                                 contentDescription = null,
