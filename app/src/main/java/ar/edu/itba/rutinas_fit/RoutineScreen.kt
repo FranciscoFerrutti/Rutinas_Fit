@@ -227,12 +227,14 @@ fun RoutineScreen(navController : NavController, routineId : String) {
                         textAlign = TextAlign.Center
 
                     )
-                    Button(onClick = { },modifier = Modifier
+                    Button(onClick = {
+                                     navigateToExercise(navController)
+                    },modifier = Modifier
                         .width(140.dp)
                         .height(50.dp)
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 5.dp), colors = ButtonDefaults.buttonColors(containerColor = Color(64, 117, 60))){
-                        Text(text = "Ejecutar", color = Color.White,
+                        Text(text = stringResource(R.string.execute), color = Color.White,
                             fontFamily = FontFamily.SansSerif,
                             fontSize = 20.sp)
                     }

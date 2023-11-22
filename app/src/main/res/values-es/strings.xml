@@ -25,4 +25,6 @@
     <string name="favorite">Rutinas Favoritas</string>
     <string name="language">Lenguaje</string>
     <string name="darkmode">Modo Oscuro</string>
+    <string name="execute">Ejecutar</string>
+
 </resources>
