@@ -8,7 +8,6 @@ data class Exercise(
     var detail: String,
     var type: String,
     var date: Int?,
-    var repetitions: Int = 1
     // do we need metadata?
 ) {
     fun asNetworkModel(): NetworkExercise {
