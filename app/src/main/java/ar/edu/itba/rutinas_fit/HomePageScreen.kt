@@ -190,16 +190,19 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
                         horizontalArrangement = Arrangement.End
                     ) {
                         // Share icon
-                        Icon(
-                            imageVector = Icons.Filled.Share,
-                            contentDescription = null,
-                            tint = Color.White,
-                            modifier = Modifier
-                                .size(24.dp)
-                                .clickable {
-                                    // TODO: Share routine
-                                }
-                        )
+                        if(routine.isPublic) {
+                            Icon(
+                                imageVector = Icons.Filled.Share,
+                                contentDescription = null,
+                                tint = Color.White,
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .clickable {
+                                        // TODO: Share routine
+                                    }
+                            )
+                        }
+
 
                         // Favorite star
                         Icon(
@@ -290,7 +293,7 @@ fun HomePageScreen(navController: NavController) {
             onOptionSelected = { selectedOption = it }
         )
         val routines = listOf(
-            Routine(name = "Routine 1", detail = "Details", date = 20220101, isPublic = true, difficulty = "Hard"),
+            Routine(name = "Routine 1", detail = "Details", date = 20220101, isPublic = false, difficulty = "Hard"),
             Routine(name = "Routine 2", detail = "Details", date = 20220102, isPublic = true, difficulty = "Medium"),
             Routine(name = "Routine 3", detail = "Details", date = 20220103, isPublic = true, difficulty = "Easy")
         )
