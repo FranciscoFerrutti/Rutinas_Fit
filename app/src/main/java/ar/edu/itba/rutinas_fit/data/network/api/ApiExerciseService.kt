@@ -22,4 +22,15 @@ interface ApiExerciseService {
 
     @DELETE("exercises/{exerciseId}")
     suspend fun deleteExercise(@Path("exerciseId") exerciseId: Int): Response<Unit>
+
+    // we add the cycleExercises api's endpoints here
+    @GET("cycles/{cycleId}/exercises")
+    suspend fun getCycleExercises(@Path("cycleId") cycleId: Int): Response<NetworkPagedContent<NetworkExercise>>
+
+    @GET("cycles/{cycleId}/exercises/{exerciseId}")
+    suspend fun getCycleExercise(
+        @Path("cycleId") cycleId: Int,
+        @Path("exerciseId") exerciseId: Int
+    ): Response<NetworkExercise>
+
 }

@@ -51,6 +51,18 @@ class ExerciseViewModel(
             currentExercise = null,
             exercises = null) }
     )
+
+    // we add the cycleExercises api's endpoints here
+
+    fun getCycleExercises(cycleId: Int) = runOnViewModelScope(
+        { exerciseRepository.getCycleExercises(cycleId) },
+        { state, response -> state.copy(exercises = response) }
+    )
+
+    fun getCycleExercise(cycleId: Int, exerciseId: Int) = runOnViewModelScope(
+        { exerciseRepository.getCycleExercise(cycleId, exerciseId) },
+        { state, response -> state.copy(currentExercise = response) }
+    )
     private fun <R> runOnViewModelScope(
         block: suspend () -> R,
         updateState: (MainUiState, R) -> MainUiState

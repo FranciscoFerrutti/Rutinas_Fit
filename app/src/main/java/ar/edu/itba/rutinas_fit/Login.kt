@@ -26,18 +26,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import ar.edu.itba.rutinas_fit.navigation.navigateToHome
+import ar.edu.itba.rutinas_fit.ui.canLogin
+import ar.edu.itba.rutinas_fit.ui.user.UserViewModel
+import ar.edu.itba.rutinas_fit.util.ViewModelFactory
+import ar.edu.itba.rutinas_fit.util.getViewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginRegisterScreen(navController: NavController) {
+fun LoginRegisterScreen(navController: NavController, userViewModel: UserViewModel = viewModel(factory = getViewModelFactory())) {
     var isLoginMode by remember { mutableStateOf(true) }
     var username by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
-
+    val uiState = userViewModel.uiState
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -98,7 +103,12 @@ fun LoginRegisterScreen(navController: NavController) {
         Button(
             onClick = {
                 if (isLoginMode) {
-                    handleLogin(navController, username, password)
+                    if(uiState.canLogin){
+                        userViewModel.login(username, password)
+                        navigateToHome(navController)
+                    } else {
+                        userViewModel.logout()
+                    }
                 } else {
                     handleRegister(username, email, password, confirmPassword)
                 }

@@ -36,4 +36,17 @@ class ExerciseRemoteDataSource(
             apiExerciseService.deleteExercise(sportId)
         }
     }
+
+    // we add the cycleExercises api's endpoints here
+    suspend fun getCycleExercises(cycleId: Int): NetworkPagedContent<NetworkExercise> {
+        return handleApiResponse {
+            apiExerciseService.getCycleExercises(cycleId)
+        }
+    }
+
+    suspend fun getCycleExercise(cycleId: Int, exerciseId: Int): NetworkExercise {
+        return handleApiResponse {
+            apiExerciseService.getCycleExercise(cycleId, exerciseId)
+        }
+    }
 }

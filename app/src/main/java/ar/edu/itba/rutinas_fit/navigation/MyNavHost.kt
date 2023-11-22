@@ -2,7 +2,9 @@ package ar.edu.itba.rutinas_fit.navigation
 
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,12 +14,13 @@ import ar.edu.itba.rutinas_fit.LoginRegisterScreen
 import ar.edu.itba.rutinas_fit.R
 import ar.edu.itba.rutinas_fit.RestScreen
 import ar.edu.itba.rutinas_fit.RoutineScreen
+import ar.edu.itba.rutinas_fit.UserProfileScreen
 
 @Composable
 fun MyNavHost(
-    startDestination: String = "home"
+    navController: NavHostController = rememberNavController(),
+    startDestination: String = Screen.Home.route
 ) {
-    var navController = rememberNavController()
     NavHost(
         navController = navController,
         startDestination = startDestination
@@ -49,22 +52,28 @@ fun MyNavHost(
 
             ExerciseDetailsScreen(exerciseName, difficulty, description, steps)
             //ProfileScreen()
-        }*/
+        }
         composable(Screen.Favorite.route) {
             //ListScreen()
-        }
+        }*/
         composable(Screen.Routine.route) {
             RoutineScreen(navController)
         }
-        composable(Screen.Login.route) {
-            LoginRegisterScreen(navController)
+        composable(Screen.Profile.route){
+            UserProfileScreen(navController)
         }
+        composable(Screen.Search.route){
+            LoginRegisterScreen(navController = navController)
+        }
+        composable(Screen.Login.route) {
+            LoginRegisterScreen(navController = navController)
+        }/*
         composable(Screen.Exercise.route) {
             ExerciseScreen(navController)
         }
         composable(Screen.Rest.route) {
             RestScreen()
-        }
+        }*/
 
     }
 }
@@ -92,4 +101,8 @@ fun navigateToSearch(navController : NavController){
 
 fun navigateToProfile(navController: NavController) {
     navController.navigate(Screen.Profile.route)
+}
+
+fun navigateToLogin(navController: NavController) {
+    navController.navigate(Screen.Login.route)
 }

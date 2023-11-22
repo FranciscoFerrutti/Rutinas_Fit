@@ -38,4 +38,5 @@ val MainUiState.canGetCurrentExercise: Boolean get() = isAuthenticated && curren
 val MainUiState.canAddExercise: Boolean get() = isAuthenticated && currentExercise == null
 val MainUiState.canModifyExercise: Boolean get() = isAuthenticated && currentExercise != null
 val MainUiState.canDeleteExercise: Boolean get() = canModifyExercise
-
+val MainUiState.canGetCycleExercises: Boolean get() = isAuthenticated && currentRoutine != null
+val MainUiState.canGetRoutineCycles: Boolean get() = isAuthenticated && currentRoutine != null

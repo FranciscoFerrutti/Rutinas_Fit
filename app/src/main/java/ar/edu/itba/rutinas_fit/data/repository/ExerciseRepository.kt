@@ -52,4 +52,15 @@ class ExerciseRepository(
         }
     }
 
+    // we add the cycleExercises api's endpoints here
+
+    suspend fun getCycleExercises(cycleId: Int): List<Exercise> {
+        val result = remoteDataSource.getCycleExercises(cycleId)
+        return result.content.map { it.asModel() }
+    }
+
+    suspend fun getCycleExercise(cycleId: Int, exerciseId: Int): Exercise {
+        return remoteDataSource.getCycleExercise(cycleId, exerciseId).asModel()
+    }
+
 }

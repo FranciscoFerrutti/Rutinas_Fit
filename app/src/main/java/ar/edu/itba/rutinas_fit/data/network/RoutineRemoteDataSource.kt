@@ -36,4 +36,17 @@ class RoutineRemoteDataSource(
             apiRoutineService.deleteRoutine(sportId)
         }
     }
+
+    // we add the cycleRoutines api's endpoints here
+    suspend fun getCycleRoutines(routineId: Int): NetworkPagedContent<NetworkRoutine> {
+        return handleApiResponse {
+            apiRoutineService.getCycleRoutines(routineId)
+        }
+    }
+
+    suspend fun getCycleRoutine(routineId: Int, cycleId: Int): NetworkRoutine {
+        return handleApiResponse {
+            apiRoutineService.getCycleRoutine(routineId, cycleId)
+        }
+    }
 }

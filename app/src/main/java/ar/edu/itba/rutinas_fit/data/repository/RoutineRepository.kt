@@ -51,5 +51,16 @@ class RoutineRepository(
             this.routines = emptyList()
         }
     }
+
+    // we add the cycleRoutines api's endpoints here
+
+    suspend fun getCycleRoutines(routineId: Int): List<Routine> {
+        val result = remoteDataSource.getCycleRoutines(routineId)
+        return result.content.map { it.asModel() }
+    }
+
+    suspend fun getCycleRoutine(routineId: Int, cycleId: Int): Routine {
+        return remoteDataSource.getCycleRoutine(routineId, cycleId).asModel()
+    }
     
 }

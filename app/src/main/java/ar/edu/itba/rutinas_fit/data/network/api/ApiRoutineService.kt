@@ -24,4 +24,14 @@ interface ApiRoutineService {
 
     @DELETE("routines/{routineId}")
     suspend fun deleteRoutine(@Path("routineId") routineId: Int): Response<Unit>
+
+    // we add the cycleRoutines api's endpoints here
+    @GET("routines/{routineId}/cycles")
+    suspend fun getCycleRoutines(@Path("routineId") routineId: Int): Response<NetworkPagedContent<NetworkRoutine>>
+
+    @GET("routines/{routineId}/cycles/{cycleId}")
+    suspend fun getCycleRoutine(
+        @Path("routineId") routineId: Int,
+        @Path("cycleId") cycleId: Int
+    ): Response<NetworkRoutine>
 }

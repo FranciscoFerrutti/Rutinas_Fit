@@ -56,6 +56,18 @@ class RoutineViewModel(
             routines = null) }
     )
 
+    // we add the cycleRoutines api's endpoints here
+
+    fun getCycleRoutines(routineId: Int) = runOnViewModelScope(
+        { routineRepository.getCycleRoutines(routineId) },
+        { state, response -> state.copy(routines = response) }
+    )
+
+    fun getCycleRoutine(routineId: Int, cycleId: Int) = runOnViewModelScope(
+        { routineRepository.getCycleRoutine(routineId, cycleId) },
+        { state, response -> state.copy(currentRoutine = response) }
+    )
+
     private fun <R> runOnViewModelScope(
         block: suspend () -> R,
         updateState: (MainUiState, R) -> MainUiState

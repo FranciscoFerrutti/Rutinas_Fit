@@ -12,4 +12,7 @@
     <string name="dismiss">DESCARTAR</string>
     <string name="add_routine">AÑADIR RUTINA</string>
     <string name="get_current_user_routines">RUTINAS DEL USUARIO ACTUAL</string>
+    <string name="sign_out">CERRAR SESIÓN</string>
+    <string name="delete_account">BORRAR CUENTA</string>
+    <string name="save_changes">GUARDAR CAMBIOS</string>
 </resources>

@@ -21,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -40,18 +41,39 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import ar.edu.itba.rutinas_fit.navigation.navigateToLogin
+import ar.edu.itba.rutinas_fit.ui.canLogout
+import ar.edu.itba.rutinas_fit.ui.user.UserViewModel
+import ar.edu.itba.rutinas_fit.util.getViewModelFactory
 import components.NavBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UserProfileScreen(navController: NavController) {
-    var firstName by remember { mutableStateOf("") }
-    var lastName by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var gender by remember { mutableStateOf("") }
-    var phone by remember { mutableStateOf("") }
-    var avatarUrl by remember { mutableStateOf("") }
+fun UserProfileScreen(navController: NavController, userViewModel: UserViewModel = viewModel(factory = getViewModelFactory())) {
+    //var firstName by remember { mutableStateOf("") }
+    // Get the firstName from the logged in user, by using the UserViewModel
+    userViewModel.getCurrentUser() // WE NEED to call getCurrentUser to fetch the data
+    val uiState = userViewModel.uiState
+    var firstName = uiState.currentUser?.let {
+        it.firstName
+    } ?: "No user logged in"
+    var lastName = uiState.currentUser?.let {
+        it.lastName
+    } ?: "No user logged in"
+    var email = uiState.currentUser?.let {
+        it.email
+    } ?: "No user logged in"
+    var gender = uiState.currentUser?.let {
+        it.email
+    } ?: "No user logged in"
+    var phone = uiState.currentUser?.let {
+        it.phone
+    } ?: "No user logged in"
+    var avatarUrl = uiState.currentUser?.let {
+        it.avatarUrl
+    } ?: "No user logged in"
 
     val textFieldColors = TextFieldDefaults.outlinedTextFieldColors(
         cursorColor = Color.White,
@@ -119,7 +141,8 @@ fun UserProfileScreen(navController: NavController) {
                 onValueChange = { firstName = it },
                 label = { Text("Nombre", color = Color.White) },
                 modifier = Modifier.fillMaxWidth(),
-                colors = textFieldColors
+                colors = textFieldColors,
+                readOnly = true,
             )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
@@ -127,7 +150,8 @@ fun UserProfileScreen(navController: NavController) {
                 onValueChange = { lastName = it },
                 label = { Text("Apellido", color = Color.White) },
                 modifier = Modifier.fillMaxWidth(),
-                colors = textFieldColors
+                colors = textFieldColors,
+                readOnly = true,
             )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
@@ -135,7 +159,8 @@ fun UserProfileScreen(navController: NavController) {
                 onValueChange = { email = it },
                 label = { Text("Email", color = Color.White) },
                 modifier = Modifier.fillMaxWidth(),
-                colors = textFieldColors
+                colors = textFieldColors,
+                readOnly = true,
             )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
@@ -143,17 +168,9 @@ fun UserProfileScreen(navController: NavController) {
                 onValueChange = { gender = it },
                 label = { Text("Género", color = Color.White) },
                 modifier = Modifier.fillMaxWidth(),
-                colors = textFieldColors
+                colors = textFieldColors,
+                readOnly = true,
             )
-            Spacer(modifier = Modifier.height(8.dp))
-            OutlinedTextField(
-                value = phone,
-                onValueChange = { phone = it },
-                label = { Text("Teléfono", color = Color.White) },
-                modifier = Modifier.fillMaxWidth(),
-                colors = textFieldColors
-            )
-
             Spacer(modifier = Modifier.height(8.dp))
 
             Row (
@@ -172,7 +189,10 @@ fun UserProfileScreen(navController: NavController) {
                 }
                 Button(
                     onClick = {
-                        // TODO: Implementar lógica para cerrar sesión
+                        if(uiState.canLogout){
+                            userViewModel.logout()
+                            navigateToLogin(navController)
+                        }
                     },
                     colors = ButtonDefaults.buttonColors(Color(0xFF388E3C))
                 ) {
