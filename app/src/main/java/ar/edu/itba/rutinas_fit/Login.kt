@@ -28,42 +28,63 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import ar.edu.itba.rutinas_fit.navigation.navigateToHome
+import androidx.compose.ui.tooling.preview.Preview
 import ar.edu.itba.rutinas_fit.ui.canLogin
 import ar.edu.itba.rutinas_fit.ui.user.UserViewModel
 import ar.edu.itba.rutinas_fit.util.ViewModelFactory
 import ar.edu.itba.rutinas_fit.util.getViewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+fun LoginRegisterScreenPreview() {
+    // Create a NavController instance for preview
+    val navController = rememberNavController()
+    LoginRegisterScreen(navController)
+}
+
 @Composable
 fun LoginRegisterScreen(navController: NavController, userViewModel: UserViewModel = viewModel(factory = getViewModelFactory())) {
     var isLoginMode by remember { mutableStateOf(true) }
+    var name by remember { mutableStateOf("") }
     var username by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
+    var dateOfBirth by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     val uiState = userViewModel.uiState
+    var errorMessage by remember { mutableStateOf("") }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(10, 10, 10))
+            .background(Color(245, 245, 245))
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = if (isLoginMode) "Login to Rutinas Fit" else "Register for Rutinas Fit",
-            color = Color.White,
+            text = if (isLoginMode) "Rutinas Fit" else "Rutinas Fit",
+            color = Color.Black,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
 
         Spacer(modifier = Modifier.height(16.dp))
-
+        if (!isLoginMode) {
+            OutlinedTextField(
+                value = name,
+                onValueChange = { name = it },
+                label = { Text("Nombre") },
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
         OutlinedTextField(
             value = username,
             onValueChange = { username = it },
-            label = { Text("Username") },
+            label = { Text("Nombre de usuario") },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -73,16 +94,22 @@ fun LoginRegisterScreen(navController: NavController, userViewModel: UserViewMod
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text("Email") },
+                label = { Text("Mail") },
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(8.dp))
+            OutlinedTextField(
+                value = dateOfBirth,
+                onValueChange = { dateOfBirth = it },
+                label = { Text("Fecha de nacimiento") },
+                modifier = Modifier.fillMaxWidth()
+            )
         }
 
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Password") },
+            label = { Text("Contraseña") },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth()
         )
@@ -92,7 +119,7 @@ fun LoginRegisterScreen(navController: NavController, userViewModel: UserViewMod
             OutlinedTextField(
                 value = confirmPassword,
                 onValueChange = { confirmPassword = it },
-                label = { Text("Confirm Password") },
+                label = { Text("Confirmar Contraseña") },
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth()
             )
@@ -102,6 +129,19 @@ fun LoginRegisterScreen(navController: NavController, userViewModel: UserViewMod
 
         Button(
             onClick = {
+                // Input validation checks
+                if (email.isNotBlank() && !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    errorMessage = "Correo inválido"
+                    return@Button
+                }
+
+                if (password != confirmPassword) {
+                    errorMessage = "Las contraseñas no coinciden"
+                    return@Button
+                }
+
+
+                // Continue with registration or login based on the mode
                 if (isLoginMode) {
                     if(uiState.canLogin){
                         userViewModel.login(username, password)
@@ -110,12 +150,20 @@ fun LoginRegisterScreen(navController: NavController, userViewModel: UserViewMod
                         userViewModel.logout()
                     }
                 } else {
-                    handleRegister(username, email, password, confirmPassword)
+                    handleRegister(
+                        navController = navController,
+                        name = name,
+                        username = username,
+                        email = email,
+                        dateOfBirth = dateOfBirth,
+                        password = password,
+                    )
                 }
             },
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Green),
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(if (isLoginMode) "Login" else "Register")
+            Text(if (isLoginMode) "Inicia sesión" else "Regístrate")
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -124,17 +172,33 @@ fun LoginRegisterScreen(navController: NavController, userViewModel: UserViewMod
             onClick = { isLoginMode = !isLoginMode },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(if (isLoginMode) "Don't have an account? Register here" else "Already have an account? Login here")
+            Text(if (isLoginMode) "¿No tienes una cuenta? Regístrate" else "¿Ya tienes una cuenta? Inicia sesión")
+        }
+
+        // Display error message
+        if (errorMessage.isNotBlank()) {
+            Text(
+                text = errorMessage,
+                color = Color.Red,
+                fontSize = 14.sp,
+                modifier = Modifier.padding(top = 8.dp)
+            )
         }
     }
 }
 
-
-private fun handleLogin(navController: NavController,username: String, password: String) {
+private fun handleLogin(navController: NavController, username: String, password: String) {
     // TODO: Implement login logic here
     navigateToHome(navController)
 }
 
-private fun handleRegister(username: String, email: String, password: String, confirmPassword: String) {
+private fun handleRegister(
+    navController: NavController,
+    name: String,
+    username: String,
+    email: String,
+    dateOfBirth: String,
+    password: String,
+) {
     // TODO: Implement register logic here
 }
