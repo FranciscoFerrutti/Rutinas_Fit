@@ -128,7 +128,7 @@ fun LoginRegisterScreen(navController: NavController, mainViewModel: MainViewMod
 
         Button(
             onClick = {
-                mainViewModel.login(username, password)
+
                 // Input validation checks
                 if (email.isNotBlank() && !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     errorMessage = "Correo inválido"
@@ -143,8 +143,9 @@ fun LoginRegisterScreen(navController: NavController, mainViewModel: MainViewMod
 
                 // Continue with registration or login based on the mode
                 if (isLoginMode) {
-                    mainViewModel.login(username, password)
-                    navigateToHome(navController)
+                    mainViewModel.login(username, password, navController)
+
+                    // navigateToHome(navController)
                 } else {
                     handleRegister(
                         navController = navController,
