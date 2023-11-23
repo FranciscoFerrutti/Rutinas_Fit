@@ -19,14 +19,17 @@ import ar.edu.itba.rutinas_fit.RoutineScreen
 import ar.edu.itba.rutinas_fit.SearchScreen
 import ar.edu.itba.rutinas_fit.SettingsScreen
 import ar.edu.itba.rutinas_fit.UserProfileScreen
+import ar.edu.itba.rutinas_fit.ui.theme.ThemeViewModel
 import ar.edu.itba.rutinas_fit.classes.MainViewModel
 import ar.edu.itba.rutinas_fit.data.model.Routine
 import ar.edu.itba.rutinas_fit.util.getViewModelFactory
 
 
+
 @Composable
 fun MyNavHost(
     startDestination: String = "home",
+    themeViewModel: ThemeViewModel,
     navController: NavHostController,
     mainViewModel: MainViewModel = viewModel(factory = getViewModelFactory())
 ) {
@@ -87,10 +90,9 @@ fun MyNavHost(
             UserProfileScreen(navController)
         }
         composable(Screen.Settings.route) {
-            SettingsScreen(navController)
+            SettingsScreen(navController, themeViewModel)
         }
         composable(Screen.Review.route){
-            Log.d("In NavHost", mainViewModel.uiState.currentRoutine?.id.toString())
             ReviewScreen(navController, mainViewModel)
         }
 

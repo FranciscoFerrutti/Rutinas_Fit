@@ -83,7 +83,6 @@ fun RestScreen() {
         clockSize = 200.dp
         paddin = 5.dp
     }
-    Rutinas_FitTheme {
         Box(modifier = Modifier.fillMaxSize()) {
             Column (modifier = Modifier.align(Alignment.TopCenter),
                 verticalArrangement = Arrangement.Top,
@@ -94,7 +93,7 @@ fun RestScreen() {
                     .fillMaxHeight(0.15f))
                 Text(
                     text = stringResource(R.string.resttimerstart),
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onBackground,
                     fontFamily = FontFamily.SansSerif,
                     fontSize = 30.sp,
                     textAlign = TextAlign.Center
@@ -118,12 +117,12 @@ fun RestScreen() {
                     modifier = Modifier.size(clockSize).padding(top=10.dp)
                         .border(
                         width = 2.dp,
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onBackground,
                         shape = CircleShape
                     )){
                     Text(
                         text = countdownSeconds.toString(),
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontFamily = FontFamily.Monospace,
                         fontSize = 108.sp,
                         modifier = Modifier
@@ -138,7 +137,7 @@ fun RestScreen() {
                         .height(60.dp)
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 10.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(64, 117, 60))
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                 ) {
                     Text(
                         text = "Siguiente", color = Color.White,
@@ -148,6 +147,5 @@ fun RestScreen() {
                 }
             }
         }
-    }
 }
 

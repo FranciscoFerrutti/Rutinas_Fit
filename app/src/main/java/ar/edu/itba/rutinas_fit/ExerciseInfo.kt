@@ -54,7 +54,7 @@ fun ExerciseDetailsScreen(
         // Exercise Name
         Text(
             text = exerciseName,
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onBackground,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
@@ -71,7 +71,7 @@ fun ExerciseDetailsScreen(
         // Description
         Text(
             text = "Descripción",
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onBackground,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
@@ -92,7 +92,7 @@ fun ExerciseDetailsScreen(
         // "Cómo hacerlo"
         Text(
             text = "Cómo hacerlo",
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onBackground,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
@@ -119,7 +119,7 @@ fun ExerciseStepItem(step: ExerciseStep) {
         Column {
             Text(
                 text = step.title,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )

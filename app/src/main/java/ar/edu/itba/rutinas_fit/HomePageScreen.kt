@@ -1,5 +1,6 @@
 package ar.edu.itba.rutinas_fit
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.content.Intent
 import androidx.compose.foundation.Image
@@ -38,6 +39,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -89,7 +91,16 @@ fun MainHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
         modifier = Modifier
             .fillMaxWidth()
             .height(Dp(70f))
-            .background(Color(30, 61, 29))
+            .background(
+                brush = Brush.linearGradient(
+                    colors = listOf(
+                        MaterialTheme.colorScheme.background,
+                        MaterialTheme.colorScheme.primary
+                    ),
+                    start = Offset(x = 0f, y = 0f),
+                    end = Offset.Infinite,
+                )
+            )
             .zIndex(1f)
     ){
         Row (modifier = Modifier
@@ -97,7 +108,7 @@ fun MainHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
             .align(Alignment.CenterStart), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly){
             Text(
                 text = stringResource(id = R.string.myroutines),
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontFamily = FontFamily.SansSerif,
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
@@ -111,7 +122,7 @@ fun MainHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
                     Text(
 
                         text = stringResource(id = R.string.orderby),
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontFamily = FontFamily.SansSerif,
                         fontSize = 24.sp,
                     )
@@ -121,7 +132,7 @@ fun MainHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
                         modifier = Modifier
                             .zIndex(3f)
                             .size(44.dp),
-                        tint = Color.White
+                        tint = MaterialTheme.colorScheme.onBackground,
                     )
                 }
 
@@ -153,7 +164,7 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
     var isFavorite = favInitialStatus
     Rutinas_FitTheme {
 
-        Box(
+    Box(
             modifier = Modifier
                 .background(color = Color.Transparent)
                 .height(height = Dp(150f))
@@ -166,14 +177,14 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
             ) {
             Box(
                 modifier = Modifier
-                    .background(Color(0.10f, 0.10f, 0.10f, alpha = 0.7f))
+                    .background(MaterialTheme.colorScheme.surface)
                     .fillMaxHeight(0.35f)
                     .fillMaxWidth()
                     .zIndex(2f)
             ) {
                 Text(
                     text = routine.name + " - " + routine.id,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onBackground,
                     fontFamily = FontFamily.SansSerif,
                     fontSize = 18.sp,
                     modifier = Modifier
@@ -186,7 +197,7 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
                         ) else it.toString()
                     }
                         ?: "",
-                    color = Color(174, 255, 0),
+                    color = MaterialTheme.colorScheme.primary,
                     fontFamily = FontFamily.SansSerif,
                     fontSize = 16.sp,
                     modifier = Modifier
@@ -231,6 +242,16 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
 
                         }
 
+                        Icon(
+                            imageVector = Icons.Filled.Share,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onBackground,
+                            modifier = Modifier
+                                .size(24.dp)
+                                .clickable {
+                                    // TODO: Share routine
+                                }
+                        )
 
                         // Favorite star
                         Icon(
@@ -307,6 +328,7 @@ fun Routines(navController: NavController, routines : List<Routine>, selectedOpt
     }
 }
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun HomePageScreen(navController: NavController, mainViewModel: MainViewModel = viewModel(factory = getViewModelFactory())) {
     var selectedOption by remember { mutableStateOf("") }

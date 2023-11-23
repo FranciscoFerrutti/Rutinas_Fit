@@ -17,6 +17,7 @@ import ar.edu.itba.rutinas_fit.ui.theme.Rutinas_FitTheme
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 //import androidx.compose.foundation.layout.ColumnScopeInstance.weight
 
@@ -31,6 +32,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
@@ -57,6 +59,7 @@ import androidx.navigation.compose.rememberNavController
 import ar.edu.itba.rutinas_fit.classes.MainViewModel
 import ar.edu.itba.rutinas_fit.navigation.MyNavHost
 import ar.edu.itba.rutinas_fit.navigation.Screen
+import ar.edu.itba.rutinas_fit.ui.theme.ThemeViewModel
 
 import ar.edu.itba.rutinas_fit.util.getViewModelFactory
 @Composable
@@ -84,15 +87,24 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Rutinas_FitTheme {
-                // A surface container using the 'background' color from the theme
+            val themeViewModel = viewModel<ThemeViewModel>()
+            val isDark = isSystemInDarkTheme()
+
+            LaunchedEffect(key1 = Unit) {
+                themeViewModel.initializeTheme(isDark)
+            }
+
+            Rutinas_FitTheme(
+                themeViewModel = themeViewModel
+            ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = Color(10, 10, 10)
+                    color = MaterialTheme.colorScheme.background
                 ) {
 
                     val context = LocalContext.current
                     val navController = rememberNavController()
+
                     val mainViewModel = viewModel<MainViewModel>(factory = getViewModelFactory())
 
                     // Check if the activity was started by a deep link
@@ -100,15 +112,15 @@ class MainActivity : ComponentActivity() {
                         val uri = intent.data
                         if (uri != null) {
                             // Extract data from the URI and navigate to the appropriate screen
-                            MyNavHost(navController = navController, startDestination = Screen.Home.route)
+                            MyNavHost(navController = navController, themeViewModel = themeViewModel, startDestination = Screen.Home.route)
                             handleDeepLink(uri, navController)
                         }
                     } else {
                         // If not a deep link, check the authentication state
                         if (!mainViewModel.uiState.isAuthenticated) {
-                            MyNavHost(navController = navController,startDestination = Screen.Login.route)
+                            MyNavHost(navController = navController, themeViewModel = themeViewModel, startDestination = Screen.Login.route)
                         } else {
-                            MyNavHost(navController = navController,startDestination = Screen.Home.route)
+                            MyNavHost(navController = navController, themeViewModel = themeViewModel, startDestination = Screen.Home.route)
                         }
                     }
                 }
