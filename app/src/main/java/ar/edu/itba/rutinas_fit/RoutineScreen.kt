@@ -70,7 +70,7 @@ import ar.edu.itba.rutinas_fit.data.model.Exercise
 import ar.edu.itba.rutinas_fit.data.model.Routine
 
 import ar.edu.itba.rutinas_fit.navigation.Screen.Exercise.title
-import ar.edu.itba.rutinas_fit.navigation.navigateToExercise
+//import ar.edu.itba.rutinas_fit.navigation.navigateToExercise
 import components.NavBar
 import java.util.Date
 

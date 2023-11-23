@@ -73,8 +73,8 @@ import ar.edu.itba.rutinas_fit.data.model.Cycle
 import ar.edu.itba.rutinas_fit.data.model.CycleExercise
 import ar.edu.itba.rutinas_fit.data.model.Exercise
 
-import ar.edu.itba.rutinas_fit.navigation.navigateToRest
-import ar.edu.itba.rutinas_fit.navigation.navigateToRoutine
+//import ar.edu.itba.rutinas_fit.navigation.navigateToRest
+//import ar.edu.itba.rutinas_fit.navigation.navigateToRoutine
 
 
 import components.NavBar

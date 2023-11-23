@@ -1,5 +1,6 @@
 package ar.edu.itba.rutinas_fit
 
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -49,6 +50,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -65,7 +67,7 @@ import ar.edu.itba.rutinas_fit.classes.MainViewModel
 import ar.edu.itba.rutinas_fit.data.model.Routine
 
 import ar.edu.itba.rutinas_fit.navigation.Screen
-import ar.edu.itba.rutinas_fit.navigation.navigateToRoutine
+//import ar.edu.itba.rutinas_fit.navigation.navigateToRoutine
 import ar.edu.itba.rutinas_fit.ui.theme.Rutinas_FitTheme
 import ar.edu.itba.rutinas_fit.util.getViewModelFactory
 import components.NavBar
@@ -201,6 +203,15 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
                         horizontalArrangement = Arrangement.End
                     ) {
                         // Share icon
+                        val sendIntent: Intent = Intent().apply {
+                            action = Intent.ACTION_SEND
+                            putExtra(Intent.EXTRA_TEXT, "https://www.rutinasfit.com/routine/"+routine.id)
+                            type = "text/plain"
+                        }
+                        val shareIntent = Intent.createChooser(sendIntent, null)
+                        val context = LocalContext.current
+
+
                         if(routine.isPublic!!) {
                             Icon(
                                 imageVector = Icons.Filled.Share,
@@ -209,9 +220,11 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
                                 modifier = Modifier
                                     .size(24.dp)
                                     .clickable {
-                                        // TODO: Share routine
+                                        context.startActivity(shareIntent)
                                     }
                             )
+
+
                         }
 
 

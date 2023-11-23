@@ -3,6 +3,7 @@ package ar.edu.itba.rutinas_fit.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -19,11 +20,11 @@ import ar.edu.itba.rutinas_fit.UserProfileScreen
 
 @Composable
 fun MyNavHost(
-    startDestination: String = "home"
+    startDestination: String = "home",
+    navController: NavHostController
 ) {
-    var navController = rememberNavController()
     NavHost(
-        navController = navController,
+        navController = navController ,
         startDestination = startDestination
     ) {
         composable(Screen.Home.route) {
@@ -87,35 +88,35 @@ fun MyNavHost(
 
 
 
-fun navigateToRoutine(navController : NavController, routineId : String){
-    navController.navigate("${Screen.Routine.route}/$routineId")
-}
-fun navigateToFavorite(navController : NavController){
-    navController.navigate(Screen.Favorite.route)
-}
-
-fun navigateToSettings(navController : NavController){
-    navController.navigate(Screen.Settings.route)
-}
-
-fun navigateToHome(navController : NavController){
-    navController.navigate(Screen.Home.route)
-}
-
-fun navigateToExercise(navController : NavController,routineId : String){
-    navController.navigate("${Screen.Exercise.route}/$routineId")
-}
-
-fun navigateToRest(navController : NavController){
-    navController.navigate(Screen.Rest.route)
-}
-fun navigateToSearch(navController : NavController){
-    navController.navigate(Screen.Search.route)
-}
-
-fun navigateToProfile(navController: NavController) {
-    navController.navigate(Screen.Profile.route)
-}
-fun navigateToLogin(navController: NavController) {
-    navController.navigate(Screen.Login.route)
-}
+//fun navigateToRoutine(navController : NavController, routineId : String){
+//    navController.navigate("${Screen.Routine.route}/$routineId")
+//}
+//fun navigateToFavorite(navController : NavController){
+//    navController.navigate(Screen.Favorite.route)
+//}
+//
+//fun navigateToSettings(navController : NavController){
+//    navController.navigate(Screen.Settings.route)
+//}
+//
+//fun navigateToHome(navController : NavController){
+//    navController.navigate(Screen.Home.route)
+//}
+//
+//fun navigateToExercise(navController : NavController,routineId : String){
+//    navController.navigate("${Screen.Exercise.route}/$routineId")
+//}
+//
+//fun navigateToRest(navController : NavController){
+//    navController.navigate(Screen.Rest.route)
+//}
+//fun navigateToSearch(navController : NavController){
+//    navController.navigate(Screen.Search.route)
+//}
+//
+//fun navigateToProfile(navController: NavController) {
+//    navController.navigate(Screen.Profile.route)
+//}
+//fun navigateToLogin(navController: NavController) {
+//    navController.navigate(Screen.Login.route)
+//}

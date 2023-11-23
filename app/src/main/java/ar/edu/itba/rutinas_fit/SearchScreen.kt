@@ -59,7 +59,7 @@ import androidx.navigation.compose.rememberNavController
 import ar.edu.itba.rutinas_fit.data.model.Routine
 import ar.edu.itba.rutinas_fit.data.model.getSortedRoutines
 import ar.edu.itba.rutinas_fit.navigation.Screen
-import ar.edu.itba.rutinas_fit.navigation.navigateToRoutine
+//import ar.edu.itba.rutinas_fit.navigation.navigateToRoutine
 import ar.edu.itba.rutinas_fit.ui.theme.Rutinas_FitTheme
 import components.NavBar
 import kotlinx.coroutines.selects.select

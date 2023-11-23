@@ -26,11 +26,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
-import ar.edu.itba.rutinas_fit.navigation.navigateToFavorite
-import ar.edu.itba.rutinas_fit.navigation.navigateToHome
-import ar.edu.itba.rutinas_fit.navigation.navigateToProfile
-import ar.edu.itba.rutinas_fit.navigation.navigateToSearch
-import ar.edu.itba.rutinas_fit.navigation.navigateToSettings
+import ar.edu.itba.rutinas_fit.navigateToFavorite
+import ar.edu.itba.rutinas_fit.navigateToHome
+import ar.edu.itba.rutinas_fit.navigateToProfile
+import ar.edu.itba.rutinas_fit.navigateToSearch
+import ar.edu.itba.rutinas_fit.navigateToSettings
+
+//import ar.edu.itba.rutinas_fit.navigation.navigateToFavorite
+//import ar.edu.itba.rutinas_fit.navigation.navigateToHome
+//import ar.edu.itba.rutinas_fit.navigation.navigateToProfile
+//import ar.edu.itba.rutinas_fit.navigation.navigateToSearch
+//import ar.edu.itba.rutinas_fit.navigation.navigateToSettings
 
 //import ar.edu.itba.rutinas_fit.naviagteToSearch
 //import ar.edu.itba.rutinas_fit.navigateToHome

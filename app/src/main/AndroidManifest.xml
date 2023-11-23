@@ -30,16 +30,15 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <!--<intent-filter>
+            -<intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                 TODO: Redirect the user to shared routine
                 <data android:scheme="http"/>
                 <data android:scheme="https"/>
                 <data android:host="www.rutinasfit.com"/>
-                <data android:pathPrefix="/routines"/>
-            </intent-filter>-->
+                <data android:pathPrefix="/routine"/>
+            </intent-filter>
         </activity>
     </application>
 
