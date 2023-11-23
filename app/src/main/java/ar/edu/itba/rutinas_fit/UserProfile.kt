@@ -123,7 +123,7 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
                         },
                         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),
                     ) {
-                        Text("Guardar Cambios", color = MaterialTheme.colorScheme.onBackground)
+                        Text("Guardar Cambios", color = MaterialTheme.colorScheme.background)
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     Button(
@@ -133,9 +133,9 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
                             navigateToLogin(navController)
                             //}
                         },
-                        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.surface)
+                        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.onBackground)
                     ) {
-                        Text("Cerrar Sesión", color = MaterialTheme.colorScheme.onBackground)
+                        Text("Cerrar Sesión", color = MaterialTheme.colorScheme.background)
                     }
                 }
             }
