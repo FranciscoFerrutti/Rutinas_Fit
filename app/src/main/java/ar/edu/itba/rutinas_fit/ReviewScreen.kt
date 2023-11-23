@@ -70,7 +70,7 @@ fun ReviewScreen(navController: NavController, mainViewModel: MainViewModel = vi
             // There must be also a 5 star rating system
             // And a button to submit the review
             OutlinedTextField(value = review, onValueChange = { review = it }, label = { stringResource(id = R.string.review) },
-                modifier = Modifier.fillMaxWidth().fillMaxHeight(0.5f)
+                modifier = Modifier.fillMaxWidth().fillMaxHeight(0.5f), textStyle = androidx.compose.ui.text.TextStyle(color = Color.White),
             //        .align(alignment = androidx.compose.ui.Alignment.CenterHorizontally)
             )
 

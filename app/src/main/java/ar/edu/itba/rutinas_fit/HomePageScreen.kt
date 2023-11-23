@@ -75,6 +75,7 @@ import ar.edu.itba.rutinas_fit.navigation.Screen
 import ar.edu.itba.rutinas_fit.navigation.navigateToReview
 //import ar.edu.itba.rutinas_fit.navigation.navigateToRoutine
 import ar.edu.itba.rutinas_fit.ui.theme.Rutinas_FitTheme
+import ar.edu.itba.rutinas_fit.ui.theme.ThemeViewModel
 import ar.edu.itba.rutinas_fit.util.getViewModelFactory
 import components.NavBar
 import kotlinx.coroutines.launch
@@ -159,10 +160,11 @@ fun MainHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
 
 @Composable
 fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: Int, routine: Routine, favInitialStatus: Boolean,
-             mainViewModel: MainViewModel = viewModel(factory = getViewModelFactory())) {
+             mainViewModel: MainViewModel = viewModel(factory = getViewModelFactory()),
+             themeViewModel: ThemeViewModel = viewModel()) {
     val backgroundImage: Painter = painterResource(id = imageResourceId)
     var isFavorite = favInitialStatus
-    Rutinas_FitTheme {
+    Rutinas_FitTheme(themeViewModel = themeViewModel) {
 
     Box(
             modifier = Modifier
@@ -292,7 +294,8 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
                                 navigateToReview(navController)
                             }
                           }, shape = RoundedCornerShape(40.dp), elevation = ButtonDefaults.elevatedButtonElevation(defaultElevation = 5.dp, pressedElevation = 8.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF007f00))) {
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF007f00),
+                contentColor = Color.White)) {
                 Text(stringResource(R.string.review), fontSize = 20.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Justify)
             }
         }
