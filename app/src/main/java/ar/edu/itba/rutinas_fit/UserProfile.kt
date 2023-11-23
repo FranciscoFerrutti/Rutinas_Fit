@@ -56,18 +56,10 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
     // Get the firstName from the logged in user, by using the UserViewModel
     mainViewModel.getCurrentUser() // WE NEED to call getCurrentUser to fetch the data
     val uiState = mainViewModel.uiState
-    var firstName = uiState.currentUser?.let {
-        it.firstName
-    } ?: "No user logged in"
-    var lastName = uiState.currentUser?.let {
-        it.lastName
-    } ?: "No user logged in"
-    var email = uiState.currentUser?.let {
-        it.email
-    } ?: "No user logged in"
-    var gender = uiState.currentUser?.let {
-        it.email
-    } ?: "No user logged in"
+    var firstName = uiState.currentUser?.firstName ?: "No user logged in"
+    var lastName = uiState.currentUser?.lastName ?: "No user logged in"
+    var email = uiState.currentUser?.email ?: "No user logged in"
+    var username = uiState.currentUser?.username ?: "No user logged in"
     var avatarUrl = "" /*uiState.currentUser?.let {
         it.avatarUrl
     } ?: "No user logged in"*/
@@ -132,7 +124,15 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
             }
 
             Spacer(modifier = Modifier.height(8.dp))
-
+            OutlinedTextField(
+                value = username,
+                onValueChange = { username = it },
+                label = { Text("Nombre de usuario", color = Color.White) },
+                modifier = Modifier.fillMaxWidth(),
+                colors = textFieldColors,
+                readOnly = true,
+            )
+            Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
                 value = firstName,
                 onValueChange = { firstName = it },
@@ -155,15 +155,6 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
                 value = email,
                 onValueChange = { email = it },
                 label = { Text("Email", color = Color.White) },
-                modifier = Modifier.fillMaxWidth(),
-                colors = textFieldColors,
-                readOnly = true,
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            OutlinedTextField(
-                value = gender,
-                onValueChange = { gender = it },
-                label = { Text("Género", color = Color.White) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = textFieldColors,
                 readOnly = true,

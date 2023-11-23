@@ -30,5 +30,6 @@
     <string name="resttimerstart">Click here to start rest countdown</string>
     <string name="exercisereps">Number of reps:</string>
     <string name="mode">Change mode</string>
+    <string name="invalid_field">INVALID USERNAME OR PASSWORD</string>
 
 </resources>
