@@ -125,13 +125,13 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
     var currentExerciseIndex by remember { mutableStateOf(0) }
     var currentCycleIndex by remember { mutableStateOf(0) }
 
-    Rutinas_FitTheme {
-        Box(
+
+    Box(
             modifier = Modifier
                 .fillMaxSize()
                 .height(200.dp)
                 .padding(top = paddin)
-                .background(Color(30, 30, 30))
+                .background(MaterialTheme.colorScheme.background)
         ) {
             if (!isDeviceInLandscape(LocalContext.current)){
                 Column(
@@ -152,7 +152,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                             Text(
                                 text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].exercise.name
                                     ?: "N/A",
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 48.sp,
                                 modifier = Modifier
@@ -161,7 +161,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                             )
                             Text(
                                 text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].exercise.detail,
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 22.sp,
                                 textAlign = TextAlign.Center
@@ -174,7 +174,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                 .height(clockSize)){
                                 Text(
                                     text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].repetitions.toString(),
-                                    color = Color.White,
+                                    color = MaterialTheme.colorScheme.onBackground,
                                     fontFamily = FontFamily.Monospace,
                                     fontSize = 108.sp,
                                     textAlign = TextAlign.Center,
@@ -204,15 +204,11 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                     .align(Alignment.CenterHorizontally)
                                     .padding(top = 5.dp),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(
-                                        64,
-                                        117,
-                                        60
-                                    )
+                                    containerColor = MaterialTheme.colorScheme.primary
                                 )
                             ) {
                                 Text(
-                                    text = stringResource(R.string.next), color = Color.White,
+                                    text = stringResource(R.string.next), color = MaterialTheme.colorScheme.onBackground,
                                     fontFamily = FontFamily.SansSerif,
                                     fontSize = 20.sp
                                 )
@@ -231,15 +227,11 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                         .align(Alignment.Center)
                                         .padding(top = 5.dp),
                                     colors = ButtonDefaults.buttonColors(
-                                        containerColor = Color(
-                                            64,
-                                            117,
-                                            60
-                                        )
+                                        containerColor = MaterialTheme.colorScheme.primary
                                     )
                                 ) {
                                     Text(
-                                        text = stringResource(R.string.mode), color = Color.White,
+                                        text = stringResource(R.string.mode), color = MaterialTheme.colorScheme.onBackground,
                                         fontFamily = FontFamily.SansSerif,
                                         fontSize = 12.sp
                                     )
@@ -251,7 +243,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                             var isCountdownRunning by remember { mutableStateOf(false) }
                             Text(
                                 text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].exercise!!.name,
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 48.sp,
                                 modifier = Modifier
@@ -260,7 +252,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                             )
                             Text(
                                 text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].exercise!!.detail,
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 22.sp,
                                 textAlign = TextAlign.Center
@@ -270,7 +262,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                             )
                             Text(
                                 text = stringResource(R.string.timerstart),
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 22.sp,
                                 textAlign = TextAlign.Center
@@ -305,7 +297,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                             ) {
                                 Text(
                                     text = countdownSeconds.toString(),
-                                    color = Color.White,
+                                    color = MaterialTheme.colorScheme.onBackground,
                                     fontFamily = FontFamily.Monospace,
                                     fontSize = 108.sp,
                                     modifier = Modifier
@@ -333,15 +325,11 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                     .align(Alignment.CenterHorizontally)
                                     .padding(top = 10.dp),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(
-                                        64,
-                                        117,
-                                        60
-                                    )
+                                    containerColor = MaterialTheme.colorScheme.primary
                                 )
                             ) {
                                 Text(
-                                    text = stringResource(R.string.next), color = Color.White,
+                                    text = stringResource(R.string.next), color = MaterialTheme.colorScheme.onBackground,
                                     fontFamily = FontFamily.SansSerif,
                                     fontSize = 20.sp
                                 )
@@ -380,7 +368,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                             .padding(horizontal = 5.dp)) {
                             Text(
                                 text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].exercise?.name ?: "N/A",
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 48.sp,
                                 modifier = Modifier
@@ -389,7 +377,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                             )
                             Text(
                                 text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].exercise!!.detail,
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 22.sp,
                                 textAlign = TextAlign.Center
@@ -402,7 +390,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                 .align(Alignment.CenterHorizontally)){
                             Text(
                                 text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].repetitions.toString(),
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontFamily = FontFamily.Monospace,
                                 fontSize = 108.sp,
                                 modifier = Modifier
@@ -429,11 +417,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                     .align(Alignment.CenterHorizontally)
                                     .padding(top = 5.dp),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(
-                                        64,
-                                        117,
-                                        60
-                                    )
+                                    containerColor = MaterialTheme.colorScheme.primary
                                 )
                             ) {
                                 Text(
@@ -452,7 +436,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                         Column (modifier = Modifier.fillMaxSize()){
                             Text(
                                 text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].exercise?.name ?: "N/A",
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 48.sp,
                                 modifier = Modifier
@@ -461,7 +445,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                             )
                             Text(
                                 text = stringResource(R.string.timerstart),
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 22.sp,
                                 textAlign = TextAlign.Center,
@@ -496,7 +480,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                             ) {
                                 Text(
                                     text = countdownSeconds.toString(),
-                                    color = Color.White,
+                                    color = MaterialTheme.colorScheme.onBackground,
                                     fontFamily = FontFamily.Monospace,
                                     fontSize = 108.sp,
                                     modifier = Modifier
@@ -524,15 +508,11 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                     .align(Alignment.CenterHorizontally)
                                     .padding(top = 10.dp),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(
-                                        64,
-                                        117,
-                                        60
-                                    )
+                                    containerColor = MaterialTheme.colorScheme.primary
                                 )
                             ) {
                                 Text(
-                                    text = stringResource(R.string.next), color = Color.White,
+                                    text = stringResource(R.string.next), color = MaterialTheme.colorScheme.onBackground,
                                     fontFamily = FontFamily.SansSerif,
                                     fontSize = 20.sp
                                 )
@@ -547,11 +527,10 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
             }
         }
 
-    }
-
 }
 
 @Composable
 fun ExerciseScreen2(name : String, repetitions : Int, duration : Int ) {
 
 }
+

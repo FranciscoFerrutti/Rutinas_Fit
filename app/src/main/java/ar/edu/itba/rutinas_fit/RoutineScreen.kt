@@ -1,5 +1,6 @@
 package ar.edu.itba.rutinas_fit
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -41,6 +42,7 @@ import androidx.compose.material3.ButtonDefaults.buttonColors
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -75,6 +77,7 @@ import components.NavBar
 import java.util.Date
 
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun ExerciseElem(modifier : Modifier, imageResourceId: Int, cycleExercise : CycleExercise) {
     var repStr = cycleExercise.repetitions.toString()
@@ -82,10 +85,9 @@ fun ExerciseElem(modifier : Modifier, imageResourceId: Int, cycleExercise : Cycl
         repStr = cycleExercise.duration.toString() + '"'
     }
     val backgroundImage: Painter = painterResource(id = imageResourceId)
-    Rutinas_FitTheme {
         LazyRow(
             modifier = Modifier
-                .background(Color(0.10f, 0.10f, 0.10f, alpha = 0.5f))
+                .background(MaterialTheme.colorScheme.surface)
                 .height(70.dp)
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(16.dp))
@@ -119,7 +121,7 @@ fun ExerciseElem(modifier : Modifier, imageResourceId: Int, cycleExercise : Cycl
                         item {
                             Text(
                                 text = cycleExercise.exercise.name,
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 18.sp,
                                 modifier = Modifier
@@ -128,7 +130,7 @@ fun ExerciseElem(modifier : Modifier, imageResourceId: Int, cycleExercise : Cycl
                         item {
                             Text(
                                 text = repStr,
-                                color = Color(174, 255, 0),
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 14.sp,
                                 modifier = Modifier
@@ -141,7 +143,6 @@ fun ExerciseElem(modifier : Modifier, imageResourceId: Int, cycleExercise : Cycl
                 }
             }
         }
-    }
 }
 
 @Composable
@@ -218,12 +219,12 @@ fun RoutineScreen(navController : NavController, routineId : String) {
                         height
                     )
                     .fillMaxWidth()
-                    .background(Color(10, 10, 10)))
+                    .background(MaterialTheme.colorScheme.inverseSurface))
             {
                 Column (
                     modifier = Modifier
                         .align(Alignment.Center)
-                        .background(Color(0.10f, 0.10f, 0.10f, alpha = 0.5f))
+                        .background(MaterialTheme.colorScheme.inverseSurface)
                         .fillMaxSize()
                         .padding(top = paddin),
 
@@ -231,7 +232,7 @@ fun RoutineScreen(navController : NavController, routineId : String) {
                     ){
                     Text(
                         text = "Nombre Rutina",
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontFamily = FontFamily.SansSerif,
                         fontSize = 26.sp,
                         modifier = Modifier
@@ -242,7 +243,7 @@ fun RoutineScreen(navController : NavController, routineId : String) {
 
                     Text(
                         text = "11 Ejercicios - 3 Ciclos",
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontFamily = FontFamily.SansSerif,
                         fontSize = 18.sp,
                         modifier = Modifier
@@ -257,8 +258,8 @@ fun RoutineScreen(navController : NavController, routineId : String) {
                         .width(140.dp)
                         .height(50.dp)
                         .align(Alignment.CenterHorizontally)
-                        .padding(top = 5.dp), colors = ButtonDefaults.buttonColors(containerColor = Color(64, 117, 60))){
-                        Text(text = stringResource(R.string.execute), color = Color.White,
+                        .padding(top = 5.dp), colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)){
+                        Text(text = stringResource(R.string.execute), color = MaterialTheme.colorScheme.onBackground,
                             fontFamily = FontFamily.SansSerif,
                             fontSize = 20.sp)
                     }
@@ -276,7 +277,7 @@ fun RoutineScreen(navController : NavController, routineId : String) {
                         modifier = Modifier
                             .height(40.dp)
                             .fillMaxWidth()
-                            .background(Color(30, 30, 30))
+                            .background(MaterialTheme.colorScheme.primary)
                             .clip(RoundedCornerShape(48.dp))
                     ) {
                         Row(
@@ -291,7 +292,7 @@ fun RoutineScreen(navController : NavController, routineId : String) {
                                     modifier = Modifier
                                         .zIndex(3f)
                                         .size(34.dp),
-                                    tint = Color.White
+                                    tint = MaterialTheme.colorScheme.onBackground
                                 )
                             } else {
                                 Icon(
@@ -309,7 +310,7 @@ fun RoutineScreen(navController : NavController, routineId : String) {
 
                             Text(
                                 text = routineCycles[currentCycle].name,
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 22.sp,
 
@@ -322,7 +323,7 @@ fun RoutineScreen(navController : NavController, routineId : String) {
                                     modifier = Modifier
                                         .zIndex(3f)
                                         .size(34.dp),
-                                    tint = Color.White
+                                    tint = MaterialTheme.colorScheme.onBackground
                                 )
                             } else {
                                 Icon(

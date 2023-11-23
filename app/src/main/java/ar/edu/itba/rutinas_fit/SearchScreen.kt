@@ -31,6 +31,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -54,6 +55,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import ar.edu.itba.rutinas_fit.data.model.Routine
@@ -61,6 +63,7 @@ import ar.edu.itba.rutinas_fit.data.model.getSortedRoutines
 import ar.edu.itba.rutinas_fit.navigation.Screen
 import ar.edu.itba.rutinas_fit.navigation.navigateToRoutine
 import ar.edu.itba.rutinas_fit.ui.theme.Rutinas_FitTheme
+import ar.edu.itba.rutinas_fit.ui.theme.ThemeViewModel
 import components.NavBar
 import kotlinx.coroutines.selects.select
 import java.util.Date
@@ -74,7 +77,16 @@ fun SearchHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
         modifier = Modifier
             .fillMaxWidth()
             .height(Dp(70f))
-            .background(Color(30, 61, 29))
+            .background(
+                brush = Brush.linearGradient(
+                    colors = listOf(
+                        MaterialTheme.colorScheme.background, // Black with alpha
+                        MaterialTheme.colorScheme.primary  // Green
+                    ),
+                    start = Offset(x = 0f, y = 0f),
+                    end = Offset.Infinite,
+                )
+            )
             .zIndex(1f)
     ){
         Row (modifier = Modifier
@@ -82,7 +94,7 @@ fun SearchHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
             .align(Alignment.CenterStart), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly){
             Text(
                 text = stringResource(id = R.string.searchroutines),
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontFamily = FontFamily.SansSerif,
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
@@ -96,7 +108,7 @@ fun SearchHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
                     Text(
 
                         text = stringResource(id = R.string.orderby),
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontFamily = FontFamily.SansSerif,
                         fontSize = 24.sp,
                     )
@@ -106,7 +118,7 @@ fun SearchHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
                         modifier = Modifier
                             .zIndex(3f)
                             .size(44.dp),
-                        tint = Color.White
+                        tint = MaterialTheme.colorScheme.onBackground
                     )
                 }
 
@@ -133,33 +145,66 @@ fun SearchHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
 
 @Composable
 fun SearchScreen(navController: NavController) {
+
     var selectedOption by remember { mutableStateOf("") }
     var title by remember { mutableStateOf("") }
-
-    Box() {
-        SearchHeader(
-            modifier = Modifier.background(Color.Transparent),
-            onOptionSelected = { selectedOption = it }
-        )
-        val routines = listOf(
-            Routine(id= 1, name = "Routine 1", detail = "Details", date = Date(), isPublic = true, difficulty = "Hard", category= null, score=2, metadata = null, user = null),
-            Routine(id= 1, name = "Routine 2", detail = "Details", date = Date(), isPublic = true, difficulty = "Medium", category= null, score=2, metadata = null, user = null),
-            Routine(id= 1, name = "Routine 3", detail = "Details", date = Date(), isPublic = true, difficulty = "Easy", category= null, score=2, metadata = null, user = null)
-        )
-        Routines(navController,routines, selectedOption)
-
-        Box (
-            modifier = Modifier
-                .fillMaxHeight(0.14f)
-                .align(Alignment.BottomCenter)
-        )
-        {
-
-            NavBar(navController,
-                modifier = Modifier
-                    .background(Color.White)
+        Box() {
+            SearchHeader(
+                modifier = Modifier.background(Color.Transparent),
+                onOptionSelected = { selectedOption = it }
             )
-        }
+            val routines = listOf(
+                Routine(
+                    id = 1,
+                    name = "Routine 1",
+                    detail = "Details",
+                    date = Date(),
+                    isPublic = true,
+                    difficulty = "Hard",
+                    category = null,
+                    score = 2,
+                    metadata = null,
+                    user = null
+                ),
+                Routine(
+                    id = 1,
+                    name = "Routine 2",
+                    detail = "Details",
+                    date = Date(),
+                    isPublic = true,
+                    difficulty = "Medium",
+                    category = null,
+                    score = 2,
+                    metadata = null,
+                    user = null
+                ),
+                Routine(
+                    id = 1,
+                    name = "Routine 3",
+                    detail = "Details",
+                    date = Date(),
+                    isPublic = true,
+                    difficulty = "Easy",
+                    category = null,
+                    score = 2,
+                    metadata = null,
+                    user = null
+                )
+            )
+            Routines(navController, routines, selectedOption)
 
-    }
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight(0.14f)
+                    .align(Alignment.BottomCenter)
+            )
+            {
+
+                NavBar(
+                    navController,
+                    modifier = Modifier
+                        .background(Color.White)
+                )
+            }
+        }
 }

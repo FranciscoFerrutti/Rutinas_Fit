@@ -30,6 +30,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -78,7 +79,16 @@ fun FavoriteHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
         modifier = Modifier
             .fillMaxWidth()
             .height(Dp(70f))
-            .background(Color(30, 61, 29))
+            .background(
+                brush = Brush.linearGradient(
+                    colors = listOf(
+                        MaterialTheme.colorScheme.background,
+                        MaterialTheme.colorScheme.primary
+                    ),
+                    start = Offset(x = 0f, y = 0f),
+                    end = Offset.Infinite,
+                )
+            )
             .zIndex(1f)
     ){
         Row (modifier = Modifier
@@ -86,7 +96,7 @@ fun FavoriteHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
             .align(Alignment.CenterStart), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly){
             Text(
                 text = stringResource(id = R.string.favorite),
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontFamily = FontFamily.SansSerif,
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
@@ -100,7 +110,7 @@ fun FavoriteHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
                     Text(
 
                         text = stringResource(id = R.string.orderby),
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontFamily = FontFamily.SansSerif,
                         fontSize = 24.sp,
                     )
@@ -110,7 +120,7 @@ fun FavoriteHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
                         modifier = Modifier
                             .zIndex(3f)
                             .size(44.dp),
-                        tint = Color.White
+                        tint = MaterialTheme.colorScheme.onBackground
                     )
                 }
 

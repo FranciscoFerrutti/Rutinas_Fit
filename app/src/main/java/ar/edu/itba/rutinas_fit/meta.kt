@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -41,12 +42,12 @@ fun GoalSelectionScreen(navController: NavController, imageList: List<ImageData>
     )  {
         Text(
             text = "¿Cuál es tu meta?",
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onBackground,
             fontSize = 24.sp
         )
         Text(
             text = "Esto nos ayudará a elegir el mejor plan para vos",
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onBackground,
             fontSize = 18.sp
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -71,12 +72,12 @@ fun GoalSelectionScreen(navController: NavController, imageList: List<ImageData>
             onClick = {
 
             },
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Green),
+            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 32.dp)
         ) {
-            Text("Confirmar", color = Color.White)
+            Text("Confirmar", color = MaterialTheme.colorScheme.onBackground)
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -107,12 +108,12 @@ fun ImageCard(imageData: ImageData, height: Dp, onImageSelected: (String) -> Uni
         ) {
             Text(
                 text = imageData.title,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 16.sp
             )
             Text(
                 text = imageData.subtitle,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 14.sp
             )
         }

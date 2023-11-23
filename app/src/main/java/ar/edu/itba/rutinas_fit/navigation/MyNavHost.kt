@@ -15,11 +15,13 @@ import ar.edu.itba.rutinas_fit.RoutineScreen
 import ar.edu.itba.rutinas_fit.SearchScreen
 import ar.edu.itba.rutinas_fit.SettingsScreen
 import ar.edu.itba.rutinas_fit.UserProfileScreen
+import ar.edu.itba.rutinas_fit.ui.theme.ThemeViewModel
 
 
 @Composable
 fun MyNavHost(
-    startDestination: String = "home"
+    startDestination: String = "home",
+    themeViewModel: ThemeViewModel
 ) {
     var navController = rememberNavController()
     NavHost(
@@ -79,7 +81,7 @@ fun MyNavHost(
             UserProfileScreen(navController)
         }
         composable(Screen.Settings.route) {
-            SettingsScreen(navController)
+            SettingsScreen(navController, themeViewModel)
         }
 
     }

@@ -32,14 +32,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.os.LocaleListCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import ar.edu.itba.rutinas_fit.ui.theme.Rutinas_FitTheme
+import ar.edu.itba.rutinas_fit.ui.theme.ThemeViewModel
 import components.NavBar
 import java.util.Locale
 @Composable
-fun SettingsScreen(navController: NavController) {
+fun SettingsScreen(navController: NavController, themeViewModel: ThemeViewModel) {
     var isSpanish by remember { mutableStateOf(true) }
-    var isDarkMode by remember { mutableStateOf(false) }
     var context = LocalContext.current
     Box (modifier = Modifier.fillMaxSize()){
         Column(
@@ -58,11 +59,11 @@ fun SettingsScreen(navController: NavController) {
                     text = stringResource(R.string.darkmode),
                     fontSize = 30.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    color = MaterialTheme.colorScheme.onBackground
                 )
                 Switch(
-                    checked = isDarkMode,
-                    onCheckedChange = { isDarkMode = it },
+                    checked = themeViewModel.isDarkTheme.value,
+                    onCheckedChange = { themeViewModel.switchTheme() },
                     modifier = Modifier.padding(8.dp).scale(1.5f)
                 )
             }

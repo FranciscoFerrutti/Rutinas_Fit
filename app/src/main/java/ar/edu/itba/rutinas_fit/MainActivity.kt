@@ -14,6 +14,7 @@ import ar.edu.itba.rutinas_fit.ui.theme.Rutinas_FitTheme
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 //import androidx.compose.foundation.layout.ColumnScopeInstance.weight
 
@@ -28,6 +29,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
@@ -44,26 +46,36 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ar.edu.itba.rutinas_fit.navigation.MyNavHost
 import ar.edu.itba.rutinas_fit.navigation.Screen
+import ar.edu.itba.rutinas_fit.ui.theme.ThemeViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Rutinas_FitTheme {
-                // A surface container using the 'background' color from the theme
+            val themeViewModel = viewModel<ThemeViewModel>()
+            val isDark = isSystemInDarkTheme()
+
+            LaunchedEffect(key1 = Unit) {
+                themeViewModel.initializeTheme(isDark)
+            }
+
+            Rutinas_FitTheme(
+                themeViewModel = themeViewModel
+            ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = Color(10,10,10)
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     val context = LocalContext.current
                     val navController = rememberNavController()
-                    MyNavHost(startDestination = Screen.Login.route)
+                    MyNavHost(startDestination = Screen.Home.route, themeViewModel = themeViewModel)
                 }
             }
         }
