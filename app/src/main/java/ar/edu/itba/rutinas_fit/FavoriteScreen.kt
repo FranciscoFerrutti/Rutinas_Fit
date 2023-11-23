@@ -53,8 +53,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import ar.edu.itba.rutinas_fit.classes.MainViewModel
 import ar.edu.itba.rutinas_fit.data.model.Category
 import ar.edu.itba.rutinas_fit.data.model.Routine
 import ar.edu.itba.rutinas_fit.data.model.User
@@ -62,6 +64,7 @@ import ar.edu.itba.rutinas_fit.data.model.User
 import ar.edu.itba.rutinas_fit.navigation.Screen
 import ar.edu.itba.rutinas_fit.navigation.navigateToRoutine
 import ar.edu.itba.rutinas_fit.ui.theme.Rutinas_FitTheme
+import ar.edu.itba.rutinas_fit.util.getViewModelFactory
 import components.NavBar
 import kotlinx.coroutines.selects.select
 import java.util.Date
@@ -133,20 +136,26 @@ fun FavoriteHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
 }
 
 @Composable
-fun FavoriteScreen(navController: NavController) {
+fun FavoriteScreen(navController: NavController, mainViewModel: MainViewModel = viewModel(factory = getViewModelFactory())) {
     var selectedOption by remember { mutableStateOf("") }
     var title by remember { mutableStateOf("") }
-
+    var flag by remember { mutableStateOf(true) }
+    if(flag) {
+        mainViewModel.getCurrentUser()
+        mainViewModel.getFavourites()
+        flag = false
+    }
     Box() {
         FavoriteHeader(
             modifier = Modifier.background(Color.Transparent),
             onOptionSelected = { selectedOption = it }
         )
-        val routines = listOf(
-            Routine(id= 1, name = "Routine 1", detail = "Details", date = Date(), isPublic = true, difficulty = "Hard", category= null, score=2, metadata = null, user = null),
-            Routine(id= 1, name = "Routine 2", detail = "Details", date = Date(), isPublic = true, difficulty = "Medium", category= null, score=2, metadata = null, user = null),
-            Routine(id= 1, name = "Routine 3", detail = "Details", date = Date(), isPublic = true, difficulty = "Easy", category= null, score=2, metadata = null, user = null)
-        )
+        val routines = mainViewModel.uiState.favRoutines
+        /*listOf(
+        Routine(id= 1, name = "Routine 1", detail = "Details", date = Date(), isPublic = true, difficulty = "Hard", category= null, score=2, metadata = null, user = null),
+        Routine(id= 1, name = "Routine 2", detail = "Details", date = Date(), isPublic = true, difficulty = "Medium", category= null, score=2, metadata = null, user = null),
+        Routine(id= 1, name = "Routine 3", detail = "Details", date = Date(), isPublic = true, difficulty = "Easy", category= null, score=2, metadata = null, user = null)
+           )*/
         Routines(navController,routines, selectedOption)
 
         Box (

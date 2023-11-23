@@ -140,10 +140,11 @@ fun MainHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
 }
 
 @Composable
-fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: Int, routine: Routine) {
+fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: Int, routine: Routine, favInitialStatus: Boolean,
+             mainViewModel: MainViewModel = viewModel(factory = getViewModelFactory())) {
     val backgroundImage: Painter = painterResource(id = imageResourceId)
-    var isFavorite by remember { mutableStateOf(false) }
     var rating by remember { mutableStateOf(0) }
+    var isFavorite = favInitialStatus
     Rutinas_FitTheme {
 
         Box(
@@ -224,8 +225,11 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
                                 .clickable {
                                     // Toggle the favorite status
                                     isFavorite = !isFavorite
-                                    // TODO: Make API call to update favorite status
-                                    // Example: api.updateFavoriteStatus(routine.id, isFavorite)
+                                    if(isFavorite) {
+                                        mainViewModel.addToFavourites(routine.id)
+                                    } else {
+                                        mainViewModel.deleteFromFavourites(routine.id)
+                                    }
                                 }
                         )
                     }
@@ -267,7 +271,7 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
 
 
 @Composable
-fun Routines(navController: NavController, routines : List<Routine>, selectedOption : String){
+fun Routines(navController: NavController, routines : List<Routine>, selectedOption : String, mainViewModel: MainViewModel = viewModel(factory = getViewModelFactory())) {
     var routinesSorted = getSortedRoutines(routines, selectedOption)
     Box(
         modifier = Modifier.padding(vertical = Dp(70f), horizontal = Dp(10F)),
@@ -285,7 +289,8 @@ fun Routines(navController: NavController, routines : List<Routine>, selectedOpt
                         .padding(vertical = Dp(120f))
                         .background(color = Color.Transparent),
                     imageResourceId = R.drawable.gymimg,
-                    routine = routine
+                    routine = routine,
+                    favInitialStatus = mainViewModel.isFavourite(routine.id)
                 )
             }
         }
@@ -300,6 +305,7 @@ fun HomePageScreen(navController: NavController, mainViewModel: MainViewModel = 
     if(flag) {
         mainViewModel.getCurrentUser()
         mainViewModel.getRoutines()
+        mainViewModel.getFavourites()
         flag = false
     }
     Box() {
