@@ -153,7 +153,7 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                     Text(
                         text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise.name
                             ?: "N/A",
-                        color = MaterialTheme.colorScheme.onBackground,
+                        color = MaterialTheme.colorScheme.inverseOnSurface,
                         fontFamily = FontFamily.SansSerif,
                         fontSize = 48.sp,
                         modifier = Modifier
@@ -162,7 +162,7 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                     )
                     Text(
                         text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise.detail,
-                        color = MaterialTheme.colorScheme.onBackground,
+                        color = MaterialTheme.colorScheme.inverseOnSurface,
                         fontFamily = FontFamily.SansSerif,
                         fontSize = 22.sp,
                         textAlign = TextAlign.Center
@@ -175,7 +175,7 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                         .height(clockSize)){
                         Text(
                             text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].repetitions.toString(),
-                            color = MaterialTheme.colorScheme.onBackground,
+                            color = MaterialTheme.colorScheme.inverseOnSurface,
                             fontFamily = FontFamily.Monospace,
                             fontSize = 108.sp,
                             textAlign = TextAlign.Center,

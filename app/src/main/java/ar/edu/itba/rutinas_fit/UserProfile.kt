@@ -86,25 +86,16 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
 
     val textFieldColors = TextFieldDefaults.outlinedTextFieldColors(
         cursorColor = MaterialTheme.colorScheme.onBackground,
-        focusedBorderColor = MaterialTheme.colorScheme.onBackground,
-        unfocusedBorderColor = MaterialTheme.colorScheme.onBackground,
-        focusedLabelColor = MaterialTheme.colorScheme.onBackground,
-        unfocusedLabelColor = MaterialTheme.colorScheme.onBackground,
+        focusedBorderColor = MaterialTheme.colorScheme.secondary,
+        unfocusedBorderColor = MaterialTheme.colorScheme.surface,
+        focusedLabelColor = MaterialTheme.colorScheme.inverseOnSurface,
+        unfocusedLabelColor = MaterialTheme.colorScheme.inverseOnSurface,
     )
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.linearGradient(
-                    colors = listOf(
-                        MaterialTheme.colorScheme.background,
-                        MaterialTheme.colorScheme.primary
-                    ),
-                    start = Offset(x = 0f, y = 0f),
-                    end = Offset.Infinite
-                )
-            )
+            .background(MaterialTheme.colorScheme.background)
     ) {
         Column(
             modifier = Modifier
@@ -123,7 +114,7 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
                     UserProfileImage(avatarUrl) { newAvatarUrl -> avatarUrl = newAvatarUrl }
                     Text(
                         text = stringResource(id = R.string.select_image),
-                        color = MaterialTheme.colorScheme.onBackground,
+                        color = MaterialTheme.colorScheme.background,
                         modifier = Modifier
                             .padding(start = 12.dp)
                             .padding(top = 6.dp)
@@ -148,9 +139,9 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
                                 }
                             }
                         },
-                        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),
+                        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),
                     ) {
-                        Text(stringResource(id = R.string.save_changes), color = MaterialTheme.colorScheme.background)
+                        Text(stringResource(id = R.string.save_changes), color = MaterialTheme.colorScheme.onBackground)
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     Button(
@@ -160,9 +151,9 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
                             navigateToLogin(navController)
                             //}
                         },
-                        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.onBackground)
+                        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
                     ) {
-                        Text(stringResource(R.string.sign_out), color = MaterialTheme.colorScheme.background)
+                        Text(stringResource(R.string.sign_out), color = MaterialTheme.colorScheme.onBackground)
                     }
                 }
             }
@@ -175,7 +166,7 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
                                         username = it
                                     }
                                 },
-                label = { Text(stringResource(R.string.username), color = MaterialTheme.colorScheme.onBackground) },
+                label = { Text(stringResource(R.string.username), color = MaterialTheme.colorScheme.inverseOnSurface) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = textFieldColors,
 
@@ -188,7 +179,7 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
                         firstName = it
                     }
                 },
-                label = { Text(stringResource(R.string.firstname), color = MaterialTheme.colorScheme.onBackground) },
+                label = { Text(stringResource(R.string.firstname), color = MaterialTheme.colorScheme.inverseOnSurface) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = textFieldColors,
 
@@ -201,7 +192,7 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
                         lastName = it
                     }
                 },
-                label = { Text(stringResource(R.string.lastname), color = MaterialTheme.colorScheme.onBackground) },
+                label = { Text(stringResource(R.string.lastname), color = MaterialTheme.colorScheme.inverseOnSurface) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = textFieldColors,
 
@@ -214,7 +205,7 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
                         email = it
                     }
                 },
-                label = { Text(stringResource(R.string.email), color = MaterialTheme.colorScheme.onBackground) },
+                label = { Text(stringResource(R.string.email), color = MaterialTheme.colorScheme.inverseOnSurface) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = textFieldColors,
 
@@ -245,7 +236,7 @@ fun UserProfileImage(avatarUrl: String, onAvatarChange: (String) -> Unit) {
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .size(150.dp)
-            .border(2.dp, MaterialTheme.colorScheme.onBackground, CircleShape)
+            .border(2.dp, MaterialTheme.colorScheme.inverseOnSurface, CircleShape)
             .padding(16.dp)
             .clickable {
                 // TODO: Implementar lógica para cambiar la imagen de perfil
