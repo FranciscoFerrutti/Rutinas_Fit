@@ -248,7 +248,7 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                     var isCountdownRunning by remember { mutableStateOf(false) }
                     Text(
                         text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise!!.name,
-                        color = MaterialTheme.colorScheme.onBackground,
+                        color = MaterialTheme.colorScheme.inverseOnSurface,
                         fontFamily = FontFamily.SansSerif,
                         fontSize = 48.sp,
                         modifier = Modifier
@@ -257,7 +257,7 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                     )
                     Text(
                         text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise!!.detail,
-                        color = MaterialTheme.colorScheme.onBackground,
+                        color = MaterialTheme.colorScheme.inverseOnSurface,
                         fontFamily = FontFamily.SansSerif,
                         fontSize = 22.sp,
                         textAlign = TextAlign.Center
@@ -267,7 +267,7 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                     )
                     Text(
                         text = stringResource(R.string.timerstart),
-                        color = MaterialTheme.colorScheme.onBackground,
+                        color = MaterialTheme.colorScheme.inverseOnSurface,
                         fontFamily = FontFamily.SansSerif,
                         fontSize = 22.sp,
                         textAlign = TextAlign.Center
@@ -296,13 +296,13 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                             .padding(top = 10.dp)
                             .border(
                                 width = 2.dp,
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.inverseOnSurface,
                                 shape = CircleShape
                             )
                     ) {
                         Text(
                             text = countdownSeconds.toString(),
-                            color = MaterialTheme.colorScheme.onBackground,
+                            color = MaterialTheme.colorScheme.inverseOnSurface,
                             fontFamily = FontFamily.Monospace,
                             fontSize = 108.sp,
                             modifier = Modifier
@@ -374,7 +374,7 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                         .padding(horizontal = 5.dp)) {
                         Text(
                             text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise?.name ?: "N/A",
-                            color = MaterialTheme.colorScheme.onBackground,
+                            color = MaterialTheme.colorScheme.inverseOnSurface,
                             fontFamily = FontFamily.SansSerif,
                             fontSize = 48.sp,
                             modifier = Modifier
@@ -383,7 +383,7 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                         )
                         Text(
                             text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise!!.detail,
-                            color = MaterialTheme.colorScheme.onBackground,
+                            color = MaterialTheme.colorScheme.inverseOnSurface,
                             fontFamily = FontFamily.SansSerif,
                             fontSize = 22.sp,
                             textAlign = TextAlign.Center
@@ -396,7 +396,7 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                             .align(Alignment.CenterHorizontally)){
                             Text(
                                 text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].repetitions.toString(),
-                                color = MaterialTheme.colorScheme.onBackground,
+                                color = MaterialTheme.colorScheme.inverseOnSurface,
                                 fontFamily = FontFamily.Monospace,
                                 fontSize = 108.sp,
                                 modifier = Modifier
@@ -443,7 +443,7 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                     Column (modifier = Modifier.fillMaxSize()){
                         Text(
                             text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise?.name ?: "N/A",
-                            color = MaterialTheme.colorScheme.onBackground,
+                            color = MaterialTheme.colorScheme.inverseOnSurface,
                             fontFamily = FontFamily.SansSerif,
                             fontSize = 48.sp,
                             modifier = Modifier
@@ -452,7 +452,7 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                         )
                         Text(
                             text = stringResource(R.string.timerstart),
-                            color = MaterialTheme.colorScheme.onBackground,
+                            color = MaterialTheme.colorScheme.inverseOnSurface,
                             fontFamily = FontFamily.SansSerif,
                             fontSize = 22.sp,
                             textAlign = TextAlign.Center,
@@ -480,14 +480,14 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                                 .padding(top = 10.dp)
                                 .border(
                                     width = 2.dp,
-                                    color = Color.White,
+                                    color = MaterialTheme.colorScheme.inverseOnSurface,
                                     shape = CircleShape
                                 )
                                 .align(Alignment.CenterHorizontally)
                         ) {
                             Text(
                                 text = countdownSeconds.toString(),
-                                color = MaterialTheme.colorScheme.onBackground,
+                                color = MaterialTheme.colorScheme.inverseOnSurface,
                                 fontFamily = FontFamily.Monospace,
                                 fontSize = 108.sp,
                                 modifier = Modifier

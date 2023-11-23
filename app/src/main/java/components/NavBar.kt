@@ -33,20 +33,21 @@ import ar.edu.itba.rutinas_fit.navigateToHome
 import ar.edu.itba.rutinas_fit.navigateToProfile
 import ar.edu.itba.rutinas_fit.navigateToSearch
 import ar.edu.itba.rutinas_fit.navigateToSettings
+import ar.edu.itba.rutinas_fit.navigation.Screen
 
-//import ar.edu.itba.rutinas_fit.navigation.navigateToFavorite
-//import ar.edu.itba.rutinas_fit.navigation.navigateToHome
-//import ar.edu.itba.rutinas_fit.navigation.navigateToProfile
-//import ar.edu.itba.rutinas_fit.navigation.navigateToSearch
-//import ar.edu.itba.rutinas_fit.navigation.navigateToSettings
 
-//import ar.edu.itba.rutinas_fit.naviagteToSearch
-//import ar.edu.itba.rutinas_fit.navigateToHome
-//import ar.edu.itba.rutinas_fit.navigateToProfile
-//import ar.edu.itba.rutinas_fit.navigateToRoutine
+@Composable
+fun getTheme(navController: NavController, route: String): Color{
+    return if(navController.currentDestination?.route == route){
+        MaterialTheme.colorScheme.primary
+    } else {
+        MaterialTheme.colorScheme.onSurface
+    }
+}
 
 @Composable
 fun NavBar(navController: NavController, modifier: Modifier) {
+    var currentRoute = navController.currentDestination?.route
     Box (
         modifier = Modifier
             .height(1.dp)
@@ -65,18 +66,6 @@ fun NavBar(navController: NavController, modifier: Modifier) {
             )
             .zIndex(1f),
     ){
-//        Text(
-//            text = "Mis Rutinas",
-//            color = Color.White,
-//            fontFamily = FontFamily.SansSerif,
-//            fontSize = 30.sp,
-//            fontWeight = FontWeight.Bold,
-//            textAlign = TextAlign.Center,
-//            modifier = Modifier
-//                .padding(Dp(10f))
-//                .align(Alignment.BottomStart)
-//                .zIndex(2f)
-//        )
         LazyRow(
             modifier = Modifier
                 .fillMaxSize(),
@@ -92,7 +81,7 @@ fun NavBar(navController: NavController, modifier: Modifier) {
                         .size(44.dp).clickable {
                             navigateToHome(navController)
                         },
-                    tint = MaterialTheme.colorScheme.inverseOnSurface
+                    tint = getTheme(navController, Screen.Home.route)
                 )
 
             }
@@ -101,14 +90,14 @@ fun NavBar(navController: NavController, modifier: Modifier) {
                     .zIndex(3f)
                     .size(44.dp).clickable {
                         navigateToSearch(navController)
-                    } ,  tint = MaterialTheme.colorScheme.inverseOnSurface)
+                    } ,  tint = getTheme(navController, Screen.Search.route))
             }
             item {
                 Icon(imageVector = Icons.Default.Favorite, contentDescription = null, modifier = Modifier
                     .zIndex(3f)
                     .size(44.dp).clickable {
                         navigateToFavorite(navController)
-                    } , tint = MaterialTheme.colorScheme.inverseOnSurface)
+                    } , tint = getTheme(navController, Screen.Favorite.route))
 
             }
             item {
@@ -116,7 +105,7 @@ fun NavBar(navController: NavController, modifier: Modifier) {
                     .zIndex(3f)
                     .size(44.dp).clickable {
                         navigateToSettings(navController)
-                    } , tint = MaterialTheme.colorScheme.inverseOnSurface)
+                    } , tint = getTheme(navController, Screen.Settings.route))
 
             }
 
@@ -125,29 +114,10 @@ fun NavBar(navController: NavController, modifier: Modifier) {
                     .zIndex(3f)
                     .size(44.dp).clickable {
                         navigateToProfile(navController)
-                    } , tint = MaterialTheme.colorScheme.inverseOnSurface)
+                    } , tint = getTheme(navController, Screen.Profile.route))
             }
 
-//
-//                Button(
-//                    onClick = {
-//                        // Handle button click
-//                    },
-//                    colors = ButtonDefaults.buttonColors(
-//                        containerColor = Color(0.1f, 0.1f, 0.1f, alpha = 0.95f),  // Set the text color
-//                        contentColor = Color(134, 196, 0)
-//                    ),
-//                    modifier = Modifier
-//                        .padding(8.dp)
-//                        .fillMaxWidth()
-//                ) {
-//                    Text(
-//                        text="Ver rutina",
-//                        fontSize = 16.sp,
-//                        fontFamily = FontFamily.SansSerif,
-//                    )
-//                }
-//            }
+
         }
     }
 }
