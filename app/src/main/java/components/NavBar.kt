@@ -50,8 +50,8 @@ fun NavBar(navController: NavController, modifier: Modifier) {
         modifier = Modifier
             .height(1.dp)
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.onBackground)
-            .border(1.dp, MaterialTheme.colorScheme.onBackground)
+            .background(MaterialTheme.colorScheme.inverseOnSurface)
+            .border(1.dp, MaterialTheme.colorScheme.background)
             .zIndex(4f)
 
     )
@@ -60,7 +60,7 @@ fun NavBar(navController: NavController, modifier: Modifier) {
             .fillMaxWidth()
             .fillMaxHeight()
             .background(
-                MaterialTheme.colorScheme.onBackground
+                MaterialTheme.colorScheme.inverseSurface
             )
             .zIndex(1f),
     ){
@@ -91,7 +91,7 @@ fun NavBar(navController: NavController, modifier: Modifier) {
                         .size(44.dp).clickable {
                             navigateToHome(navController)
                         },
-                    tint = MaterialTheme.colorScheme.background
+                    tint = MaterialTheme.colorScheme.inverseOnSurface
                 )
 
             }
@@ -100,14 +100,14 @@ fun NavBar(navController: NavController, modifier: Modifier) {
                     .zIndex(3f)
                     .size(44.dp).clickable {
                         navigateToSearch(navController)
-                    } ,  tint = MaterialTheme.colorScheme.background)
+                    } ,  tint = MaterialTheme.colorScheme.inverseOnSurface)
             }
             item {
                 Icon(imageVector = Icons.Default.Star, contentDescription = null, modifier = Modifier
                     .zIndex(3f)
                     .size(44.dp).clickable {
                         navigateToFavorite(navController)
-                    } , tint = MaterialTheme.colorScheme.background)
+                    } , tint = MaterialTheme.colorScheme.inverseOnSurface)
 
             }
             item {
@@ -115,7 +115,7 @@ fun NavBar(navController: NavController, modifier: Modifier) {
                     .zIndex(3f)
                     .size(44.dp).clickable {
                         navigateToSettings(navController)
-                    } , tint = MaterialTheme.colorScheme.background)
+                    } , tint = MaterialTheme.colorScheme.inverseOnSurface)
 
             }
 
@@ -124,7 +124,7 @@ fun NavBar(navController: NavController, modifier: Modifier) {
                     .zIndex(3f)
                     .size(44.dp).clickable {
                         navigateToProfile(navController)
-                    } , tint = MaterialTheme.colorScheme.background)
+                    } , tint = MaterialTheme.colorScheme.inverseOnSurface)
             }
 
 //
