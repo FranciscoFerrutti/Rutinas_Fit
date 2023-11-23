@@ -7,6 +7,7 @@ class Name(
     var firstName: String,
     var lastName: String,
     var email: String,
+    var image: String,
 ) {
     fun asNetworkModel(): NetworkName {
         return NetworkName(
@@ -14,6 +15,7 @@ class Name(
             firstName = firstName,
             lastName = lastName,
             email = email,
+            image = image,
         )
     }
 }

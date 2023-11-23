@@ -1,5 +1,7 @@
 package ar.edu.itba.rutinas_fit
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -40,6 +42,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -51,8 +54,10 @@ import ar.edu.itba.rutinas_fit.data.model.Name
 //import ar.edu.itba.rutinas_fit.navigation.navigateToLogin
 
 import ar.edu.itba.rutinas_fit.util.getViewModelFactory
+import coil.compose.rememberImagePainter
 import components.NavBar
 import kotlinx.coroutines.launch
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -78,9 +83,9 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
         flag = false
     }
 
-        /*uiState.currentUser?.let {
-        it.avatarUrl
-    } ?: "No user logged in"*/
+    /*uiState.currentUser?.let {
+    it.avatarUrl
+} ?: "No user logged in"*/
     var saveChangesEnabled by remember { mutableStateOf(true) }
     val scope = rememberCoroutineScope()
 
@@ -102,6 +107,7 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -111,66 +117,41 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
                 Column(
                     horizontalAlignment = Alignment.Start
                 ) {
-                    UserProfileImage(avatarUrl) { newAvatarUrl -> avatarUrl = newAvatarUrl }
-                    Text(
-                        text = stringResource(id = R.string.select_image),
-                        color = MaterialTheme.colorScheme.background,
+                    Box(
                         modifier = Modifier
-                            .padding(start = 12.dp)
-                            .padding(top = 6.dp)
-                    )
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        UserProfileImage(avatarUrl) { newAvatarUrl -> avatarUrl = newAvatarUrl }
+                        Text(
+                            text = stringResource(id = R.string.select_image),
+                            color = MaterialTheme.colorScheme.background,
+                            modifier = Modifier
+                                .padding(start = 12.dp)
+                                .padding(top = 6.dp)
+                        )
+                    }
                 }
 
                 Spacer(modifier = Modifier.weight(1f))
 
-                Column (
-                    horizontalAlignment = Alignment.End,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Button(
-                        enabled = saveChangesEnabled,
-                        onClick = {
-                            scope.launch {
-                                saveChangesEnabled = false
-                                mainViewModel.modifyUser(Name(username, firstName, lastName, email)).invokeOnCompletion {
-                                    mainViewModel.getCurrentUser().invokeOnCompletion{
-                                        saveChangesEnabled = true
-                                    }
-                                }
-                            }
-                        },
-                        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),
-                    ) {
-                        Text(stringResource(id = R.string.save_changes), color = MaterialTheme.colorScheme.onBackground)
-                    }
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Button(
-                        onClick = {
-                            mainViewModel.logout()
-                            //if (!mainViewModel.uiState.isAuthenticated) {
-                            navigateToLogin(navController)
-                            //}
-                        },
-                        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
-                    ) {
-                        Text(stringResource(R.string.sign_out), color = MaterialTheme.colorScheme.onBackground)
-                    }
-                }
+
             }
 
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedTextField(
                 value = username,
                 onValueChange = {
-                                    if(it.length < 50){
-                                        username = it
-                                    }
-                                },
+                    if(it.length < 50){
+                        username = it
+                    }
+                },
                 label = { Text(stringResource(R.string.username), color = MaterialTheme.colorScheme.inverseOnSurface) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = textFieldColors,
 
-            )
+                )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
                 value = firstName,
@@ -183,7 +164,7 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
                 modifier = Modifier.fillMaxWidth(),
                 colors = textFieldColors,
 
-            )
+                )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
                 value = lastName,
@@ -196,24 +177,59 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
                 modifier = Modifier.fillMaxWidth(),
                 colors = textFieldColors,
 
-            )
+                )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
-                value = email,
+                value= email,
                 onValueChange = {
-                    if(it.length < 50){
+                    if (it.length < 50) {
                         email = it
                     }
                 },
                 label = { Text(stringResource(R.string.email), color = MaterialTheme.colorScheme.inverseOnSurface) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = textFieldColors,
-
             )
+            Spacer(modifier = Modifier.height(16.dp))
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+
+            ) {
+                Button(
+                    enabled = saveChangesEnabled,
+                    onClick = {
+                        scope.launch {
+                            saveChangesEnabled = false
+                            mainViewModel.modifyUser(Name(username, firstName, lastName, email, avatarUrl)).invokeOnCompletion {
+                                mainViewModel.getCurrentUser().invokeOnCompletion{
+                                    saveChangesEnabled = true
+                                }
+                            }
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),
+                    modifier = Modifier.padding(vertical = 8.dp)
+                ) {
+                    Text(stringResource(id = R.string.save_changes), color = MaterialTheme.colorScheme.onBackground)
+                }
+                Button(
+                    onClick = {
+                        mainViewModel.logout()
+                        //if (!mainViewModel.uiState.isAuthenticated) {
+                        navigateToLogin(navController)
+                        //}
+                    },
+                    colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),
+                    modifier = Modifier.padding(bottom = 8.dp)
+                ) {
+                    Text(stringResource(R.string.sign_out), color = MaterialTheme.colorScheme.onBackground)
+                }
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+
+
         }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
         Box (
             modifier = Modifier
                 .fillMaxHeight(0.14f)
@@ -230,8 +246,24 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
 }
 
 
+
 @Composable
 fun UserProfileImage(avatarUrl: String, onAvatarChange: (String) -> Unit) {
+    // Get the context
+    val context = LocalContext.current
+
+    // Create an ActivityResultLauncher to handle the image picker result
+    val imagePickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+        onResult = { uri ->
+            // Handle the selected image URI
+            uri?.let {
+                // Convert the URI to a string and pass it to the callback
+                onAvatarChange(it.toString())
+            }
+        }
+    )
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -239,10 +271,12 @@ fun UserProfileImage(avatarUrl: String, onAvatarChange: (String) -> Unit) {
             .border(2.dp, MaterialTheme.colorScheme.inverseOnSurface, CircleShape)
             .padding(16.dp)
             .clickable {
-                // TODO: Implementar lógica para cambiar la imagen de perfil
+                // Launch the image picker when the box is clicked
+                imagePickerLauncher.launch("image/*")
             }
     ) {
         if (avatarUrl.isEmpty()) {
+            // Display the default account circle icon
             Icon(
                 imageVector = Icons.Default.AccountCircle,
                 contentDescription = stringResource(R.string.select_image),
@@ -250,14 +284,12 @@ fun UserProfileImage(avatarUrl: String, onAvatarChange: (String) -> Unit) {
                 modifier = Modifier.size(118.dp)
             )
         } else {
-            // Si avatarUrl es el nombre de un recurso drawable...
-            val image = painterResource(id = R.drawable.gymimg)
-            // TODO: revisar esto con la logico a implementar
+            // Display the selected image
             Image(
-                painter = image,
+                painter = rememberImagePainter(avatarUrl),
                 contentDescription = "Avatar",
                 modifier = Modifier
-                    .size(128.dp) // Tamaño ajustado dentro del círculo
+                    .size(128.dp) // Adjusted size within the circle
                     .clip(CircleShape)
             )
         }
