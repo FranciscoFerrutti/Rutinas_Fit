@@ -274,6 +274,30 @@ class MainViewModel(
         }
     }
 
+    fun getCurrentUserRoutines() = viewModelScope.launch {
+        uiState = uiState.copy(
+            isFetching = true,
+            message = null
+        )
+        runCatching {
+            routineRepository.getCurrentUserRoutines()
+        }.onSuccess { response ->
+            Log.d("response", response.toString())
+            uiState = uiState.copy(
+                isFetching = false,
+                routines = response
+            )
+            getFavourites()
+            getTopRoutine()
+        }.onFailure { e ->
+            // Handle the error and notify the UI when appropriate.
+            uiState = uiState.copy(
+                routines = listOf(),
+                message = e.message,
+                isFetching = false)
+        }
+    }
+
 
     fun getRoutine(routineId: Int) = viewModelScope.launch {
         uiState = uiState.copy(

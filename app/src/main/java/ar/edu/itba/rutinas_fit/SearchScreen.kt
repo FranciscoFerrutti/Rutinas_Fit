@@ -58,12 +58,14 @@ import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import ar.edu.itba.rutinas_fit.classes.MainViewModel
 import ar.edu.itba.rutinas_fit.data.model.Routine
 import ar.edu.itba.rutinas_fit.data.model.getSortedRoutines
 import ar.edu.itba.rutinas_fit.navigation.Screen
 //import ar.edu.itba.rutinas_fit.navigation.navigateToRoutine
 import ar.edu.itba.rutinas_fit.ui.theme.Rutinas_FitTheme
 import ar.edu.itba.rutinas_fit.ui.theme.ThemeViewModel
+import ar.edu.itba.rutinas_fit.util.getViewModelFactory
 import components.NavBar
 import kotlinx.coroutines.selects.select
 import java.util.Date
@@ -144,16 +146,25 @@ fun SearchHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
 }
 
 @Composable
-fun SearchScreen(navController: NavController) {
+fun SearchScreen(navController: NavController, mainViewModel: MainViewModel = viewModel(factory = getViewModelFactory())) {
 
     var selectedOption by remember { mutableStateOf("") }
     var title by remember { mutableStateOf("") }
+    var flag by remember { mutableStateOf(true) }
+    if(flag) {
+        mainViewModel.getCurrentUser()
+        mainViewModel.getRoutines()
+        mainViewModel.getFavourites()
+        flag = false
+    }
+
         Box() {
             SearchHeader(
                 modifier = Modifier.background(Color.Transparent),
                 onOptionSelected = { selectedOption = it }
             )
-            val routines = listOf(
+            val routines = mainViewModel.uiState.routines
+                /*listOf(
                 Routine(
                     id = 1,
                     name = "Routine 1",
@@ -190,7 +201,7 @@ fun SearchScreen(navController: NavController) {
                     metadata = null,
                     user = null
                 )
-            )
+            )*/
             Routines(navController, routines, selectedOption)
 
             Box(

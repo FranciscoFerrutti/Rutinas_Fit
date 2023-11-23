@@ -184,7 +184,7 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
                     .zIndex(2f)
             ) {
                 Text(
-                    text = routine.name + " - " + routine.id,
+                    text = routine.name,
                     color = MaterialTheme.colorScheme.onBackground,
                     fontFamily = FontFamily.SansSerif,
                     fontSize = 18.sp,
@@ -326,7 +326,7 @@ fun HomePageScreen(navController: NavController, mainViewModel: MainViewModel = 
     var flag by remember { mutableStateOf(true) }
     if(flag) {
         mainViewModel.getCurrentUser()
-        mainViewModel.getRoutines()
+        mainViewModel.getCurrentUserRoutines()
         mainViewModel.getFavourites()
         flag = false
     }
@@ -336,11 +336,11 @@ fun HomePageScreen(navController: NavController, mainViewModel: MainViewModel = 
             onOptionSelected = { selectedOption = it }
         )
         val routines = mainViewModel.uiState.routines
-            listOf(
+            /*listOf(
             Routine(id= 1, name = "Routine 1", detail = "Details", date = Date(), isPublic = true, difficulty = "Hard", category= null, score=2, metadata = null, user = null),
             Routine(id= 1, name = "Routine 2", detail = "Details", date = Date(), isPublic = true, difficulty = "Medium", category= null, score=2, metadata = null, user = null),
             Routine(id= 1, name = "Routine 3", detail = "Details", date = Date(), isPublic = true, difficulty = "Easy", category= null, score=2, metadata = null, user = null)
-        )
+        )*/
         Routines(navController,routines, selectedOption)
 
         Box (

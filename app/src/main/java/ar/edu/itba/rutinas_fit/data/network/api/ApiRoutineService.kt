@@ -12,6 +12,9 @@ interface ApiRoutineService {
     @GET("routines")
     suspend fun getRoutines() : Response<NetworkPagedContent<NetworkRoutine>>
 
+    @GET("users/current/routines")
+    suspend fun getCurrentUserRoutines() : Response<NetworkPagedContent<NetworkRoutine>>
+
     @POST("routines")
     suspend fun addRoutine(@Body routine: NetworkRoutine) : Response<NetworkRoutine>
 
