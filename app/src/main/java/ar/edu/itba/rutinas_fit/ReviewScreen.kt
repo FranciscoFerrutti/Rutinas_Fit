@@ -52,18 +52,11 @@ fun ReviewScreen(navController: NavController, mainViewModel: MainViewModel = vi
     var rating by remember { mutableIntStateOf(0) }
     var flag by remember { mutableStateOf(true) }
     var review by remember { mutableStateOf("") }
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(
-            brush = Brush.linearGradient(
-                colors = listOf(
-                    MaterialTheme.colorScheme.background,
-                    MaterialTheme.colorScheme.primary
-                ),
-                start = Offset(x = 0f, y = 0f),
-                end = Offset.Infinite
-            )
-        )){
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background) // Use the background color from UserProfileScreen
+    ){
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)){
@@ -71,7 +64,7 @@ fun ReviewScreen(navController: NavController, mainViewModel: MainViewModel = vi
             // There must be also a 5 star rating system
             // And a button to submit the review
             OutlinedTextField(value = review, onValueChange = { review = it }, label = { stringResource(id = R.string.review) },
-                modifier = Modifier.fillMaxWidth().fillMaxHeight(0.5f), textStyle = androidx.compose.ui.text.TextStyle(color = MaterialTheme.colorScheme.onBackground),
+                modifier = Modifier.fillMaxWidth().fillMaxHeight(0.5f), textStyle = androidx.compose.ui.text.TextStyle(color = MaterialTheme.colorScheme.inverseOnSurface),
             //        .align(alignment = androidx.compose.ui.Alignment.CenterHorizontally)
             )
 
