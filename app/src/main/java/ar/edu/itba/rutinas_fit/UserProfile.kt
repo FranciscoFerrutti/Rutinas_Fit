@@ -61,7 +61,7 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
     var lastName = uiState.currentUser?.lastName ?: "No user logged in"
     var email = uiState.currentUser?.email ?: "No user logged in"
     var username = uiState.currentUser?.username ?: "No user logged in"
-    var avatarUrl = "" /*uiState.currentUser?.let {
+    var avatarUrl = uiState.currentUser?.avatarUrl ?: "No user logged in" /*uiState.currentUser?.let {
         it.avatarUrl
     } ?: "No user logged in"*/
 
