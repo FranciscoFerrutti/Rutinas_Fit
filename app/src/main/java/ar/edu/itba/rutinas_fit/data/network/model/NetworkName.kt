@@ -14,6 +14,8 @@ class NetworkName (
     var lastName: String,
     @SerializedName("email")
     var email: String,
+    @SerializedName("avatarUrl")
+    var image: String,
 ) {
 
     fun asModel() : Name {
@@ -22,6 +24,7 @@ class NetworkName (
             firstName = firstName,
             lastName = lastName,
             email = email,
+            image = image,
         )
     }
 }

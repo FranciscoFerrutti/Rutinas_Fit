@@ -126,7 +126,7 @@ fun ExerciseElem(modifier : Modifier, imageResourceId: Int, cycleExercise : Cycl
                         item {
                             Text(
                                 text = cycleExercise.exercise.name,
-                                color = MaterialTheme.colorScheme.onBackground,
+                                color = MaterialTheme.colorScheme.inverseOnSurface,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 18.sp,
                                 modifier = Modifier
@@ -135,7 +135,7 @@ fun ExerciseElem(modifier : Modifier, imageResourceId: Int, cycleExercise : Cycl
                         item {
                             Text(
                                 text = repStr,
-                                color = MaterialTheme.colorScheme.onBackground,
+                                color = MaterialTheme.colorScheme.inverseOnSurface,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 14.sp,
                                 modifier = Modifier
@@ -257,7 +257,7 @@ fun RoutineScreen(navController : NavController, routineId : String, mainViewMod
                             ) {
                             Text(
                                 text = routine!!.name,
-                                color = MaterialTheme.colorScheme.onBackground,
+                                color = MaterialTheme.colorScheme.inverseOnSurface,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 26.sp,
                                 modifier = Modifier
@@ -268,7 +268,7 @@ fun RoutineScreen(navController : NavController, routineId : String, mainViewMod
 
                             Text(
                                 text = "@${routine.user!!.username}",
-                                color = MaterialTheme.colorScheme.onBackground,
+                                color = MaterialTheme.colorScheme.inverseOnSurface,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 18.sp,
                                 modifier = Modifier
@@ -329,7 +329,7 @@ fun RoutineScreen(navController : NavController, routineId : String, mainViewMod
                                             modifier = Modifier
                                                 .zIndex(3f)
                                                 .size(34.dp),
-                                            tint = MaterialTheme.colorScheme.onBackground
+                                            tint = MaterialTheme.colorScheme.inverseOnSurface
                                         )
                                     } else {
                                         Icon(
@@ -361,7 +361,7 @@ fun RoutineScreen(navController : NavController, routineId : String, mainViewMod
                                             modifier = Modifier
                                                 .zIndex(3f)
                                                 .size(34.dp),
-                                            tint = MaterialTheme.colorScheme.onBackground
+                                            tint = MaterialTheme.colorScheme.inverseOnSurface
                                         )
                                     } else {
                                         Icon(

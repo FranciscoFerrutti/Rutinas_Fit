@@ -31,7 +31,7 @@ private val LightColorScheme = lightColorScheme(
     secondary = DarkGreen,
     background = Color(235,235,235),
     onBackground = Color(245,245,245),
-    surface = LightGray,
+    surface = Color(0.8f,0.8f,0.8f,0.8f),
     inverseOnSurface = Color(40,40,40),
     inverseSurface = Color(245,245,245),
 )
