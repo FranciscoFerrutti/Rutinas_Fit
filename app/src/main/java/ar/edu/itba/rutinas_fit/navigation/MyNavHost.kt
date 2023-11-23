@@ -1,7 +1,9 @@
 package ar.edu.itba.rutinas_fit.navigation
 
 
+import android.util.Log
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -18,7 +20,9 @@ import ar.edu.itba.rutinas_fit.SearchScreen
 import ar.edu.itba.rutinas_fit.SettingsScreen
 import ar.edu.itba.rutinas_fit.UserProfileScreen
 import ar.edu.itba.rutinas_fit.ui.theme.ThemeViewModel
+import ar.edu.itba.rutinas_fit.classes.MainViewModel
 import ar.edu.itba.rutinas_fit.data.model.Routine
+import ar.edu.itba.rutinas_fit.util.getViewModelFactory
 
 
 
@@ -26,14 +30,15 @@ import ar.edu.itba.rutinas_fit.data.model.Routine
 fun MyNavHost(
     startDestination: String = "home",
     themeViewModel: ThemeViewModel,
-    navController: NavHostController
+    navController: NavHostController,
+    mainViewModel: MainViewModel = viewModel(factory = getViewModelFactory())
 ) {
     NavHost(
         navController = navController ,
         startDestination = startDestination
     ) {
         composable(Screen.Home.route) {
-            HomePageScreen(navController)
+            HomePageScreen(navController, mainViewModel)
         }/*
         composable(Screen.Search.route) {
             val imageResource = R.drawable.gymimg
@@ -88,7 +93,7 @@ fun MyNavHost(
             SettingsScreen(navController, themeViewModel)
         }
         composable(Screen.Review.route){
-            ReviewScreen(navController)
+            ReviewScreen(navController, mainViewModel)
         }
 
     }

@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,8 +50,8 @@ fun NavBar(navController: NavController, modifier: Modifier) {
         modifier = Modifier
             .height(1.dp)
             .fillMaxWidth()
-            .background(Color(1f, 1f, 1f, 0.1f))
-            .border(1.dp, Color(1f, 1f, 1f, 0.1f))
+            .background(MaterialTheme.colorScheme.onBackground)
+            .border(1.dp, MaterialTheme.colorScheme.onBackground)
             .zIndex(4f)
 
     )
@@ -59,7 +60,7 @@ fun NavBar(navController: NavController, modifier: Modifier) {
             .fillMaxWidth()
             .fillMaxHeight()
             .background(
-                Color(20, 20, 20)
+                MaterialTheme.colorScheme.onBackground
             )
             .zIndex(1f),
     ){
@@ -90,7 +91,7 @@ fun NavBar(navController: NavController, modifier: Modifier) {
                         .size(44.dp).clickable {
                             navigateToHome(navController)
                         },
-                    tint = Color.White
+                    tint = MaterialTheme.colorScheme.background
                 )
 
             }
@@ -99,14 +100,14 @@ fun NavBar(navController: NavController, modifier: Modifier) {
                     .zIndex(3f)
                     .size(44.dp).clickable {
                         navigateToSearch(navController)
-                    } ,  tint = Color.White)
+                    } ,  tint = MaterialTheme.colorScheme.background)
             }
             item {
                 Icon(imageVector = Icons.Default.Star, contentDescription = null, modifier = Modifier
                     .zIndex(3f)
                     .size(44.dp).clickable {
                         navigateToFavorite(navController)
-                    } , tint = Color.White)
+                    } , tint = MaterialTheme.colorScheme.background)
 
             }
             item {
@@ -114,7 +115,7 @@ fun NavBar(navController: NavController, modifier: Modifier) {
                     .zIndex(3f)
                     .size(44.dp).clickable {
                         navigateToSettings(navController)
-                    } , tint = Color.White)
+                    } , tint = MaterialTheme.colorScheme.background)
 
             }
 
@@ -123,7 +124,7 @@ fun NavBar(navController: NavController, modifier: Modifier) {
                     .zIndex(3f)
                     .size(44.dp).clickable {
                         navigateToProfile(navController)
-                    } , tint = Color.White)
+                    } , tint = MaterialTheme.colorScheme.background)
             }
 
 //

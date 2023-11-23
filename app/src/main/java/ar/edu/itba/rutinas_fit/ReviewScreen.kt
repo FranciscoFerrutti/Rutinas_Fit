@@ -1,5 +1,6 @@
 package ar.edu.itba.rutinas_fit
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -37,22 +38,27 @@ import ar.edu.itba.rutinas_fit.classes.MainViewModel
 import ar.edu.itba.rutinas_fit.data.model.Review
 import ar.edu.itba.rutinas_fit.util.getViewModelFactory
 import kotlinx.coroutines.launch
+import android.content.Context
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 
 
 @Composable
 fun ReviewScreen(navController: NavController, mainViewModel: MainViewModel = viewModel(factory = getViewModelFactory())){
+    Log.d("ReviewScreen", "routineId: ${mainViewModel.uiState.currentRoutine?.id}")
+    val routine = mainViewModel.uiState.currentRoutine
+    val scope = rememberCoroutineScope()
     var rating by remember { mutableIntStateOf(0) }
     var flag by remember { mutableStateOf(true) }
     var review by remember { mutableStateOf("") }
-    val scope = rememberCoroutineScope()
-    val routine = mainViewModel.uiState.currentRoutine
     Box(modifier = Modifier
         .fillMaxSize()
         .background(
             brush = Brush.linearGradient(
                 colors = listOf(
-                    Color(0xFF000000),
-                    Color(0xFF007f00)
+                    MaterialTheme.colorScheme.background,
+                    MaterialTheme.colorScheme.primary
                 ),
                 start = Offset(x = 0f, y = 0f),
                 end = Offset.Infinite
@@ -64,36 +70,37 @@ fun ReviewScreen(navController: NavController, mainViewModel: MainViewModel = vi
             // Here we need a big text field for the user to write the review
             // There must be also a 5 star rating system
             // And a button to submit the review
-            OutlinedTextField(value = "", onValueChange = { review = it }, label = { stringResource(id = R.string.review) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(alignment = androidx.compose.ui.Alignment.CenterHorizontally))
-            Spacer(modifier = Modifier.height(12.dp))
-            Row(){
+            OutlinedTextField(value = review, onValueChange = { review = it }, label = { stringResource(id = R.string.review) },
+                modifier = Modifier.fillMaxWidth().fillMaxHeight(0.5f), textStyle = androidx.compose.ui.text.TextStyle(color = MaterialTheme.colorScheme.onBackground),
+            //        .align(alignment = androidx.compose.ui.Alignment.CenterHorizontally)
+            )
+
+            Row(modifier = Modifier.fillMaxWidth().align(alignment = androidx.compose.ui.Alignment.CenterHorizontally)){
                 repeat(5) { index ->
                     Icon(
                         imageVector = Icons.Outlined.Star,
                         contentDescription = null,
                         tint = if (index < rating) Color.Yellow else Color.Gray,
-                        modifier = Modifier
-                            .size(24.dp)
+                        modifier = Modifier.size(42.dp)//.align(alignment = androidx.compose.ui.Alignment.CenterVertically)
                             .clickable {
-                                // Set the rating to the clicked star index + 1
                                 rating = index + 1
-                                // TODO: Make API call to update exercise rating
-                                // Example: api.updateExerciseRating(routine.id, rating)
                             }
                     )
                 }
             }
+            Spacer(modifier = Modifier.height(2.dp))
             Button(onClick = {
                 scope.launch {
                     mainViewModel.reviewRoutine(
                         Review((rating * 2), review),
                         routine?.id?: 0
-                    )
+                    ).invokeOnCompletion {
+                        review = ""
+                        navController.popBackStack()
+                    }
                 }
-            }) {
+            }, modifier = Modifier.fillMaxWidth().align(alignment = androidx.compose.ui.Alignment.CenterHorizontally),
+                colors= ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)){
                 Text(text = stringResource(id = R.string.submit_review))
             }
         }

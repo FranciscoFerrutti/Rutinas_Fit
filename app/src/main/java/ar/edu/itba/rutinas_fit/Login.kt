@@ -111,7 +111,7 @@ fun LoginRegisterScreen(navController: NavController, mainViewModel: MainViewMod
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
-
+    var scope = rememberCoroutineScope()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -199,8 +199,9 @@ fun LoginRegisterScreen(navController: NavController, mainViewModel: MainViewMod
 
                 // Continue with registration or login based on the mode
                 if (isLoginMode) {
-                    mainViewModel.login(username, password, navController)
-
+                    scope.launch {
+                        mainViewModel.login(username, password, navController)
+                    }
                     // navigateToHome(navController)
                 } else {
                     handleRegister(
