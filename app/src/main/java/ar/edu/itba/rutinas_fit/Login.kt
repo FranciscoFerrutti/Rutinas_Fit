@@ -38,10 +38,11 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import ar.edu.itba.rutinas_fit.navigation.navigateToHome
+//import ar.edu.itba.rutinas_fit.navigation.navigateToHome
 import androidx.compose.ui.tooling.preview.Preview
 import ar.edu.itba.rutinas_fit.classes.MainViewModel
 import ar.edu.itba.rutinas_fit.navigation.Screen
+import ar.edu.itba.rutinas_fit.navigation.Screen.Exercise.route
 import ar.edu.itba.rutinas_fit.util.ViewModelFactory
 import ar.edu.itba.rutinas_fit.util.getViewModelFactory
 import kotlinx.coroutines.launch
@@ -101,6 +102,7 @@ fun loginContinueButton(navController: NavController,viewModel : MainViewModel, 
 
 @Composable
 fun LoginRegisterScreen(navController: NavController, mainViewModel: MainViewModel = viewModel(factory = getViewModelFactory())) {
+
     var isLoginMode by remember { mutableStateOf(true) }
     var name by remember { mutableStateOf("") }
     var username by remember { mutableStateOf("") }

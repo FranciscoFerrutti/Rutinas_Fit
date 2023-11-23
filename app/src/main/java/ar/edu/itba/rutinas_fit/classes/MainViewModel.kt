@@ -10,7 +10,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import ar.edu.itba.rutinas_fit.data.model.*
 import ar.edu.itba.rutinas_fit.data.repository.*
-import ar.edu.itba.rutinas_fit.navigation.navigateToHome
+import ar.edu.itba.rutinas_fit.navigateToHome
+//import ar.edu.itba.rutinas_fit.navigation.navigateToHome
 import ar.edu.itba.rutinas_fit.util.SessionManager
 import kotlinx.coroutines.launch
 
@@ -274,7 +275,7 @@ class MainViewModel(
     }
 
 
-    fun getRoutine(routineId: Int) = viewModelScope.launch {
+    suspend fun getRoutine(routineId: Int) = viewModelScope.launch {
         uiState = uiState.copy(
             isFetching = true,
             message = null
@@ -304,7 +305,7 @@ class MainViewModel(
                 maxRating = (curr.score ?: 0)
             }
         }
-        return routine;
+        return routine
     }
 
     suspend fun reviewRoutine(review: Review, id : Int) = viewModelScope.launch{

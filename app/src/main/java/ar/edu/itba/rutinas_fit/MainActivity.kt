@@ -1,6 +1,9 @@
 package ar.edu.itba.rutinas_fit
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -50,10 +53,35 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import ar.edu.itba.rutinas_fit.classes.MainViewModel
 import ar.edu.itba.rutinas_fit.navigation.MyNavHost
 import ar.edu.itba.rutinas_fit.navigation.Screen
 import ar.edu.itba.rutinas_fit.ui.theme.ThemeViewModel
+
+import ar.edu.itba.rutinas_fit.util.getViewModelFactory
+@Composable
+fun MyNavHost2(
+    startDestination: String = "home",
+    navController: NavHostController
+) {
+    NavHost(
+        navController = navController ,
+        startDestination = startDestination
+    ) {
+        composable(Screen.Routine.route + "/{routineId}") {backStackEntry ->
+            val routineId = backStackEntry.arguments?.getString("routineId")
+            RoutineScreen(navController, routineId.orEmpty())
+        }
+        composable(Screen.Home.route) {
+            HomePageScreen(navController)
+        }
+
+
+    }
+}
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,11 +101,79 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+
                     val context = LocalContext.current
                     val navController = rememberNavController()
-                    MyNavHost(startDestination = Screen.Home.route, themeViewModel = themeViewModel)
+
+                    val mainViewModel = viewModel<MainViewModel>(factory = getViewModelFactory())
+
+                    // Check if the activity was started by a deep link
+                    if (Intent.ACTION_VIEW == intent.action) {
+                        val uri = intent.data
+                        if (uri != null) {
+                            // Extract data from the URI and navigate to the appropriate screen
+                            MyNavHost(navController = navController, themeViewModel = themeViewModel, startDestination = Screen.Home.route)
+                            handleDeepLink(uri, navController)
+                        }
+                    } else {
+                        // If not a deep link, check the authentication state
+                        if (!mainViewModel.uiState.isAuthenticated) {
+                            MyNavHost(navController = navController, themeViewModel = themeViewModel, startDestination = Screen.Login.route)
+                        } else {
+                            MyNavHost(navController = navController, themeViewModel = themeViewModel, startDestination = Screen.Home.route)
+                        }
+                    }
                 }
             }
         }
     }
+
+    private fun handleDeepLink(uri: Uri, navController: NavHostController) {
+        val pathSegments = uri.pathSegments
+        val lastSegment = pathSegments.lastOrNull()
+
+        // Check if the last segment is not null or blank before navigating
+        if (!lastSegment.isNullOrBlank()) {
+            navigateToRoutine2(navController, lastSegment)
+        } else {
+            // Handle the case when the last segment is not provided or blank
+            // You might want to navigate to a default screen or show an error message
+            Log.e("DeepLink", "Invalid routineId provided in the deep link")
+        }
+    }
+}
+fun navigateToRoutine2(navController : NavController, routineId : String){
+    navController.navigate("${Screen.Routine.route}/$routineId")
+}
+fun navigateToRoutine(navController : NavController, routineId : String){
+    navController.navigate("${Screen.Routine.route}/$routineId")
+}
+fun navigateToFavorite(navController : NavController){
+    navController.navigate(Screen.Favorite.route)
+}
+
+fun navigateToSettings(navController : NavController){
+    navController.navigate(Screen.Settings.route)
+}
+
+fun navigateToHome(navController : NavController){
+    navController.navigate(Screen.Home.route)
+}
+
+fun navigateToExercise(navController : NavController,routineId : String){
+    navController.navigate("${Screen.Exercise.route}/$routineId")
+}
+
+fun navigateToRest(navController : NavController){
+    navController.navigate(Screen.Rest.route)
+}
+fun navigateToSearch(navController : NavController){
+    navController.navigate(Screen.Search.route)
+}
+
+fun navigateToProfile(navController: NavController) {
+    navController.navigate(Screen.Profile.route)
+}
+fun navigateToLogin(navController: NavController) {
+    navController.navigate(Screen.Login.route)
 }
