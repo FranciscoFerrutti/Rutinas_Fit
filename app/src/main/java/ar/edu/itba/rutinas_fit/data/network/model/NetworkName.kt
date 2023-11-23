@@ -6,16 +6,22 @@ import com.google.gson.annotations.SerializedName
 import java.util.*
 
 class NetworkName (
+    @SerializedName("username")
+    var username: String,
     @SerializedName("firstName")
     var firstName: String,
     @SerializedName("lastName")
     var lastName: String,
+    @SerializedName("email")
+    var email: String,
 ) {
 
     fun asModel() : Name {
         return Name(
+            username = username,
             firstName = firstName,
             lastName = lastName,
+            email = email,
         )
     }
 }

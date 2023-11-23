@@ -32,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,30 +41,48 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import ar.edu.itba.rutinas_fit.classes.MainViewModel
+import ar.edu.itba.rutinas_fit.data.model.Name
 //import ar.edu.itba.rutinas_fit.navigation.navigateToLogin
 
 import ar.edu.itba.rutinas_fit.util.getViewModelFactory
 import components.NavBar
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel = viewModel(factory = getViewModelFactory())) {
     //var firstName by remember { mutableStateOf("") }
     // Get the firstName from the logged in user, by using the UserViewModel
-    mainViewModel.getCurrentUser() // WE NEED to call getCurrentUser to fetch the data
     val uiState = mainViewModel.uiState
-    var firstName = uiState.currentUser?.firstName ?: "No user logged in"
-    var lastName = uiState.currentUser?.lastName ?: "No user logged in"
-    var email = uiState.currentUser?.email ?: "No user logged in"
-    var username = uiState.currentUser?.username ?: "No user logged in"
-    var avatarUrl = uiState.currentUser?.avatarUrl ?: "No user logged in" /*uiState.currentUser?.let {
+    var firstName by remember { mutableStateOf("") }
+    var flag by remember { mutableStateOf(true) }
+    var lastName by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var username by remember { mutableStateOf("") }
+    var avatarUrl by remember { mutableStateOf("") }
+    if(flag && mainViewModel.uiState.isAuthenticated && firstName == "") {
+        mainViewModel.getCurrentUser().invokeOnCompletion {
+            firstName = uiState.currentUser?.firstName ?: ""
+            lastName = uiState.currentUser?.lastName ?: ""
+            email = uiState.currentUser?.email ?: ""
+            username = uiState.currentUser?.username ?: ""
+            avatarUrl = uiState.currentUser?.avatarUrl ?: ""
+        }
+    } else {
+        flag = false
+    }
+
+        /*uiState.currentUser?.let {
         it.avatarUrl
     } ?: "No user logged in"*/
+    var saveChangesEnabled by remember { mutableStateOf(true) }
+    val scope = rememberCoroutineScope()
 
     val textFieldColors = TextFieldDefaults.outlinedTextFieldColors(
         cursorColor = MaterialTheme.colorScheme.onBackground,
@@ -103,7 +122,7 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
                 ) {
                     UserProfileImage(avatarUrl) { newAvatarUrl -> avatarUrl = newAvatarUrl }
                     Text(
-                        text = "Cambiar avatar",
+                        text = stringResource(id = R.string.select_image),
                         color = MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier
                             .padding(start = 12.dp)
@@ -118,12 +137,20 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
                     verticalArrangement = Arrangement.Center
                 ) {
                     Button(
+                        enabled = saveChangesEnabled,
                         onClick = {
-                            // TODO: Implementar lógica para guardar los cambios
+                            scope.launch {
+                                saveChangesEnabled = false
+                                mainViewModel.modifyUser(Name(username, firstName, lastName, email)).invokeOnCompletion {
+                                    mainViewModel.getCurrentUser().invokeOnCompletion{
+                                        saveChangesEnabled = true
+                                    }
+                                }
+                            }
                         },
                         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),
                     ) {
-                        Text("Guardar Cambios", color = MaterialTheme.colorScheme.background)
+                        Text(stringResource(id = R.string.save_changes), color = MaterialTheme.colorScheme.background)
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     Button(
@@ -135,7 +162,7 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
                         },
                         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.onBackground)
                     ) {
-                        Text("Cerrar Sesión", color = MaterialTheme.colorScheme.background)
+                        Text(stringResource(R.string.sign_out), color = MaterialTheme.colorScheme.background)
                     }
                 }
             }
@@ -143,38 +170,54 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedTextField(
                 value = username,
-                onValueChange = { username = it },
-                label = { Text("Nombre de usuario", color = MaterialTheme.colorScheme.onBackground) },
+                onValueChange = {
+                                    if(it.length < 50){
+                                        username = it
+                                    }
+                                },
+                label = { Text(stringResource(R.string.username), color = MaterialTheme.colorScheme.onBackground) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = textFieldColors,
-                readOnly = true,
+
             )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
                 value = firstName,
-                onValueChange = { firstName = it },
-                label = { Text("Nombre", color = MaterialTheme.colorScheme.onBackground) },
+                onValueChange = {
+                    if(it.length < 50){
+                        firstName = it
+                    }
+                },
+                label = { Text(stringResource(R.string.firstname), color = MaterialTheme.colorScheme.onBackground) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = textFieldColors,
-                readOnly = true,
+
             )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
                 value = lastName,
-                onValueChange = { lastName = it },
-                label = { Text("Apellido", color = MaterialTheme.colorScheme.onBackground) },
+                onValueChange = {
+                    if(it.length < 50){
+                        lastName = it
+                    }
+                },
+                label = { Text(stringResource(R.string.lastname), color = MaterialTheme.colorScheme.onBackground) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = textFieldColors,
-                readOnly = true,
+
             )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
                 value = email,
-                onValueChange = { email = it },
-                label = { Text("Email", color = MaterialTheme.colorScheme.onBackground) },
+                onValueChange = {
+                    if(it.length < 50){
+                        email = it
+                    }
+                },
+                label = { Text(stringResource(R.string.email), color = MaterialTheme.colorScheme.onBackground) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = textFieldColors,
-                readOnly = true,
+
             )
         }
 
@@ -211,7 +254,7 @@ fun UserProfileImage(avatarUrl: String, onAvatarChange: (String) -> Unit) {
         if (avatarUrl.isEmpty()) {
             Icon(
                 imageVector = Icons.Default.AccountCircle,
-                contentDescription = "Cambiar avatar",
+                contentDescription = stringResource(R.string.select_image),
                 tint = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.size(118.dp)
             )

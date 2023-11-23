@@ -34,5 +34,10 @@
     <string name="invalid_field">USUARIO O CONTRASEÑA INVÁLIDOS</string>
     <string name="review">Calificar</string>
     <string name="submit_review">Enviar Calificación</string>
+    <string name="select_image">Elegir imagen</string>
+    <string name="username">Nombre de usuario</string>
+    <string name="firstname">Primer nombre</string>
+    <string name="lastname">Apellido</string>
+    <string name="email">Email</string>
 
 </resources>

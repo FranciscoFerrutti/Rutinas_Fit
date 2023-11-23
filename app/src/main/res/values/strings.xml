@@ -33,5 +33,10 @@
     <string name="invalid_field">INVALID USERNAME OR PASSWORD</string>
     <string name="review">Review</string>
     <string name="submit_review">Send review</string>
+    <string name="select_image">Select image</string>
+    <string name="username">Username</string>
+    <string name="firstname">First name</string>
+    <string name="lastname">Last name</string>
+    <string name="email">Email</string>
 
 </resources>
