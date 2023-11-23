@@ -44,7 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import ar.edu.itba.rutinas_fit.classes.MainViewModel
-import ar.edu.itba.rutinas_fit.navigation.navigateToLogin
+//import ar.edu.itba.rutinas_fit.navigation.navigateToLogin
 
 import ar.edu.itba.rutinas_fit.util.getViewModelFactory
 import components.NavBar

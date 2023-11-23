@@ -10,7 +10,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import ar.edu.itba.rutinas_fit.data.model.*
 import ar.edu.itba.rutinas_fit.data.repository.*
-import ar.edu.itba.rutinas_fit.navigation.navigateToHome
+import ar.edu.itba.rutinas_fit.navigateToHome
+//import ar.edu.itba.rutinas_fit.navigation.navigateToHome
 import ar.edu.itba.rutinas_fit.util.SessionManager
 import kotlinx.coroutines.launch
 
