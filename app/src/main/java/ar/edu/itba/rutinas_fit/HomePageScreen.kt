@@ -336,12 +336,12 @@ fun HomePageScreen(navController: NavController, mainViewModel: MainViewModel = 
             onOptionSelected = { selectedOption = it }
         )
         val routines = mainViewModel.uiState.routines
-            /*listOf(
+            listOf(
             Routine(id= 1, name = "Routine 1", detail = "Details", date = Date(), isPublic = true, difficulty = "Hard", category= null, score=2, metadata = null, user = null),
             Routine(id= 1, name = "Routine 2", detail = "Details", date = Date(), isPublic = true, difficulty = "Medium", category= null, score=2, metadata = null, user = null),
             Routine(id= 1, name = "Routine 3", detail = "Details", date = Date(), isPublic = true, difficulty = "Easy", category= null, score=2, metadata = null, user = null)
-        )*/
-        Routines(navController,routines, selectedOption, mainViewModel = mainViewModel)
+        )
+        Routines(navController,routines, selectedOption)
 
         Box (
             modifier = Modifier
