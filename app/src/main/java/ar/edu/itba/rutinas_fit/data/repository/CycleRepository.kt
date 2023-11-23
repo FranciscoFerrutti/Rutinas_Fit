@@ -1,6 +1,7 @@
 package ar.edu.itba.rutinas_fit.data.repository
 
 
+import android.util.Log
 import ar.edu.itba.rutinas_fit.data.model.Cycle
 import ar.edu.itba.rutinas_fit.data.network.CycleRemoteDataSource
 import kotlinx.coroutines.delay
@@ -19,6 +20,7 @@ class CycleRepository(
     suspend fun getCycles(routineId: Int): List<Cycle> {
 
             val result = remoteDataSource.getCycles(routineId)
+
             // Thread-safe write to latestNews
             cyclesMutex.withLock {
                 this.cycles = result.content.map { it.asModel() }

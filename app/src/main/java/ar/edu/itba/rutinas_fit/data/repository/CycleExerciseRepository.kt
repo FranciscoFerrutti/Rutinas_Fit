@@ -1,5 +1,6 @@
 package ar.edu.itba.rutinas_fit.data.repository
 
+import android.util.Log
 import ar.edu.itba.rutinas_fit.data.model.Cycle
 import ar.edu.itba.rutinas_fit.data.model.CycleExercise
 import ar.edu.itba.rutinas_fit.data.network.CycleExerciseRemoteDataSource
@@ -20,6 +21,8 @@ class CycleExerciseRepository(
     suspend fun getCycleExercises(cycleId: Int): List<CycleExercise> {
 
             val result = remoteDataSource.getCycleExercises(cycleId)
+            Log.wtf("Asd","Asd")
+
             // Thread-safe write to latestNews
             cyclesMutex.withLock {
                 this.cycleExercises = result.content.map { it.asModel() }
