@@ -100,7 +100,7 @@ fun ReviewScreen(navController: NavController, mainViewModel: MainViewModel = vi
                     }
                 }
             }, modifier = Modifier.fillMaxWidth().align(alignment = androidx.compose.ui.Alignment.CenterHorizontally),
-                colors= ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)){
+                colors= ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)){
                 Text(text = stringResource(id = R.string.submit_review))
             }
         }

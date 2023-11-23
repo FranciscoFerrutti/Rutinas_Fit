@@ -144,7 +144,7 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
             OutlinedTextField(
                 value = username,
                 onValueChange = { username = it },
-                label = { Text("Nombre de usuario", color = Color.White) },
+                label = { Text("Nombre de usuario", color = MaterialTheme.colorScheme.onBackground) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = textFieldColors,
                 readOnly = true,
@@ -153,7 +153,7 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
             OutlinedTextField(
                 value = firstName,
                 onValueChange = { firstName = it },
-                label = { Text("Nombre", color = Color.White) },
+                label = { Text("Nombre", color = MaterialTheme.colorScheme.onBackground) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = textFieldColors,
                 readOnly = true,
@@ -162,7 +162,7 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
             OutlinedTextField(
                 value = lastName,
                 onValueChange = { lastName = it },
-                label = { Text("Apellido", color = Color.White) },
+                label = { Text("Apellido", color = MaterialTheme.colorScheme.onBackground) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = textFieldColors,
                 readOnly = true,
@@ -171,7 +171,7 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text("Email", color = Color.White) },
+                label = { Text("Email", color = MaterialTheme.colorScheme.onBackground) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = textFieldColors,
                 readOnly = true,
@@ -202,7 +202,7 @@ fun UserProfileImage(avatarUrl: String, onAvatarChange: (String) -> Unit) {
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .size(150.dp)
-            .border(2.dp, Color.White, CircleShape)
+            .border(2.dp, MaterialTheme.colorScheme.onBackground, CircleShape)
             .padding(16.dp)
             .clickable {
                 // TODO: Implementar lógica para cambiar la imagen de perfil
@@ -212,7 +212,7 @@ fun UserProfileImage(avatarUrl: String, onAvatarChange: (String) -> Unit) {
             Icon(
                 imageVector = Icons.Default.AccountCircle,
                 contentDescription = "Cambiar avatar",
-                tint = Color.White,
+                tint = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.size(118.dp)
             )
         } else {

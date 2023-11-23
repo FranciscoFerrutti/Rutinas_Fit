@@ -164,7 +164,6 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
              themeViewModel: ThemeViewModel = viewModel()) {
     val backgroundImage: Painter = painterResource(id = imageResourceId)
     var isFavorite = favInitialStatus
-    Rutinas_FitTheme(themeViewModel = themeViewModel) {
 
     Box(
             modifier = Modifier
@@ -233,7 +232,7 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
                             Icon(
                                 imageVector = Icons.Filled.Share,
                                 contentDescription = null,
-                                tint = Color.White,
+                                tint = MaterialTheme.colorScheme.onBackground,
                                 modifier = Modifier
                                     .size(24.dp)
                                     .clickable {
@@ -243,17 +242,6 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
 
 
                         }
-
-                        Icon(
-                            imageVector = Icons.Filled.Share,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onBackground,
-                            modifier = Modifier
-                                .size(24.dp)
-                                .clickable {
-                                    // TODO: Share routine
-                                }
-                        )
 
                         // Favorite star
                         Icon(
@@ -299,7 +287,6 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
                 Text(stringResource(R.string.review), fontSize = 20.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Justify)
             }
         }
-    }
 }
 
 
