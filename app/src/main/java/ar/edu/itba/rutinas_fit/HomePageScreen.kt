@@ -92,16 +92,7 @@ fun MainHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
         modifier = Modifier
             .fillMaxWidth()
             .height(Dp(70f))
-            .background(
-                brush = Brush.linearGradient(
-                    colors = listOf(
-                        MaterialTheme.colorScheme.background,
-                        MaterialTheme.colorScheme.primary
-                    ),
-                    start = Offset(x = 0f, y = 0f),
-                    end = Offset.Infinite,
-                )
-            )
+            .background(MaterialTheme.colorScheme.primary)
             .zIndex(1f)
     ){
         Row (modifier = Modifier
@@ -185,25 +176,25 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
             ) {
                 Text(
                     text = routine.name + " - " + routine.id,
-                    color = MaterialTheme.colorScheme.onBackground,
+                    color = MaterialTheme.colorScheme.inverseOnSurface,
                     fontFamily = FontFamily.SansSerif,
                     fontSize = 18.sp,
                     modifier = Modifier
                         .padding(horizontal = Dp(8f), vertical = 5.dp)
                 )
                 Text(
-                    text = routine.difficulty?.replaceFirstChar {
+                    text = "▮"+ routine.difficulty?.replaceFirstChar {
                         if (it.isLowerCase()) it.titlecase(
                             Locale.ROOT
                         ) else it.toString()
                     }
                         ?: "",
-                    color = MaterialTheme.colorScheme.primary,
+                    color = MaterialTheme.colorScheme.secondary,
                     fontFamily = FontFamily.SansSerif,
                     fontSize = 16.sp,
                     modifier = Modifier
                         .align(Alignment.BottomStart)
-                        .padding(horizontal = Dp(10f), vertical = Dp(4f))
+                        .padding(horizontal = Dp(1f), vertical = Dp(4f))
                 )
                 Box(
                     modifier = Modifier
@@ -232,7 +223,7 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
                             Icon(
                                 imageVector = Icons.Filled.Share,
                                 contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onBackground,
+                                tint = MaterialTheme.colorScheme.inverseOnSurface,
                                 modifier = Modifier
                                     .size(24.dp)
                                     .clickable {

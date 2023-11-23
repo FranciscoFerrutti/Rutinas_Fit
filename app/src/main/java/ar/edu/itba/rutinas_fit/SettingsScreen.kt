@@ -59,7 +59,7 @@ fun SettingsScreen(navController: NavController, themeViewModel: ThemeViewModel)
                     text = stringResource(R.string.darkmode),
                     fontSize = 30.sp,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onBackground
+                    color = MaterialTheme.colorScheme.inverseOnSurface
                 )
                 Switch(
                     checked = themeViewModel.isDarkTheme.value,

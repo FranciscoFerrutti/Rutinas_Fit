@@ -79,16 +79,7 @@ fun FavoriteHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
         modifier = Modifier
             .fillMaxWidth()
             .height(Dp(70f))
-            .background(
-                brush = Brush.linearGradient(
-                    colors = listOf(
-                        MaterialTheme.colorScheme.background,
-                        MaterialTheme.colorScheme.primary
-                    ),
-                    start = Offset(x = 0f, y = 0f),
-                    end = Offset.Infinite,
-                )
-            )
+            .background(MaterialTheme.colorScheme.primary)
             .zIndex(1f)
     ){
         Row (modifier = Modifier
