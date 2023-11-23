@@ -7,8 +7,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import ar.edu.itba.rutinas_fit.data.model.*
 import ar.edu.itba.rutinas_fit.data.repository.*
+import ar.edu.itba.rutinas_fit.navigation.navigateToHome
 import ar.edu.itba.rutinas_fit.util.SessionManager
 import kotlinx.coroutines.launch
 
@@ -28,29 +30,33 @@ class MainViewModel(
     var lastGetSportsTimestamp = 0
 
     // --------------------- USER ----------------------
-    fun login(username: String, password: String) = viewModelScope.launch {
+    fun login(username: String, password: String, navController: NavController? = null) = viewModelScope.launch {
 
+        uiState = uiState.copy(
+            isFetching = true,
+            message = null,
+            currentUser = null
+        )
+
+        runCatching {
+            userRepository.login(username, password)
+        }.onSuccess { response ->
             uiState = uiState.copy(
-                isFetching = true,
-                message = null,
-                currentUser = null
+                isFetching = false,
+                isAuthenticated = true
             )
 
-            runCatching {
-                userRepository.login(username, password)
-            }.onSuccess { response ->
-                uiState = uiState.copy(
-                    isFetching = false,
-                    isAuthenticated = true
-                )
-            }.onFailure { e ->
-                // Handle the error and notify the UI when appropriate.
-                uiState = uiState.copy(
-                    message = e.message,
-                    isFetching = false)
-            }
-
+            // Navigate to home screen on successful login
+            navController?.let { navigateToHome(it) }
+        }.onFailure { e ->
+            // Handle the error and notify the UI when appropriate.
+            uiState = uiState.copy(
+                message = e.message,
+                isFetching = false
+            )
+        }
     }
+
 
     fun signUp(data: SignUp) = viewModelScope.launch {
 
