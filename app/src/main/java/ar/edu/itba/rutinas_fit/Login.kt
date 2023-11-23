@@ -3,12 +3,15 @@ package ar.edu.itba.rutinas_fit
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,12 +22,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Green
+import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -33,8 +41,10 @@ import androidx.navigation.compose.rememberNavController
 import ar.edu.itba.rutinas_fit.navigation.navigateToHome
 import androidx.compose.ui.tooling.preview.Preview
 import ar.edu.itba.rutinas_fit.classes.MainViewModel
+import ar.edu.itba.rutinas_fit.navigation.Screen
 import ar.edu.itba.rutinas_fit.util.ViewModelFactory
 import ar.edu.itba.rutinas_fit.util.getViewModelFactory
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
@@ -43,6 +53,50 @@ fun LoginRegisterScreenPreview() {
     // Create a NavController instance for preview
     val navController = rememberNavController()
     LoginRegisterScreen(navController)
+}
+@Composable
+fun loginContinueButton(navController: NavController,viewModel : MainViewModel, route: String, username : String, password : String, id: Int) : String{
+    val scope = rememberCoroutineScope()
+    var error by remember{mutableStateOf("")}
+
+    Button(
+        onClick = {
+            scope.launch{
+                viewModel.login(username,password).invokeOnCompletion {
+                    if(viewModel.uiState.isAuthenticated) {
+                        viewModel.getCurrentUser().invokeOnCompletion {
+                            viewModel.getRoutines().invokeOnCompletion {
+                                if(id == -1) {
+                                    navController.navigate(route) {
+                                        popUpTo("welcome_screen") { inclusive = true }
+                                    }
+                                } else{
+                                    navController.navigate("share_screen?id=${id}"){
+                                        popUpTo("welcome_screen")
+                                    }
+                                }
+                            }
+                        }
+                    } else{
+                        error = viewModel.uiState.message!!
+                    }
+                }
+            } },
+        modifier = Modifier
+            .width(250.dp)
+            .height(60.dp),
+        colors = ButtonDefaults.buttonColors(
+            contentColor = Green
+        ),
+        shape = RoundedCornerShape(40.dp),
+        elevation = ButtonDefaults.elevatedButtonElevation(defaultElevation = 5.dp, pressedElevation = 8.dp)
+    ) {
+        Text(stringResource(R.string.login), fontSize = 20.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Justify)
+    }
+    if(error != ""){
+        return stringResource(id = R.string.invalid_field)
+    }
+    return error
 }
 
 @Composable

@@ -296,17 +296,23 @@ fun Routines(navController: NavController, routines : List<Routine>, selectedOpt
 fun HomePageScreen(navController: NavController, mainViewModel: MainViewModel = viewModel(factory = getViewModelFactory())) {
     var selectedOption by remember { mutableStateOf("") }
     var title by remember { mutableStateOf("") }
-
+    var flag by remember { mutableStateOf(true) }
+    if(flag) {
+        mainViewModel.getCurrentUser()
+        mainViewModel.getRoutines()
+        flag = false
+    }
     Box() {
         MainHeader(
             modifier = Modifier.background(Color.Transparent),
             onOptionSelected = { selectedOption = it }
         )
-        val routines = listOf(
+        val routines = mainViewModel.uiState.routines
+            /*listOf(
             Routine(id= 1, name = "Routine 1", detail = "Details", date = Date(), isPublic = true, difficulty = "Hard", category= null, score=2, metadata = null, user = null),
             Routine(id= 1, name = "Routine 2", detail = "Details", date = Date(), isPublic = true, difficulty = "Medium", category= null, score=2, metadata = null, user = null),
             Routine(id= 1, name = "Routine 3", detail = "Details", date = Date(), isPublic = true, difficulty = "Easy", category= null, score=2, metadata = null, user = null)
-        )
+        )*/
         Routines(navController,routines, selectedOption)
 
         Box (

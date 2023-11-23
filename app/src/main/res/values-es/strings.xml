@@ -31,5 +31,6 @@
     <string name="resttimerstart">Apretá para comenzar la cuenta de descanso.</string>
     <string name="exercisereps">Cantidad de repeticiones:</string>
     <string name="mode">Cambiar modo</string>
+    <string name="invalid_field">USUARIO O CONTRASEÑA INVÁLIDOS</string>
 
 </resources>
