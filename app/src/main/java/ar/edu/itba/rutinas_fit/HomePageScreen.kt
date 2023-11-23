@@ -175,7 +175,7 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
                     .zIndex(2f)
             ) {
                 Text(
-                    text = routine.name + " - " + routine.id,
+                    text = routine.name,
                     color = MaterialTheme.colorScheme.inverseOnSurface,
                     fontFamily = FontFamily.SansSerif,
                     fontSize = 18.sp,
@@ -317,7 +317,7 @@ fun HomePageScreen(navController: NavController, mainViewModel: MainViewModel = 
     var flag by remember { mutableStateOf(true) }
     if(flag) {
         mainViewModel.getCurrentUser()
-        mainViewModel.getRoutines()
+        mainViewModel.getCurrentUserRoutines()
         mainViewModel.getFavourites()
         flag = false
     }

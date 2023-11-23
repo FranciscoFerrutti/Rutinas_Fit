@@ -33,6 +33,18 @@ class RoutineRepository(
         return routinesMutex.withLock { this.routines }
     }
 
+    suspend fun getCurrentUserRoutines(refresh: Boolean = false): List<Routine> {
+        if (refresh || routines.isEmpty()) {
+            delay(200)
+            val result = remoteDataSource.getCurrentUserRoutines()
+            // Thread-safe write to latestNews
+            routinesMutex.withLock {
+                this.routines = result.content.map { it.asModel() }
+            }
+        }
+        return routinesMutex.withLock { this.routines }
+    }
+
     suspend fun getRoutine(routineId: Int) : Routine {
         delay(200)
         return remoteDataSource.getRoutine(routineId).asModel()

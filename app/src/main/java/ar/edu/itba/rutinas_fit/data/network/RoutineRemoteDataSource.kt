@@ -17,6 +17,12 @@ class RoutineRemoteDataSource(
         }
     }
 
+    suspend fun getCurrentUserRoutines(): NetworkPagedContent<NetworkRoutine> {
+        return handleApiResponse {
+            apiRoutineService.getCurrentUserRoutines()
+        }
+    }
+
     suspend fun getRoutine(routineId: Int) : NetworkRoutine {
         return handleApiResponse {
             apiRoutineService.getRoutine(routineId)
