@@ -150,9 +150,7 @@ fun MainHeader(modifier: Modifier, onOptionSelected: (String) -> Unit  ) {
 fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: Int, routine: Routine, favInitialStatus: Boolean,
              mainViewModel: MainViewModel = viewModel(factory = getViewModelFactory())) {
     val backgroundImage: Painter = painterResource(id = imageResourceId)
-    var rating by remember { mutableStateOf(0) }
     var isFavorite = favInitialStatus
-    var scope = rememberCoroutineScope()
     Rutinas_FitTheme {
 
         Box(
@@ -267,15 +265,13 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
                     .align(Alignment.BottomStart)
                     .padding(start = Dp(10f), bottom = Dp(4f)),
                 onClick = {
-                    scope.launch{
-                        mainViewModel.getRoutine(routine.id).invokeOnCompletion {
-                            Log.d("routineId", "routineId: ${routine.id}")
-                            Log.d("currentRoutineId", "currentRoutineId: ${mainViewModel.uiState.currentRoutine?.id?:0}")
-                            navigateToReview(navController)
-                        }
-                    }
-                          }, shape = RoundedCornerShape(40.dp), elevation = ButtonDefaults.elevatedButtonElevation(defaultElevation = 5.dp, pressedElevation = 8.dp)
-            ) {
+                            mainViewModel.getRoutine(routine.id).invokeOnCompletion {
+                                Log.d("routineId", "routineId: ${routine.id}")
+                                Log.d("currentRoutineId", "currentRoutineId: ${mainViewModel.uiState.currentRoutine?.id?:0}")
+                                navigateToReview(navController)
+                            }
+                          }, shape = RoundedCornerShape(40.dp), elevation = ButtonDefaults.elevatedButtonElevation(defaultElevation = 5.dp, pressedElevation = 8.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF007f00))) {
                 Text(stringResource(R.string.review), fontSize = 20.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Justify)
             }
         }
@@ -303,7 +299,8 @@ fun Routines(navController: NavController, routines : List<Routine>, selectedOpt
                         .background(color = Color.Transparent),
                     imageResourceId = R.drawable.gymimg,
                     routine = routine,
-                    favInitialStatus = mainViewModel.isFavourite(routine.id)
+                    favInitialStatus = mainViewModel.isFavourite(routine.id),
+                    mainViewModel = mainViewModel
                 )
             }
         }
@@ -332,7 +329,7 @@ fun HomePageScreen(navController: NavController, mainViewModel: MainViewModel = 
             Routine(id= 1, name = "Routine 2", detail = "Details", date = Date(), isPublic = true, difficulty = "Medium", category= null, score=2, metadata = null, user = null),
             Routine(id= 1, name = "Routine 3", detail = "Details", date = Date(), isPublic = true, difficulty = "Easy", category= null, score=2, metadata = null, user = null)
         )*/
-        Routines(navController,routines, selectedOption)
+        Routines(navController,routines, selectedOption, mainViewModel = mainViewModel)
 
         Box (
             modifier = Modifier

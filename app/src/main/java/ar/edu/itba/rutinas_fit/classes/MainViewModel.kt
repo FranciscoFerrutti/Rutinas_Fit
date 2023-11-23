@@ -31,7 +31,7 @@ class MainViewModel(
     var lastGetSportsTimestamp = 0
 
     // --------------------- USER ----------------------
-    fun login(username: String, password: String, navController: NavController? = null) = viewModelScope.launch {
+    suspend fun login(username: String, password: String, navController: NavController? = null) = viewModelScope.launch {
 
         uiState = uiState.copy(
             isFetching = true,
@@ -275,7 +275,7 @@ class MainViewModel(
     }
 
 
-    suspend fun getRoutine(routineId: Int) = viewModelScope.launch {
+    fun getRoutine(routineId: Int) = viewModelScope.launch {
         uiState = uiState.copy(
             isFetching = true,
             message = null
