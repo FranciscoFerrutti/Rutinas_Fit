@@ -275,7 +275,7 @@ class MainViewModel(
     }
 
 
-    suspend fun getRoutine(routineId: Int) = viewModelScope.launch {
+    fun getRoutine(routineId: Int) = viewModelScope.launch {
         uiState = uiState.copy(
             isFetching = true,
             message = null

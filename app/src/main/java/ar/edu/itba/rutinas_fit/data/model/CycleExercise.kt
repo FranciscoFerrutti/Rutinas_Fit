@@ -12,10 +12,9 @@ data class CycleExercise(
 ){
     fun asNetworkModel() : NetworkCycleExercise {
         return NetworkCycleExercise(
-            order           =order           ,
-            duration        =duration        ,
-            repetitions     =repetitions     ,
-            exercise        =exercise
+            order           = order           ,
+            duration        = duration        ,
+            repetitions     = repetitions     ,
 
         )
     }
