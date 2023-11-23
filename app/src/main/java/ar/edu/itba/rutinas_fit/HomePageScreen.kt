@@ -1,5 +1,6 @@
 package ar.edu.itba.rutinas_fit
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -32,6 +33,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -40,6 +42,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -65,10 +68,12 @@ import ar.edu.itba.rutinas_fit.classes.MainViewModel
 import ar.edu.itba.rutinas_fit.data.model.Routine
 
 import ar.edu.itba.rutinas_fit.navigation.Screen
+import ar.edu.itba.rutinas_fit.navigation.navigateToReview
 import ar.edu.itba.rutinas_fit.navigation.navigateToRoutine
 import ar.edu.itba.rutinas_fit.ui.theme.Rutinas_FitTheme
 import ar.edu.itba.rutinas_fit.util.getViewModelFactory
 import components.NavBar
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.selects.select
 import java.util.Date
 import java.util.Locale
@@ -145,6 +150,7 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
     val backgroundImage: Painter = painterResource(id = imageResourceId)
     var rating by remember { mutableStateOf(0) }
     var isFavorite = favInitialStatus
+    var scope = rememberCoroutineScope()
     Rutinas_FitTheme {
 
         Box(
@@ -166,7 +172,7 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
                     .zIndex(2f)
             ) {
                 Text(
-                    text = routine.name,
+                    text = routine.name + " - " + routine.id,
                     color = Color.White,
                     fontFamily = FontFamily.SansSerif,
                     fontSize = 18.sp,
@@ -225,7 +231,7 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
                                 .clickable {
                                     // Toggle the favorite status
                                     isFavorite = !isFavorite
-                                    if(isFavorite) {
+                                    if (isFavorite) {
                                         mainViewModel.addToFavourites(routine.id)
                                     } else {
                                         mainViewModel.deleteFromFavourites(routine.id)
@@ -243,27 +249,21 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
                     .clip(RoundedCornerShape(16.dp)),
                 contentScale = ContentScale.Crop
             )
-            Row(
+            Button(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
-                    .padding(start = Dp(10f), bottom = Dp(4f))
+                    .padding(start = Dp(10f), bottom = Dp(4f)),
+                onClick = {
+                    scope.launch{
+                        mainViewModel.getRoutine(routine.id).invokeOnCompletion {
+                            Log.d("routineId", "routineId: ${routine.id}")
+                            Log.d("currentRoutineId", "currentRoutineId: ${mainViewModel.uiState.currentRoutine?.id?:0}")
+                            navigateToReview(navController)
+                        }
+                    }
+                          }, shape = RoundedCornerShape(40.dp), elevation = ButtonDefaults.elevatedButtonElevation(defaultElevation = 5.dp, pressedElevation = 8.dp)
             ) {
-                // Rating stars
-                repeat(5) { index ->
-                    Icon(
-                        imageVector = Icons.Outlined.Star,
-                        contentDescription = null,
-                        tint = if (index < rating) Color.Yellow else Color.Gray,
-                        modifier = Modifier
-                            .size(24.dp)
-                            .clickable {
-                                // Set the rating to the clicked star index + 1
-                                rating = index + 1
-                                // TODO: Make API call to update exercise rating
-                                // Example: api.updateExerciseRating(routine.id, rating)
-                            }
-                    )
-                }
+                Text(stringResource(R.string.review), fontSize = 20.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Justify)
             }
         }
     }

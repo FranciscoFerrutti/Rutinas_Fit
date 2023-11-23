@@ -274,7 +274,7 @@ class MainViewModel(
     }
 
 
-    fun getRoutine(routineId: Int) = viewModelScope.launch {
+    suspend fun getRoutine(routineId: Int) = viewModelScope.launch {
         uiState = uiState.copy(
             isFetching = true,
             message = null
@@ -304,7 +304,7 @@ class MainViewModel(
                 maxRating = (curr.score ?: 0)
             }
         }
-        return routine;
+        return routine
     }
 
     suspend fun reviewRoutine(review: Review, id : Int) = viewModelScope.launch{

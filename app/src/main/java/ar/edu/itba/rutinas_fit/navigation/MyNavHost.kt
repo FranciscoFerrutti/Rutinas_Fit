@@ -11,10 +11,12 @@ import ar.edu.itba.rutinas_fit.FavoriteScreen
 import ar.edu.itba.rutinas_fit.HomePageScreen
 import ar.edu.itba.rutinas_fit.LoginRegisterScreen
 import ar.edu.itba.rutinas_fit.RestScreen
+import ar.edu.itba.rutinas_fit.ReviewScreen
 import ar.edu.itba.rutinas_fit.RoutineScreen
 import ar.edu.itba.rutinas_fit.SearchScreen
 import ar.edu.itba.rutinas_fit.SettingsScreen
 import ar.edu.itba.rutinas_fit.UserProfileScreen
+import ar.edu.itba.rutinas_fit.data.model.Routine
 
 
 @Composable
@@ -81,6 +83,9 @@ fun MyNavHost(
         composable(Screen.Settings.route) {
             SettingsScreen(navController)
         }
+        composable(Screen.Review.route){
+            ReviewScreen(navController)
+        }
 
     }
 }
@@ -118,4 +123,8 @@ fun navigateToProfile(navController: NavController) {
 }
 fun navigateToLogin(navController: NavController) {
     navController.navigate(Screen.Login.route)
+}
+
+fun navigateToReview(navController: NavController){
+    navController.navigate(Screen.Review.route)
 }

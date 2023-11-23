@@ -31,5 +31,7 @@
     <string name="exercisereps">Number of reps:</string>
     <string name="mode">Change mode</string>
     <string name="invalid_field">INVALID USERNAME OR PASSWORD</string>
+    <string name="review">Review</string>
+    <string name="submit_review">Send review</string>
 
 </resources>
