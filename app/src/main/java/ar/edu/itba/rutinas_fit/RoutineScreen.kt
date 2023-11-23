@@ -72,6 +72,7 @@ import ar.edu.itba.rutinas_fit.classes.MainViewModel
 import ar.edu.itba.rutinas_fit.data.model.Cycle
 import ar.edu.itba.rutinas_fit.data.model.CycleExercise
 import ar.edu.itba.rutinas_fit.data.model.Exercise
+import ar.edu.itba.rutinas_fit.data.model.FullCycle
 import ar.edu.itba.rutinas_fit.data.model.Routine
 
 import ar.edu.itba.rutinas_fit.navigation.Screen.Exercise.title
@@ -175,231 +176,237 @@ fun CycleComp(cycleExercises : List<CycleExercise>){
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RoutineScreen(navController : NavController, routineId : String, mainViewModel: MainViewModel = viewModel(factory = getViewModelFactory())) {
-    var currentCycle by remember { mutableStateOf(0) }
-    var totalCycles by remember { mutableStateOf(3) }
-    val pagerState = rememberPagerState {3}
-    var flag by remember { mutableStateOf(false) }
-    var flagStop by remember { mutableStateOf(true) }
 
-    if (flagStop){
-        mainViewModel.getCurrentUser()
-        mainViewModel.getRoutine(routineId.toInt())
-        mainViewModel.getCycles(routineId.toInt())
-        mainViewModel.getFullCyclesExercises(routineId.toInt())
-        flagStop = false
-    }
-    var routine = mainViewModel.uiState.currentRoutine
-    var cycles = mainViewModel.uiState.currentCycles
-    var cycleExercises = mainViewModel.uiState.currentWorkout
-//    println(cycles[0].name)
-    val routineCycles = listOf(
-        Cycle(id = 101, name = "Cycle 1", detail = "Details 1", type = "Type A", order = 1, repetitions = 1, metadata=null),
-        Cycle(id = 101, name = "Cycle 2", detail = "Details 2", type = "Type B", order = 2, repetitions = 1, metadata=null),
-        Cycle(id = 101, name = "Cycle 3", detail = "Details 3", type = "Type C", order = 3, repetitions = 1, metadata=null)
-        // Add more objects as needed
-    )
-    try {
-        Log.wtf("wtf",cycles[0].name)
-        Log.wtf("wtf",routine!!.name)
-        Log.wtf("wtf","attempting fullcycles")
-        Log.wtf("wtf",cycleExercises[0].toString())
-        flag = true
-    } catch (e: Exception){
-        Log.e("er", e.toString())
-    }
+    val currentScreen = remember { mutableStateOf(1) }
 
-    val cycleExercisesList = listOf(
-        // Cycle 1
-        listOf(
-            CycleExercise(order = 1, duration = 0, repetitions = 8, exercise = Exercise(id = 1, name = "Exercise A1", detail = "Details A1", type = "Type A", date = Date(), metadata=null)),
-            CycleExercise(order = 1, duration = 0, repetitions = 8, exercise = Exercise(id = 1, name = "Exercise A2", detail = "Details A2", type = "Type A", date = Date(), metadata=null)),
-            CycleExercise(order = 1, duration = 0, repetitions = 8, exercise = Exercise(id = 1, name = "Exercise A3", detail = "Details A3", type = "Type A", date = Date(), metadata=null))
-        ),
+        var currentCycle by remember { mutableStateOf(0) }
+        var totalCycles by remember { mutableStateOf(3) }
+        val pagerState = rememberPagerState { 3 }
+        var flag by remember { mutableStateOf(false) }
+        var flagStop by remember { mutableStateOf(true) }
+        if (flagStop) {
+            mainViewModel.getCurrentUser()
+            mainViewModel.getRoutine(routineId.toInt())
+            mainViewModel.getCycles(routineId.toInt())
+            mainViewModel.getFullCyclesExercises(routineId.toInt())
 
-        // Cycle 2
-        listOf(
-            CycleExercise(order = 1, duration = 0, repetitions = 8, exercise = Exercise(id = 1, name = "Exercise B1", detail = "Details B1", type = "Type B", date = Date(), metadata=null)),
-            CycleExercise(order = 1, duration = 0, repetitions = 8, exercise = Exercise(id = 1, name = "Exercise B2", detail = "Details B2", type = "Type B", date = Date(), metadata=null)),
-            CycleExercise(order = 1, duration = 0, repetitions = 8, exercise = Exercise(id = 1, name = "Exercise B3", detail = "Details B3", type = "Type B", date = Date(), metadata=null))
-        ),
-
-        // Cycle 3
-        listOf(
-            CycleExercise(order = 1, duration = 0, repetitions = 8, exercise = Exercise(id = 1, name = "Exercise C1", detail = "Details C1", type = "Type C", date = Date(), metadata=null)),
-            CycleExercise(order = 1, duration = 0, repetitions = 8, exercise = Exercise(id = 1, name = "Exercise C2", detail = "Details C2", type = "Type C", date = Date(), metadata=null)),
-            CycleExercise(order = 1, duration = 0, repetitions = 8, exercise = Exercise(id = 1, name = "Exercise C3", detail = "Details C3", type = "Type C", date = Date(), metadata=null))
-        )
-    )
-    if (flag) {
-        var height = 0.3f
-        var paddin = 50.dp
-        if (isDeviceInLandscape(LocalContext.current)) {
-            height = 0.38f
-            paddin = 5.dp
+            flagStop = false
         }
-        Box(modifier = Modifier.fillMaxSize()) {
-            Column() {
-                Box(
-                    modifier = Modifier
-                        .fillMaxHeight(
-                            height
-                        )
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.inverseSurface)
-                )
-                {
-                    Column(
+        var routine = mainViewModel.uiState.currentRoutine
+        var cycles = mainViewModel.uiState.currentCycles
+        var cycleExercisesUnordered = mainViewModel.uiState.currentWorkout
+        // Assuming FullCycle has a default constructor
+        var cycleExercises: MutableList<FullCycle> = MutableList(3) { FullCycle(cycleId = 1, exercises = listOf()) }
+
+
+
+
+//    println(cycles[0].name)
+//    val routineCycles = listOf(
+//        Cycle(id = 101, name = "Cycle 1", detail = "Details 1", type = "Type A", order = 1, repetitions = 1, metadata=null),
+//        Cycle(id = 101, name = "Cycle 2", detail = "Details 2", type = "Type B", order = 2, repetitions = 1, metadata=null),
+//        Cycle(id = 101, name = "Cycle 3", detail = "Details 3", type = "Type C", order = 3, repetitions = 1, metadata=null)
+//        // Add more objects as needed
+//    )
+        try {
+            Log.wtf("wtf", cycles[0].name)
+            Log.wtf("wtf", routine!!.name)
+            Log.wtf("wtf", "attempting fullcycles")
+            Log.wtf("wtf", cycleExercises[0].toString())
+            flag = true
+
+            cycleExercisesUnordered.forEach { cycle ->
+                cycles.forEach { cycleInner ->
+                    if (cycle.cycleId == cycleInner.id){
+                        cycleExercises[cycleInner.order-1] = cycle
+                    }
+                }
+            }
+            Log.wtf("ENTIRE THING", cycleExercises.toString())
+        } catch (e: Exception) {
+            Log.e("er", e.toString())
+        }
+
+        if (currentScreen.value == 1) {
+        if (flag) {
+            var height = 0.3f
+            var paddin = 50.dp
+            if (isDeviceInLandscape(LocalContext.current)) {
+                height = 0.38f
+                paddin = 5.dp
+            }
+            Box(modifier = Modifier.fillMaxSize()) {
+                Column() {
+                    Box(
                         modifier = Modifier
-                            .align(Alignment.Center)
+                            .fillMaxHeight(
+                                height
+                            )
+                            .fillMaxWidth()
                             .background(MaterialTheme.colorScheme.inverseSurface)
-                            .fillMaxSize()
-                            .padding(top = paddin),
-
-
-                        ) {
-                        Text(
-                            text = "Nombre Rutina",
-                            color = MaterialTheme.colorScheme.onBackground,
-                            fontFamily = FontFamily.SansSerif,
-                            fontSize = 26.sp,
+                    )
+                    {
+                        Column(
                             modifier = Modifier
-                                .padding(top = Dp(8f))
-                                .align(Alignment.CenterHorizontally),
-                            textAlign = TextAlign.Center
-                        )
+                                .align(Alignment.Center)
+                                .background(MaterialTheme.colorScheme.inverseSurface)
+                                .fillMaxSize()
+                                .padding(top = paddin),
 
-                        Text(
-                            text = "11 Ejercicios - 3 Ciclos",
-                            color = MaterialTheme.colorScheme.onBackground,
-                            fontFamily = FontFamily.SansSerif,
-                            fontSize = 18.sp,
-                            modifier = Modifier
-                                .padding(Dp(5f))
-                                .align(Alignment.CenterHorizontally),
-                            textAlign = TextAlign.Center
 
-                        )
-                        Button(
-                            onClick = {
-                                navigateToExercise(navController, routineId)
-                            },
-                            modifier = Modifier
-                                .width(140.dp)
-                                .height(50.dp)
-                                .align(Alignment.CenterHorizontally)
-                                .padding(top = 5.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
-                        ) {
+                            ) {
                             Text(
-                                text = stringResource(R.string.execute),
+                                text = routine!!.name,
                                 color = MaterialTheme.colorScheme.onBackground,
                                 fontFamily = FontFamily.SansSerif,
-                                fontSize = 20.sp
+                                fontSize = 26.sp,
+                                modifier = Modifier
+                                    .padding(top = Dp(8f))
+                                    .align(Alignment.CenterHorizontally),
+                                textAlign = TextAlign.Center
                             )
-                        }
-                    }
 
-                }
+                            Text(
+                                text = "@${routine.user!!.username}",
+                                color = MaterialTheme.colorScheme.onBackground,
+                                fontFamily = FontFamily.SansSerif,
+                                fontSize = 18.sp,
+                                modifier = Modifier
+                                    .padding(Dp(5f))
+                                    .align(Alignment.CenterHorizontally),
+                                textAlign = TextAlign.Center
 
-                HorizontalPager(
-                    state = pagerState,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .weight(1f)
-                ) { index ->
-                    currentCycle = index
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .height(40.dp)
-                                .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.primary)
-                                .clip(RoundedCornerShape(48.dp))
-                        ) {
-                            Row(
-                                modifier = Modifier.fillMaxSize(),
-                                horizontalArrangement = Arrangement.SpaceAround,
-                                verticalAlignment = Alignment.CenterVertically
+                            )
+                            Button(
+                                onClick = {
+                                    currentScreen.value = 2
+                                },
+                                modifier = Modifier
+                                    .width(140.dp)
+                                    .height(50.dp)
+                                    .align(Alignment.CenterHorizontally)
+                                    .padding(top = 5.dp),
+                                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                             ) {
-                                if (currentCycle > 0) {
-                                    Icon(
-                                        imageVector = Icons.Default.ArrowBack,
-                                        contentDescription = null,
-                                        modifier = Modifier
-                                            .zIndex(3f)
-                                            .size(34.dp),
-                                        tint = MaterialTheme.colorScheme.onBackground
-                                    )
-                                } else {
-                                    Icon(
-                                        imageVector = Icons.Default.ArrowBack,
-                                        contentDescription = null,
-                                        modifier = Modifier
-                                            .zIndex(3f)
-                                            .size(44.dp)
-                                            .clickable {
-                                                if (currentCycle > 0)
-                                                    currentCycle -= 1
-                                            },
-                                        tint = Color.Transparent
-                                    )
-                                }
-
                                 Text(
-                                    text = routineCycles[currentCycle].name,
+                                    text = stringResource(R.string.execute),
                                     color = MaterialTheme.colorScheme.onBackground,
                                     fontFamily = FontFamily.SansSerif,
-                                    fontSize = 22.sp,
-
-                                    textAlign = TextAlign.Center
+                                    fontSize = 20.sp
                                 )
-                                if (currentCycle < totalCycles - 1) {
-                                    Icon(
-                                        imageVector = Icons.Default.ArrowForward,
-                                        contentDescription = null,
-                                        modifier = Modifier
-                                            .zIndex(3f)
-                                            .size(34.dp),
-                                        tint = MaterialTheme.colorScheme.onBackground
-                                    )
-                                } else {
-                                    Icon(
-                                        imageVector = Icons.Default.ArrowForward,
-                                        contentDescription = null,
-                                        modifier = Modifier
-                                            .zIndex(3f)
-                                            .size(44.dp)
-                                            .clickable {
-                                                if (currentCycle < totalCycles - 1)
-                                                    currentCycle += 1
-                                            },
-                                        tint = Color.Transparent
-                                    )
-                                }
                             }
                         }
-                        CycleComp(cycleExercisesList[currentCycle])
+
                     }
-                }
+
+                    HorizontalPager(
+                        state = pagerState,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .weight(1f)
+                    ) { index ->
+                        currentCycle = index
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .height(40.dp)
+                                    .fillMaxWidth()
+                                    .background(MaterialTheme.colorScheme.primary)
+                                    .clip(RoundedCornerShape(48.dp))
+                            ) {
+                                Row(
+                                    modifier = Modifier.fillMaxSize(),
+                                    horizontalArrangement = Arrangement.SpaceAround,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    if (currentCycle > 0) {
+                                        Icon(
+                                            imageVector = Icons.Default.ArrowBack,
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .zIndex(3f)
+                                                .size(34.dp),
+                                            tint = MaterialTheme.colorScheme.onBackground
+                                        )
+                                    } else {
+                                        Icon(
+                                            imageVector = Icons.Default.ArrowBack,
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .zIndex(3f)
+                                                .size(44.dp)
+                                                .clickable {
+                                                    if (currentCycle > 0)
+                                                        currentCycle -= 1
+                                                },
+                                            tint = Color.Transparent
+                                        )
+                                    }
+
+                                    Text(
+                                        text = cycles[currentCycle].name,
+                                        color = MaterialTheme.colorScheme.onBackground,
+                                        fontFamily = FontFamily.SansSerif,
+                                        fontSize = 22.sp,
+
+                                        textAlign = TextAlign.Center
+                                    )
+                                    if (currentCycle < totalCycles - 1) {
+                                        Icon(
+                                            imageVector = Icons.Default.ArrowForward,
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .zIndex(3f)
+                                                .size(34.dp),
+                                            tint = MaterialTheme.colorScheme.onBackground
+                                        )
+                                    } else {
+                                        Icon(
+                                            imageVector = Icons.Default.ArrowForward,
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .zIndex(3f)
+                                                .size(44.dp)
+                                                .clickable {
+                                                    if (currentCycle < totalCycles - 1)
+                                                        currentCycle += 1
+                                                },
+                                            tint = Color.Transparent
+                                        )
+                                    }
+                                }
+                            }
+                            CycleComp(cycleExercises[currentCycle].exercises)
+                        }
+                    }
 
 //            CycleComp(navController, currentCycle.toString())
-            }
-            Box(
-                modifier = Modifier
-                    .fillMaxHeight(0.14f)
-                    .align(Alignment.BottomCenter)
-            )
-            {
-
-                NavBar(
-                    navController,
+                }
+                Box(
                     modifier = Modifier
-                        .background(Color.White)
+                        .fillMaxHeight(0.14f)
+                        .align(Alignment.BottomCenter)
                 )
+                {
+
+                    NavBar(
+                        navController,
+                        modifier = Modifier
+                            .background(Color.White)
+                    )
+                }
             }
         }
+    } else {
+
+            ExerciseScreen(
+                navController = navController,
+                routineId = routineId,
+                routineCycles = cycles,
+                cycleExercisesList = cycleExercises.toList()
+            )
     }
 }

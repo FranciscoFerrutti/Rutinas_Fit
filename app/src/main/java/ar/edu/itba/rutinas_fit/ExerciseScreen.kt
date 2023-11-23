@@ -72,6 +72,7 @@ import androidx.navigation.compose.rememberNavController
 import ar.edu.itba.rutinas_fit.data.model.Cycle
 import ar.edu.itba.rutinas_fit.data.model.CycleExercise
 import ar.edu.itba.rutinas_fit.data.model.Exercise
+import ar.edu.itba.rutinas_fit.data.model.FullCycle
 
 //import ar.edu.itba.rutinas_fit.navigation.navigateToRest
 //import ar.edu.itba.rutinas_fit.navigation.navigateToRoutine
@@ -83,7 +84,7 @@ import java.util.Date
 
 
 @Composable
-fun ExerciseScreen(navController : NavController, routineId : String) {
+fun ExerciseScreen(navController : NavController, routineId : String, routineCycles : List<Cycle>, cycleExercisesList : List<FullCycle>) {
     val imageResource = R.drawable.gymimg
     var clockSize = 300.dp
     var paddin = 10.dp
@@ -91,39 +92,39 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
     var imHei = 0.3f
     var mode by remember { mutableStateOf(false) }
 
-    val routineCycles = listOf(
-        Cycle(id = 101, name = "Cycle 1", detail = "Details 1", type = "Type A", order = 1, repetitions = 1, metadata = null),
-        Cycle(id = 101, name = "Cycle 2", detail = "Details 2", type = "Type B", order = 2, repetitions = 1, metadata = null),
-        Cycle(id = 101, name = "Cycle 3", detail = "Details 3", type = "Type C", order = 3, repetitions = 1, metadata = null)
-        // Add more objects as needed
-    )
+//    val routineCycles = listOf(
+//        Cycle(id = 101, name = "Cycle 1", detail = "Details 1", type = "Type A", order = 1, repetitions = 1, metadata = null),
+//        Cycle(id = 101, name = "Cycle 2", detail = "Details 2", type = "Type B", order = 2, repetitions = 1, metadata = null),
+//        Cycle(id = 101, name = "Cycle 3", detail = "Details 3", type = "Type C", order = 3, repetitions = 1, metadata = null)
+//        // Add more objects as needed
+//    )
+//
+//    val cycleExercisesList = listOf(
+//        // Cycle 1
+//        listOf(
+//            CycleExercise(order = 1, duration = 0, repetitions = 8, exercise = Exercise(id = 1, name = "Exercise A1", detail = "Details A1", type = "Type A", date = Date(), metadata = null)),
+//            CycleExercise(order = 2, duration = 0, repetitions = 10, exercise = Exercise(id = 2, name = "Exercise A2", detail = "Details A2", type = "Type A", date = Date(), metadata = null)),
+//            CycleExercise(order = 3, duration = 15, repetitions = 0, exercise = Exercise(id = 3, name = "Exercise A3", detail = "Details A3", type = "Type A", date = Date(), metadata = null))
+//        ),
+//
+//        // Cycle 2
+//        listOf(
+//            CycleExercise(order = 1, duration = 0, repetitions = 8, exercise = Exercise(id = 4, name = "Exercise B1", detail = "Details B1", type = "Type B", date = Date(), metadata = null)),
+//            CycleExercise(order = 2, duration = 0, repetitions = 10, exercise = Exercise(id = 5, name = "Exercise B2", detail = "Details B2", type = "Type B", date = Date(), metadata = null)),
+//            CycleExercise(order = 3, duration = 15, repetitions = 0, exercise = Exercise(id = 6, name = "Exercise B3", detail = "Details B3", type = "Type B", date = Date(), metadata = null))
+//        ),
+//
+//        // Cycle 3
+//        listOf(
+//            CycleExercise(order = 1, duration = 0, repetitions = 8, exercise = Exercise(id = 7, name = "Exercise C1", detail = "Details C1", type = "Type C", date = Date(), metadata = null)),
+//            CycleExercise(order = 2, duration = 0, repetitions = 10, exercise = Exercise(id = 8, name = "Exercise C2", detail = "Details C2", type = "Type C", date = Date(), metadata = null)),
+//            CycleExercise(order = 3, duration = 15, repetitions = 0, exercise = Exercise(id = 9, name = "Exercise C3", detail = "Details C3", type = "Type C", date = Date(), metadata = null))
+//        )
+//    )
 
-    val cycleExercisesList = listOf(
-        // Cycle 1
-        listOf(
-            CycleExercise(order = 1, duration = 0, repetitions = 8, exercise = Exercise(id = 1, name = "Exercise A1", detail = "Details A1", type = "Type A", date = Date(), metadata = null)),
-            CycleExercise(order = 2, duration = 0, repetitions = 10, exercise = Exercise(id = 2, name = "Exercise A2", detail = "Details A2", type = "Type A", date = Date(), metadata = null)),
-            CycleExercise(order = 3, duration = 15, repetitions = 0, exercise = Exercise(id = 3, name = "Exercise A3", detail = "Details A3", type = "Type A", date = Date(), metadata = null))
-        ),
-
-        // Cycle 2
-        listOf(
-            CycleExercise(order = 1, duration = 0, repetitions = 8, exercise = Exercise(id = 4, name = "Exercise B1", detail = "Details B1", type = "Type B", date = Date(), metadata = null)),
-            CycleExercise(order = 2, duration = 0, repetitions = 10, exercise = Exercise(id = 5, name = "Exercise B2", detail = "Details B2", type = "Type B", date = Date(), metadata = null)),
-            CycleExercise(order = 3, duration = 15, repetitions = 0, exercise = Exercise(id = 6, name = "Exercise B3", detail = "Details B3", type = "Type B", date = Date(), metadata = null))
-        ),
-
-        // Cycle 3
-        listOf(
-            CycleExercise(order = 1, duration = 0, repetitions = 8, exercise = Exercise(id = 7, name = "Exercise C1", detail = "Details C1", type = "Type C", date = Date(), metadata = null)),
-            CycleExercise(order = 2, duration = 0, repetitions = 10, exercise = Exercise(id = 8, name = "Exercise C2", detail = "Details C2", type = "Type C", date = Date(), metadata = null)),
-            CycleExercise(order = 3, duration = 15, repetitions = 0, exercise = Exercise(id = 9, name = "Exercise C3", detail = "Details C3", type = "Type C", date = Date(), metadata = null))
-        )
-    )
-
-    var totalCount = 3
     var currentExerciseIndex by remember { mutableStateOf(0) }
     var currentCycleIndex by remember { mutableStateOf(0) }
+    var totalCount by remember { mutableStateOf(cycleExercisesList[currentCycleIndex].exercises.size) }
 
 
     Box(
@@ -148,9 +149,9 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
 //                                .clip(RoundedCornerShape(16.dp))
 ////                    .align(Alignment.TopCenter)
 //                        )
-                        if (cycleExercisesList[currentCycleIndex][currentExerciseIndex].duration == 0) {
+                        if (cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].duration == 0) {
                             Text(
-                                text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].exercise.name
+                                text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise.name
                                     ?: "N/A",
                                 color = MaterialTheme.colorScheme.onBackground,
                                 fontFamily = FontFamily.SansSerif,
@@ -160,7 +161,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
 //                    .align(Alignment.Center)
                             )
                             Text(
-                                text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].exercise.detail,
+                                text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise.detail,
                                 color = MaterialTheme.colorScheme.onBackground,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 22.sp,
@@ -173,7 +174,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                 .fillMaxWidth()
                                 .height(clockSize)){
                                 Text(
-                                    text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].repetitions.toString(),
+                                    text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].repetitions.toString(),
                                     color = MaterialTheme.colorScheme.onBackground,
                                     fontFamily = FontFamily.Monospace,
                                     fontSize = 108.sp,
@@ -190,6 +191,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                         if (currentCycleIndex < 2) {
                                             currentCycleIndex += 1
                                             currentExerciseIndex = 0
+                                            totalCount = cycleExercisesList[currentCycleIndex].exercises.size
                                         } else {
                                             navigateToRoutine(navController, routineId)
                                             // back to routine screen
@@ -214,7 +216,9 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                 )
                             }
                             if (mode){
-                                CycleComp(cycleExercisesList[currentCycleIndex])
+                                if (currentCycleIndex < cycleExercisesList.size) {
+                                    CycleComp(cycleExercisesList[currentCycleIndex].exercises)
+                                }
                             }
                             Box (modifier = Modifier.fillMaxWidth()){
                                 Button(
@@ -238,11 +242,11 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                 }
                             }
                         } else {
-                            var countdownSeconds by remember { mutableStateOf(cycleExercisesList[currentCycleIndex][currentExerciseIndex].duration) }
+                            var countdownSeconds by remember { mutableStateOf(cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].duration) }
 
                             var isCountdownRunning by remember { mutableStateOf(false) }
                             Text(
-                                text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].exercise!!.name,
+                                text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise!!.name,
                                 color = MaterialTheme.colorScheme.onBackground,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 48.sp,
@@ -251,7 +255,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
 //                    .align(Alignment.Center)
                             )
                             Text(
-                                text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].exercise!!.detail,
+                                text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise!!.detail,
                                 color = MaterialTheme.colorScheme.onBackground,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 22.sp,
@@ -311,6 +315,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                         if (currentCycleIndex < 2) {
                                             currentCycleIndex += 1
                                             currentExerciseIndex = 0
+                                            totalCount = cycleExercisesList[currentCycleIndex].exercises.size
                                         } else {
                                             navigateToRoutine(navController, routineId)
                                             // back to routine screen
@@ -335,7 +340,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                 )
                             }
                             if (mode){
-                                CycleComp(cycleExercisesList[currentCycleIndex])
+                                CycleComp(cycleExercisesList[currentCycleIndex].exercises)
                             }
 
                         }
@@ -362,12 +367,12 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
 ////                    .align(Alignment.TopCenter)
 //                        )
                     }
-                    if (cycleExercisesList[currentCycleIndex][currentExerciseIndex].duration == 0) {
+                    if (cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].duration == 0) {
                         Column (modifier = Modifier
                             .fillMaxSize()
                             .padding(horizontal = 5.dp)) {
                             Text(
-                                text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].exercise?.name ?: "N/A",
+                                text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise?.name ?: "N/A",
                                 color = MaterialTheme.colorScheme.onBackground,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 48.sp,
@@ -376,7 +381,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                     .align(Alignment.CenterHorizontally)
                             )
                             Text(
-                                text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].exercise!!.detail,
+                                text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise!!.detail,
                                 color = MaterialTheme.colorScheme.onBackground,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 22.sp,
@@ -389,7 +394,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                 .size(clockSize)
                                 .align(Alignment.CenterHorizontally)){
                             Text(
-                                text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].repetitions.toString(),
+                                text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].repetitions.toString(),
                                 color = MaterialTheme.colorScheme.onBackground,
                                 fontFamily = FontFamily.Monospace,
                                 fontSize = 108.sp,
@@ -403,6 +408,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                         if (currentCycleIndex < 2) {
                                             currentCycleIndex += 1
                                             currentExerciseIndex = 0
+                                            totalCount = cycleExercisesList[currentCycleIndex].exercises.size
                                         } else {
                                             navigateToRoutine(navController, routineId)
                                             // back to routine screen
@@ -427,15 +433,15 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                 )
                             }
                             if (mode){
-                                CycleComp(cycleExercisesList[currentCycleIndex])
+                                CycleComp(cycleExercisesList[currentCycleIndex].exercises)
                             }
                         }
                     } else {
-                        var countdownSeconds by remember { mutableStateOf(cycleExercisesList[currentCycleIndex][currentExerciseIndex].duration) }
+                        var countdownSeconds by remember { mutableStateOf(cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].duration) }
                         var isCountdownRunning by remember { mutableStateOf(false) }
                         Column (modifier = Modifier.fillMaxSize()){
                             Text(
-                                text = cycleExercisesList[currentCycleIndex][currentExerciseIndex].exercise?.name ?: "N/A",
+                                text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise?.name ?: "N/A",
                                 color = MaterialTheme.colorScheme.onBackground,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 48.sp,
@@ -494,6 +500,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                         if (currentCycleIndex < 2) {
                                             currentCycleIndex += 1
                                             currentExerciseIndex = 1
+                                            totalCount = cycleExercisesList[currentCycleIndex].exercises.size
                                         } else {
                                             navigateToRoutine(navController, routineId)
                                             // back to routine screen
@@ -518,7 +525,7 @@ fun ExerciseScreen(navController : NavController, routineId : String) {
                                 )
                             }
                             if (mode){
-                                CycleComp(cycleExercisesList[currentCycleIndex])
+                                CycleComp(cycleExercisesList[currentCycleIndex].exercises)
                             }
                         }
 

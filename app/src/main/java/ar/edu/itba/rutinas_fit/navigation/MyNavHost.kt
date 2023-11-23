@@ -71,10 +71,10 @@ fun MyNavHost(
             LoginRegisterScreen(navController)
         }
 
-        composable(Screen.Exercise.route + "/{routineId}") {backStackEntry ->
-            val routineId = backStackEntry.arguments?.getString("routineId")
-            ExerciseScreen(navController, routineId.orEmpty())
-        }
+//        composable(Screen.Exercise.route + "/{routineId}") {backStackEntry ->
+//            val routineId = backStackEntry.arguments?.getString("routineId")
+//            ExerciseScreen(navController, routineId.orEmpty())
+//        }
         composable(Screen.Rest.route) {
             RestScreen()
         }
