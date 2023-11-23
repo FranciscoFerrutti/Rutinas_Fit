@@ -107,22 +107,7 @@ class MainActivity : ComponentActivity() {
 
                     val mainViewModel = viewModel<MainViewModel>(factory = getViewModelFactory())
 
-                    // Check if the activity was started by a deep link
-                    if (Intent.ACTION_VIEW == intent.action) {
-                        val uri = intent.data
-                        if (uri != null) {
-                            // Extract data from the URI and navigate to the appropriate screen
-                            MyNavHost(navController = navController, themeViewModel = themeViewModel, startDestination = Screen.Home.route)
-                            handleDeepLink(uri, navController)
-                        }
-                    } else {
-                        // If not a deep link, check the authentication state
-                        if (!mainViewModel.uiState.isAuthenticated) {
-                            MyNavHost(navController = navController, themeViewModel = themeViewModel, startDestination = Screen.Login.route)
-                        } else {
-                            MyNavHost(navController = navController, themeViewModel = themeViewModel, startDestination = Screen.Home.route)
-                        }
-                    }
+                    MyNavHost(navController = navController, themeViewModel = themeViewModel, startDestination = Screen.Home.route)
                 }
             }
         }

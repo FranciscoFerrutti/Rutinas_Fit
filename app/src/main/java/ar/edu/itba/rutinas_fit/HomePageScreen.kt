@@ -294,8 +294,8 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
                                 navigateToReview(navController)
                             }
                           }, shape = RoundedCornerShape(40.dp), elevation = ButtonDefaults.elevatedButtonElevation(defaultElevation = 5.dp, pressedElevation = 8.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF007f00),
-                contentColor = Color.White)) {
+            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onBackground)) {
                 Text(stringResource(R.string.review), fontSize = 20.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Justify)
             }
         }

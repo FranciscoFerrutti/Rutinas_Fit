@@ -24,6 +24,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -65,11 +66,11 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
     } ?: "No user logged in"*/
 
     val textFieldColors = TextFieldDefaults.outlinedTextFieldColors(
-        cursorColor = Color.White,
-        focusedBorderColor = Color.White,
-        unfocusedBorderColor = Color.White,
-        focusedLabelColor = Color.White,
-        unfocusedLabelColor = Color.White
+        cursorColor = MaterialTheme.colorScheme.onBackground,
+        focusedBorderColor = MaterialTheme.colorScheme.onBackground,
+        unfocusedBorderColor = MaterialTheme.colorScheme.onBackground,
+        focusedLabelColor = MaterialTheme.colorScheme.onBackground,
+        unfocusedLabelColor = MaterialTheme.colorScheme.onBackground,
     )
 
     Box(
@@ -78,8 +79,8 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
             .background(
                 brush = Brush.linearGradient(
                     colors = listOf(
-                        Color(0xFF000000),
-                        Color(0xFF007f00)
+                        MaterialTheme.colorScheme.background,
+                        MaterialTheme.colorScheme.primary
                     ),
                     start = Offset(x = 0f, y = 0f),
                     end = Offset.Infinite
@@ -103,27 +104,43 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
                     UserProfileImage(avatarUrl) { newAvatarUrl -> avatarUrl = newAvatarUrl }
                     Text(
                         text = "Cambiar avatar",
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier
-                            .padding(start = 18.dp)
+                            .padding(start = 12.dp)
                             .padding(top = 6.dp)
                     )
                 }
 
                 Spacer(modifier = Modifier.weight(1f))
 
-                Button(
-                    onClick = {
-                        // TODO: Implementar lógica para eliminar cuenta
-                    },
-                    colors = ButtonDefaults.buttonColors(Color.Red),
-                    modifier = Modifier.padding(top = 32.dp)
+                Column (
+                    horizontalAlignment = Alignment.End,
+                    verticalArrangement = Arrangement.Center
                 ) {
-                    Text("Eliminar Cuenta", color = Color.White)
+                    Button(
+                        onClick = {
+                            // TODO: Implementar lógica para guardar los cambios
+                        },
+                        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),
+                    ) {
+                        Text("Guardar Cambios", color = MaterialTheme.colorScheme.onBackground)
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Button(
+                        onClick = {
+                            mainViewModel.logout()
+                            //if (!mainViewModel.uiState.isAuthenticated) {
+                            navigateToLogin(navController)
+                            //}
+                        },
+                        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.surface)
+                    ) {
+                        Text("Cerrar Sesión", color = MaterialTheme.colorScheme.onBackground)
+                    }
                 }
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(12.dp))
             OutlinedTextField(
                 value = username,
                 onValueChange = { username = it },
@@ -159,34 +176,6 @@ fun UserProfileScreen(navController: NavController, mainViewModel: MainViewModel
                 colors = textFieldColors,
                 readOnly = true,
             )
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Row (
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                Button(
-                    onClick = {
-                        // TODO: Implementar lógica para guardar los cambios
-                    },
-                    colors = ButtonDefaults.buttonColors(Color(0xFF004D40)),
-                ) {
-                    Text("Guardar Cambios", color = Color.White)
-                }
-                Button(
-                    onClick = {
-                        mainViewModel.logout()
-                        //if (!mainViewModel.uiState.isAuthenticated) {
-                            navigateToLogin(navController)
-                        //}
-                    },
-                    colors = ButtonDefaults.buttonColors(Color(0xFF388E3C))
-                ) {
-                    Text("Cerrar Sesión", color = Color.White)
-                }
-            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))

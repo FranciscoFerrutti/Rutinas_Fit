@@ -41,6 +41,7 @@ import kotlinx.coroutines.launch
 import android.content.Context
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 
 
 @Composable
@@ -56,8 +57,8 @@ fun ReviewScreen(navController: NavController, mainViewModel: MainViewModel = vi
         .background(
             brush = Brush.linearGradient(
                 colors = listOf(
-                    Color(0xFF000000),
-                    Color(0xFF007f00)
+                    MaterialTheme.colorScheme.background,
+                    MaterialTheme.colorScheme.primary
                 ),
                 start = Offset(x = 0f, y = 0f),
                 end = Offset.Infinite
@@ -70,7 +71,7 @@ fun ReviewScreen(navController: NavController, mainViewModel: MainViewModel = vi
             // There must be also a 5 star rating system
             // And a button to submit the review
             OutlinedTextField(value = review, onValueChange = { review = it }, label = { stringResource(id = R.string.review) },
-                modifier = Modifier.fillMaxWidth().fillMaxHeight(0.5f), textStyle = androidx.compose.ui.text.TextStyle(color = Color.White),
+                modifier = Modifier.fillMaxWidth().fillMaxHeight(0.5f), textStyle = androidx.compose.ui.text.TextStyle(color = MaterialTheme.colorScheme.onBackground),
             //        .align(alignment = androidx.compose.ui.Alignment.CenterHorizontally)
             )
 
@@ -99,7 +100,7 @@ fun ReviewScreen(navController: NavController, mainViewModel: MainViewModel = vi
                     }
                 }
             }, modifier = Modifier.fillMaxWidth().align(alignment = androidx.compose.ui.Alignment.CenterHorizontally),
-                colors= ButtonDefaults.buttonColors(containerColor = Color(0xFF007f00))){
+                colors= ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)){
                 Text(text = stringResource(id = R.string.submit_review))
             }
         }
