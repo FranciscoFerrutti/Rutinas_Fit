@@ -128,17 +128,17 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
 
 
     Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .height(200.dp)
-                .padding(top = paddin)
-                .background(MaterialTheme.colorScheme.background)
-        ) {
-            if (!isDeviceInLandscape(LocalContext.current)){
-                Column(
-                    modifier = Modifier.align(Alignment.TopCenter),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
+        modifier = Modifier
+            .fillMaxSize()
+            .height(200.dp)
+            .padding(top = paddin)
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+        if (!isDeviceInLandscape(LocalContext.current)){
+            Column(
+                modifier = Modifier.align(Alignment.TopCenter),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
 //                        Image(
 //                            painter = painterResource(id = imageResource),
 //                            contentDescription = null,
@@ -149,213 +149,214 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
 //                                .clip(RoundedCornerShape(16.dp))
 ////                    .align(Alignment.TopCenter)
 //                        )
-                        if (cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].duration == 0) {
-                            Text(
-                                text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise.name
-                                    ?: "N/A",
-                                color = MaterialTheme.colorScheme.onBackground,
-                                fontFamily = FontFamily.SansSerif,
-                                fontSize = 48.sp,
-                                modifier = Modifier
-                                    .padding(Dp(5f))
+                if (cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].duration == 0) {
+                    Text(
+                        text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise.name
+                            ?: "N/A",
+                        color = MaterialTheme.colorScheme.onBackground,
+                        fontFamily = FontFamily.SansSerif,
+                        fontSize = 48.sp,
+                        modifier = Modifier
+                            .padding(Dp(5f))
 //                    .align(Alignment.Center)
-                            )
-                            Text(
-                                text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise.detail,
-                                color = MaterialTheme.colorScheme.onBackground,
-                                fontFamily = FontFamily.SansSerif,
-                                fontSize = 22.sp,
-                                textAlign = TextAlign.Center
+                    )
+                    Text(
+                        text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise.detail,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        fontFamily = FontFamily.SansSerif,
+                        fontSize = 22.sp,
+                        textAlign = TextAlign.Center
 //                    modifier = Modifier
 //                        .padding(Dp(5f))
 //                    .align(Alignment.Center)
-                            )
-                            Box (modifier = Modifier
-                                .fillMaxWidth()
-                                .height(clockSize)){
-                                Text(
-                                    text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].repetitions.toString(),
-                                    color = MaterialTheme.colorScheme.onBackground,
-                                    fontFamily = FontFamily.Monospace,
-                                    fontSize = 108.sp,
-                                    textAlign = TextAlign.Center,
-                                    modifier = Modifier
-                                        .padding(Dp(5f))
-                                        .align(Alignment.Center)
+                    )
+                    Box (modifier = Modifier
+                        .fillMaxWidth()
+                        .height(clockSize)){
+                        Text(
+                            text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].repetitions.toString(),
+                            color = MaterialTheme.colorScheme.onBackground,
+                            fontFamily = FontFamily.Monospace,
+                            fontSize = 108.sp,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .padding(Dp(5f))
+                                .align(Alignment.Center)
 //                    .align(Alignment.Center)
-                                )
-                            }
-                            Button(
-                                onClick = { // aca avmos a tener un array o algo para ver cuantos ejs tiene el ciclo
-                                    if (currentExerciseIndex >= totalCount - 1){
-                                        if (currentCycleIndex < 2) {
-                                            currentCycleIndex += 1
-                                            currentExerciseIndex = 0
-                                            totalCount = cycleExercisesList[currentCycleIndex].exercises.size
-                                        } else {
-                                            navigateToRoutine(navController, routineId)
-                                            // back to routine screen
-                                        }
-                                    } else {
-                                    currentExerciseIndex +=1
-                                    }
-                                },
-                                modifier = Modifier
-                                    .width(140.dp)
-                                    .height(50.dp)
-                                    .align(Alignment.CenterHorizontally)
-                                    .padding(top = 5.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = MaterialTheme.colorScheme.primary
-                                )
-                            ) {
-                                Text(
-                                    text = stringResource(R.string.next), color = MaterialTheme.colorScheme.onBackground,
-                                    fontFamily = FontFamily.SansSerif,
-                                    fontSize = 20.sp
-                                )
-                            }
-                            if (mode){
-                                if (currentCycleIndex < cycleExercisesList.size) {
-                                    CycleComp(cycleExercisesList[currentCycleIndex].exercises)
+                        )
+                    }
+                    Button(
+                        onClick = { // aca avmos a tener un array o algo para ver cuantos ejs tiene el ciclo
+                            if (currentExerciseIndex >= totalCount - 1){
+                                if (currentCycleIndex < 2) {
+                                    currentCycleIndex += 1
+                                    currentExerciseIndex = 0
+
+                                    totalCount = cycleExercisesList[currentCycleIndex].exercises.size
+                                } else {
+                                    navigateToRoutine(navController, routineId)
+                                    // back to routine screen
                                 }
+                            } else {
+                                currentExerciseIndex +=1
                             }
-                            Box (modifier = Modifier.fillMaxWidth()){
-                                Button(
-                                    onClick = { // aca avmos a tener un array o algo para ver cuantos ejs tiene el ciclo
-                                        mode = !mode
-                                    },
-                                    modifier = Modifier
-                                        .width(125.dp)
-                                        .height(40.dp)
-                                        .align(Alignment.Center)
-                                        .padding(top = 5.dp),
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = MaterialTheme.colorScheme.primary
-                                    )
-                                ) {
-                                    Text(
-                                        text = stringResource(R.string.mode), color = MaterialTheme.colorScheme.onBackground,
-                                        fontFamily = FontFamily.SansSerif,
-                                        fontSize = 12.sp
-                                    )
-                                }
-                            }
-                        } else {
-                            var countdownSeconds by remember { mutableStateOf(cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].duration) }
-
-                            var isCountdownRunning by remember { mutableStateOf(false) }
-                            Text(
-                                text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise!!.name,
-                                color = MaterialTheme.colorScheme.onBackground,
-                                fontFamily = FontFamily.SansSerif,
-                                fontSize = 48.sp,
-                                modifier = Modifier
-                                    .padding(Dp(5f))
-//                    .align(Alignment.Center)
-                            )
-                            Text(
-                                text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise!!.detail,
-                                color = MaterialTheme.colorScheme.onBackground,
-                                fontFamily = FontFamily.SansSerif,
-                                fontSize = 22.sp,
-                                textAlign = TextAlign.Center
-//                    modifier = Modifier
-//                        .padding(Dp(5f))
-//                    .align(Alignment.Center)
-                            )
-                            Text(
-                                text = stringResource(R.string.timerstart),
-                                color = MaterialTheme.colorScheme.onBackground,
-                                fontFamily = FontFamily.SansSerif,
-                                fontSize = 22.sp,
-                                textAlign = TextAlign.Center
-//                    modifier = Modifier
-//                        .padding(Dp(5f))
-//                    .align(Alignment.Center)
-                            )
-                            Button(
-                                onClick = {
-                                    isCountdownRunning = true
-                                    object :
-                                        CountDownTimer((countdownSeconds * 1000).toLong(), 1000) {
-                                        override fun onTick(millisUntilFinished: Long) {
-                                            countdownSeconds = (millisUntilFinished / 1000).toInt()
-                                        }
-
-                                        override fun onFinish() {
-                                            countdownSeconds = 0
-                                            isCountdownRunning = false
-                                        }
-                                    }.start()
-                                },
-                                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-                                modifier = Modifier
-                                    .size(clockSize)
-                                    .padding(top = 10.dp)
-                                    .border(
-                                        width = 2.dp,
-                                        color = Color.White,
-                                        shape = CircleShape
-                                    )
-                            ) {
-                                Text(
-                                    text = countdownSeconds.toString(),
-                                    color = MaterialTheme.colorScheme.onBackground,
-                                    fontFamily = FontFamily.Monospace,
-                                    fontSize = 108.sp,
-                                    modifier = Modifier
-                                        .padding(Dp(5f))
-//                    .align(Alignment.Center)
-                                )
-                            }
-                            Button(
-                                onClick = { // aca avmos a tener un array o algo para ver cuantos ejs tiene el ciclo
-                                    if (currentExerciseIndex >= totalCount - 1){
-                                        if (currentCycleIndex < 2) {
-                                            currentCycleIndex += 1
-                                            currentExerciseIndex = 0
-                                            totalCount = cycleExercisesList[currentCycleIndex].exercises.size
-                                        } else {
-                                            navigateToRoutine(navController, routineId)
-                                            // back to routine screen
-                                        }
-                                    } else {
-                                        currentExerciseIndex +=1
-                                    }
-                                },
-                                modifier = Modifier
-                                    .width(140.dp)
-                                    .height(60.dp)
-                                    .align(Alignment.CenterHorizontally)
-                                    .padding(top = 10.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = MaterialTheme.colorScheme.primary
-                                )
-                            ) {
-                                Text(
-                                    text = stringResource(R.string.next), color = MaterialTheme.colorScheme.onBackground,
-                                    fontFamily = FontFamily.SansSerif,
-                                    fontSize = 20.sp
-                                )
-                            }
-                            if (mode){
-                                CycleComp(cycleExercisesList[currentCycleIndex].exercises)
-                            }
-
+                        },
+                        modifier = Modifier
+                            .width(140.dp)
+                            .height(50.dp)
+                            .align(Alignment.CenterHorizontally)
+                            .padding(top = 5.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary
+                        )
+                    ) {
+                        Text(
+                            text = stringResource(R.string.next), color = MaterialTheme.colorScheme.onBackground,
+                            fontFamily = FontFamily.SansSerif,
+                            fontSize = 20.sp
+                        )
+                    }
+                    if (mode){
+                        if (currentCycleIndex < cycleExercisesList.size) {
+                            CycleComp(cycleExercisesList[currentCycleIndex].exercises)
                         }
+                    }
+                    Box (modifier = Modifier.fillMaxWidth()){
+                        Button(
+                            onClick = { // aca avmos a tener un array o algo para ver cuantos ejs tiene el ciclo
+                                mode = !mode
+                            },
+                            modifier = Modifier
+                                .width(125.dp)
+                                .height(40.dp)
+                                .align(Alignment.Center)
+                                .padding(top = 5.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.primary
+                            )
+                        ) {
+                            Text(
+                                text = stringResource(R.string.mode), color = MaterialTheme.colorScheme.onBackground,
+                                fontFamily = FontFamily.SansSerif,
+                                fontSize = 12.sp
+                            )
+                        }
+                    }
+                } else {
+                    var countdownSeconds by remember { mutableStateOf(cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].duration) }
+
+                    var isCountdownRunning by remember { mutableStateOf(false) }
+                    Text(
+                        text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise!!.name,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        fontFamily = FontFamily.SansSerif,
+                        fontSize = 48.sp,
+                        modifier = Modifier
+                            .padding(Dp(5f))
+//                    .align(Alignment.Center)
+                    )
+                    Text(
+                        text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise!!.detail,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        fontFamily = FontFamily.SansSerif,
+                        fontSize = 22.sp,
+                        textAlign = TextAlign.Center
+//                    modifier = Modifier
+//                        .padding(Dp(5f))
+//                    .align(Alignment.Center)
+                    )
+                    Text(
+                        text = stringResource(R.string.timerstart),
+                        color = MaterialTheme.colorScheme.onBackground,
+                        fontFamily = FontFamily.SansSerif,
+                        fontSize = 22.sp,
+                        textAlign = TextAlign.Center
+//                    modifier = Modifier
+//                        .padding(Dp(5f))
+//                    .align(Alignment.Center)
+                    )
+                    Button(
+                        onClick = {
+                            isCountdownRunning = true
+                            object :
+                                CountDownTimer((countdownSeconds * 1000).toLong(), 1000) {
+                                override fun onTick(millisUntilFinished: Long) {
+                                    countdownSeconds = (millisUntilFinished / 1000).toInt()
+                                }
+
+                                override fun onFinish() {
+                                    countdownSeconds = 0
+                                    isCountdownRunning = false
+                                }
+                            }.start()
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                        modifier = Modifier
+                            .size(clockSize)
+                            .padding(top = 10.dp)
+                            .border(
+                                width = 2.dp,
+                                color = Color.White,
+                                shape = CircleShape
+                            )
+                    ) {
+                        Text(
+                            text = countdownSeconds.toString(),
+                            color = MaterialTheme.colorScheme.onBackground,
+                            fontFamily = FontFamily.Monospace,
+                            fontSize = 108.sp,
+                            modifier = Modifier
+                                .padding(Dp(5f))
+//                    .align(Alignment.Center)
+                        )
+                    }
+                    Button(
+                        onClick = { // aca avmos a tener un array o algo para ver cuantos ejs tiene el ciclo
+                            if (currentExerciseIndex >= totalCount - 1){
+                                if (currentCycleIndex < 2) {
+                                    currentCycleIndex += 1
+                                    currentExerciseIndex = 0
+                                    totalCount = cycleExercisesList[currentCycleIndex].exercises.size
+                                } else {
+                                    navigateToRoutine(navController, routineId)
+                                    // back to routine screen
+                                }
+                            } else {
+                                currentExerciseIndex +=1
+                            }
+                        },
+                        modifier = Modifier
+                            .width(140.dp)
+                            .height(60.dp)
+                            .align(Alignment.CenterHorizontally)
+                            .padding(top = 10.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary
+                        )
+                    ) {
+                        Text(
+                            text = stringResource(R.string.next), color = MaterialTheme.colorScheme.onBackground,
+                            fontFamily = FontFamily.SansSerif,
+                            fontSize = 20.sp
+                        )
+                    }
+                    if (mode){
+                        CycleComp(cycleExercisesList[currentCycleIndex].exercises)
+                    }
 
                 }
-            } else {
-                clockSize = 200.dp
-                paddin = 5.dp
-                imWid = 0.35f
-                imHei = 0.7f
-                Row(
-                    modifier = Modifier.align(Alignment.TopCenter),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Box (modifier = Modifier.padding(start = 50.dp)){
+
+            }
+        } else {
+            clockSize = 200.dp
+            paddin = 5.dp
+            imWid = 0.35f
+            imHei = 0.7f
+            Row(
+                modifier = Modifier.align(Alignment.TopCenter),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Box (modifier = Modifier.padding(start = 50.dp)){
 //                        Image(
 //                            painter = painterResource(id = imageResource),
 //                            contentDescription = null,
@@ -366,33 +367,33 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
 //                                .clip(RoundedCornerShape(16.dp))
 ////                    .align(Alignment.TopCenter)
 //                        )
-                    }
-                    if (cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].duration == 0) {
-                        Column (modifier = Modifier
-                            .fillMaxSize()
-                            .padding(horizontal = 5.dp)) {
-                            Text(
-                                text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise?.name ?: "N/A",
-                                color = MaterialTheme.colorScheme.onBackground,
-                                fontFamily = FontFamily.SansSerif,
-                                fontSize = 48.sp,
-                                modifier = Modifier
-                                    .padding(Dp(5f))
-                                    .align(Alignment.CenterHorizontally)
-                            )
-                            Text(
-                                text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise!!.detail,
-                                color = MaterialTheme.colorScheme.onBackground,
-                                fontFamily = FontFamily.SansSerif,
-                                fontSize = 22.sp,
-                                textAlign = TextAlign.Center
+                }
+                if (cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].duration == 0) {
+                    Column (modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 5.dp)) {
+                        Text(
+                            text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise?.name ?: "N/A",
+                            color = MaterialTheme.colorScheme.onBackground,
+                            fontFamily = FontFamily.SansSerif,
+                            fontSize = 48.sp,
+                            modifier = Modifier
+                                .padding(Dp(5f))
+                                .align(Alignment.CenterHorizontally)
+                        )
+                        Text(
+                            text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise!!.detail,
+                            color = MaterialTheme.colorScheme.onBackground,
+                            fontFamily = FontFamily.SansSerif,
+                            fontSize = 22.sp,
+                            textAlign = TextAlign.Center
 //                    modifier = Modifier
 //                        .padding(Dp(5f))
 //                    .align(Alignment.Center)
-                            )
-                            Box (modifier = Modifier
-                                .size(clockSize)
-                                .align(Alignment.CenterHorizontally)){
+                        )
+                        Box (modifier = Modifier
+                            .size(clockSize)
+                            .align(Alignment.CenterHorizontally)){
                             Text(
                                 text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].repetitions.toString(),
                                 color = MaterialTheme.colorScheme.onBackground,
@@ -402,137 +403,137 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                                     .padding(Dp(5f))
 
                             )}
-                            Button(
-                                onClick = { // aca avmos a tener un array o algo para ver cuantos ejs tiene el ciclo
-                                    if (currentExerciseIndex >= totalCount - 1){
-                                        if (currentCycleIndex < 2) {
-                                            currentCycleIndex += 1
-                                            currentExerciseIndex = 0
-                                            totalCount = cycleExercisesList[currentCycleIndex].exercises.size
-                                        } else {
-                                            navigateToRoutine(navController, routineId)
-                                            // back to routine screen
-                                        }
+                        Button(
+                            onClick = { // aca avmos a tener un array o algo para ver cuantos ejs tiene el ciclo
+                                if (currentExerciseIndex >= totalCount - 1){
+                                    if (currentCycleIndex < 2) {
+                                        currentCycleIndex += 1
+                                        currentExerciseIndex = 0
+                                        totalCount = cycleExercisesList[currentCycleIndex].exercises.size
                                     } else {
-                                        currentExerciseIndex +=1
+                                        navigateToRoutine(navController, routineId)
+                                        // back to routine screen
                                     }
-                                },
-                                modifier = Modifier
-                                    .width(140.dp)
-                                    .height(50.dp)
-                                    .align(Alignment.CenterHorizontally)
-                                    .padding(top = 5.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = MaterialTheme.colorScheme.primary
-                                )
-                            ) {
-                                Text(
-                                    text = stringResource(R.string.next), color = Color.White,
-                                    fontFamily = FontFamily.SansSerif,
-                                    fontSize = 20.sp
-                                )
-                            }
-                            if (mode){
-                                CycleComp(cycleExercisesList[currentCycleIndex].exercises)
-                            }
-                        }
-                    } else {
-                        var countdownSeconds by remember { mutableStateOf(cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].duration) }
-                        var isCountdownRunning by remember { mutableStateOf(false) }
-                        Column (modifier = Modifier.fillMaxSize()){
+                                } else {
+                                    currentExerciseIndex +=1
+                                }
+                            },
+                            modifier = Modifier
+                                .width(140.dp)
+                                .height(50.dp)
+                                .align(Alignment.CenterHorizontally)
+                                .padding(top = 5.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.primary
+                            )
+                        ) {
                             Text(
-                                text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise?.name ?: "N/A",
-                                color = MaterialTheme.colorScheme.onBackground,
+                                text = stringResource(R.string.next), color = Color.White,
                                 fontFamily = FontFamily.SansSerif,
-                                fontSize = 48.sp,
+                                fontSize = 20.sp
+                            )
+                        }
+                        if (mode){
+                            CycleComp(cycleExercisesList[currentCycleIndex].exercises)
+                        }
+                    }
+                } else {
+                    var countdownSeconds by remember { mutableStateOf(cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].duration) }
+                    var isCountdownRunning by remember { mutableStateOf(false) }
+                    Column (modifier = Modifier.fillMaxSize()){
+                        Text(
+                            text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise?.name ?: "N/A",
+                            color = MaterialTheme.colorScheme.onBackground,
+                            fontFamily = FontFamily.SansSerif,
+                            fontSize = 48.sp,
+                            modifier = Modifier
+                                .padding(Dp(5f))
+//                    .align(Alignment.Center)
+                        )
+                        Text(
+                            text = stringResource(R.string.timerstart),
+                            color = MaterialTheme.colorScheme.onBackground,
+                            fontFamily = FontFamily.SansSerif,
+                            fontSize = 22.sp,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .padding(Dp(5f))
+                        )
+                        Button(
+                            onClick = {
+                                isCountdownRunning = true
+                                object :
+                                    CountDownTimer((countdownSeconds * 1000).toLong(), 1000) {
+                                    override fun onTick(millisUntilFinished: Long) {
+                                        countdownSeconds = (millisUntilFinished / 1000).toInt()
+                                    }
+
+                                    override fun onFinish() {
+                                        countdownSeconds = 0
+                                        isCountdownRunning = false
+                                    }
+                                }.start()
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                            modifier = Modifier
+                                .size(clockSize)
+                                .padding(top = 10.dp)
+                                .border(
+                                    width = 2.dp,
+                                    color = Color.White,
+                                    shape = CircleShape
+                                )
+                                .align(Alignment.CenterHorizontally)
+                        ) {
+                            Text(
+                                text = countdownSeconds.toString(),
+                                color = MaterialTheme.colorScheme.onBackground,
+                                fontFamily = FontFamily.Monospace,
+                                fontSize = 108.sp,
                                 modifier = Modifier
                                     .padding(Dp(5f))
 //                    .align(Alignment.Center)
                             )
-                            Text(
-                                text = stringResource(R.string.timerstart),
-                                color = MaterialTheme.colorScheme.onBackground,
-                                fontFamily = FontFamily.SansSerif,
-                                fontSize = 22.sp,
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier
-                                .padding(Dp(5f))
-                            )
-                            Button(
-                                onClick = {
-                                    isCountdownRunning = true
-                                    object :
-                                        CountDownTimer((countdownSeconds * 1000).toLong(), 1000) {
-                                        override fun onTick(millisUntilFinished: Long) {
-                                            countdownSeconds = (millisUntilFinished / 1000).toInt()
-                                        }
-
-                                        override fun onFinish() {
-                                            countdownSeconds = 0
-                                            isCountdownRunning = false
-                                        }
-                                    }.start()
-                                },
-                                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-                                modifier = Modifier
-                                    .size(clockSize)
-                                    .padding(top = 10.dp)
-                                    .border(
-                                        width = 2.dp,
-                                        color = Color.White,
-                                        shape = CircleShape
-                                    )
-                                    .align(Alignment.CenterHorizontally)
-                            ) {
-                                Text(
-                                    text = countdownSeconds.toString(),
-                                    color = MaterialTheme.colorScheme.onBackground,
-                                    fontFamily = FontFamily.Monospace,
-                                    fontSize = 108.sp,
-                                    modifier = Modifier
-                                        .padding(Dp(5f))
-//                    .align(Alignment.Center)
-                                )
-                            }
-                            Button(
-                                onClick = { // aca avmos a tener un array o algo para ver cuantos ejs tiene el ciclo
-                                    if (currentExerciseIndex >= totalCount - 1){
-                                        if (currentCycleIndex < 2) {
-                                            currentCycleIndex += 1
-                                            currentExerciseIndex = 1
-                                            totalCount = cycleExercisesList[currentCycleIndex].exercises.size
-                                        } else {
-                                            navigateToRoutine(navController, routineId)
-                                            // back to routine screen
-                                        }
-                                    } else {
-                                        currentExerciseIndex +=1
-                                    }
-                                },
-                                modifier = Modifier
-                                    .width(140.dp)
-                                    .height(60.dp)
-                                    .align(Alignment.CenterHorizontally)
-                                    .padding(top = 10.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = MaterialTheme.colorScheme.primary
-                                )
-                            ) {
-                                Text(
-                                    text = stringResource(R.string.next), color = MaterialTheme.colorScheme.onBackground,
-                                    fontFamily = FontFamily.SansSerif,
-                                    fontSize = 20.sp
-                                )
-                            }
-                            if (mode){
-                                CycleComp(cycleExercisesList[currentCycleIndex].exercises)
-                            }
                         }
-
+                        Button(
+                            onClick = { // aca avmos a tener un array o algo para ver cuantos ejs tiene el ciclo
+                                if (currentExerciseIndex >= totalCount - 1){
+                                    if (currentCycleIndex < 2) {
+                                        currentCycleIndex += 1
+                                        currentExerciseIndex = 1
+                                        totalCount = cycleExercisesList[currentCycleIndex].exercises.size
+                                    } else {
+                                        navigateToRoutine(navController, routineId)
+                                        // back to routine screen
+                                    }
+                                } else {
+                                    currentExerciseIndex +=1
+                                }
+                            },
+                            modifier = Modifier
+                                .width(140.dp)
+                                .height(60.dp)
+                                .align(Alignment.CenterHorizontally)
+                                .padding(top = 10.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.primary
+                            )
+                        ) {
+                            Text(
+                                text = stringResource(R.string.next), color = MaterialTheme.colorScheme.onBackground,
+                                fontFamily = FontFamily.SansSerif,
+                                fontSize = 20.sp
+                            )
+                        }
+                        if (mode){
+                            CycleComp(cycleExercisesList[currentCycleIndex].exercises)
+                        }
                     }
+
                 }
             }
         }
+    }
 
 }
 
