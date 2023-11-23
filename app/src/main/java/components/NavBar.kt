@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Search
@@ -103,7 +104,7 @@ fun NavBar(navController: NavController, modifier: Modifier) {
                     } ,  tint = MaterialTheme.colorScheme.inverseOnSurface)
             }
             item {
-                Icon(imageVector = Icons.Default.Star, contentDescription = null, modifier = Modifier
+                Icon(imageVector = Icons.Default.Favorite, contentDescription = null, modifier = Modifier
                     .zIndex(3f)
                     .size(44.dp).clickable {
                         navigateToFavorite(navController)

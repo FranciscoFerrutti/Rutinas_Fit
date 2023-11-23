@@ -114,7 +114,15 @@ class MainViewModel(
                 isAuthenticated = false,
                 currentUser = null,
                 currentSport = null,
-                sports = listOf()
+                sports = listOf(),
+                routines = listOf(),
+                favRoutines = listOf(),
+                currentRoutine = null,
+                currentCycles = listOf(),
+                currentWorkout = listOf(),
+                currentCycleIdx = 0,
+                currentExIdx = 0,
+                error = null,
             )
         }.onFailure { e ->
             // Handle the error and notify the UI when appropriate.

@@ -39,5 +39,6 @@
     <string name="firstname">Primer nombre</string>
     <string name="lastname">Apellido</string>
     <string name="email">Email</string>
+    <string name="you">Tu</string>
 
 </resources>

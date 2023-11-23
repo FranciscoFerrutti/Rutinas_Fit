@@ -61,6 +61,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -180,15 +181,17 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
                     fontFamily = FontFamily.SansSerif,
                     fontSize = 18.sp,
                     modifier = Modifier
-                        .padding(horizontal = Dp(8f), vertical = 5.dp)
+                        .padding(horizontal = Dp(8f), vertical = 5.dp).fillMaxWidth(0.7f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
+
                 Text(
-                    text = "▮"+ routine.difficulty?.replaceFirstChar {
+                    text = ("▮" + routine.difficulty?.replaceFirstChar {
                         if (it.isLowerCase()) it.titlecase(
                             Locale.ROOT
                         ) else it.toString()
-                    }
-                        ?: "",
+                    }),
                     color = MaterialTheme.colorScheme.secondary,
                     fontFamily = FontFamily.SansSerif,
                     fontSize = 16.sp,
@@ -268,8 +271,6 @@ fun CardElem(navController: NavController, modifier: Modifier, imageResourceId: 
                     .padding(start = Dp(10f), bottom = Dp(4f)),
                 onClick = {
                             mainViewModel.getRoutine(routine.id).invokeOnCompletion {
-                                Log.d("routineId", "routineId: ${routine.id}")
-                                Log.d("currentRoutineId", "currentRoutineId: ${mainViewModel.uiState.currentRoutine?.id?:0}")
                                 navigateToReview(navController)
                             }
                           }, shape = RoundedCornerShape(40.dp), elevation = ButtonDefaults.elevatedButtonElevation(defaultElevation = 5.dp, pressedElevation = 8.dp),
@@ -327,11 +328,11 @@ fun HomePageScreen(navController: NavController, mainViewModel: MainViewModel = 
             onOptionSelected = { selectedOption = it }
         )
         val routines = mainViewModel.uiState.routines
-            listOf(
+/*            listOf(
             Routine(id= 1, name = "Routine 1", detail = "Details", date = Date(), isPublic = true, difficulty = "Hard", category= null, score=2, metadata = null, user = null),
             Routine(id= 1, name = "Routine 2", detail = "Details", date = Date(), isPublic = true, difficulty = "Medium", category= null, score=2, metadata = null, user = null),
             Routine(id= 1, name = "Routine 3", detail = "Details", date = Date(), isPublic = true, difficulty = "Easy", category= null, score=2, metadata = null, user = null)
-        )
+        )*/
         Routines(navController,routines, selectedOption)
 
         Box (
