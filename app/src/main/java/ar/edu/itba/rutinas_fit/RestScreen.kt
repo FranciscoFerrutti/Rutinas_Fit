@@ -140,7 +140,7 @@ fun RestScreen() {
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                 ) {
                     Text(
-                        text = "Siguiente", color = Color.White,
+                        text = stringResource(R.string.next), color = Color.White,
                         fontFamily = FontFamily.SansSerif,
                         fontSize = 20.sp
                     )

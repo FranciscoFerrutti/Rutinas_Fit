@@ -22,7 +22,10 @@ import androidx.navigation.NavController
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
+import ar.edu.itba.rutinas_fit.R
+
 //import coil.compose.rememberAsyncImagePainter
 
 
@@ -41,12 +44,12 @@ fun GoalSelectionScreen(navController: NavController, imageList: List<ImageData>
         horizontalAlignment = Alignment.CenterHorizontally
     )  {
         Text(
-            text = "¿Cuál es tu meta?",
+            text = stringResource(R.string.what_is_your_goal),
             color = MaterialTheme.colorScheme.onBackground,
             fontSize = 24.sp
         )
         Text(
-            text = "Esto nos ayudará a elegir el mejor plan para vos",
+            text = stringResource(id = R.string.this_will_help_us),
             color = MaterialTheme.colorScheme.onBackground,
             fontSize = 18.sp
         )
@@ -77,7 +80,7 @@ fun GoalSelectionScreen(navController: NavController, imageList: List<ImageData>
                 .fillMaxWidth()
                 .padding(horizontal = 32.dp)
         ) {
-            Text("Confirmar", color = MaterialTheme.colorScheme.onBackground)
+            Text(stringResource(R.string.confirm), color = MaterialTheme.colorScheme.onBackground)
         }
 
         Spacer(modifier = Modifier.height(16.dp))

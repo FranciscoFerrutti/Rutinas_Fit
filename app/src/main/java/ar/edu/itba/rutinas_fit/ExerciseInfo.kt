@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -70,7 +71,7 @@ fun ExerciseDetailsScreen(
 
         // Description
         Text(
-            text = "Descripción",
+            text = stringResource(R.string.description),
             color = MaterialTheme.colorScheme.onBackground,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
@@ -91,7 +92,7 @@ fun ExerciseDetailsScreen(
 
         // "Cómo hacerlo"
         Text(
-            text = "Cómo hacerlo",
+            text = stringResource(id = R.string.how_to_do_it),
             color = MaterialTheme.colorScheme.onBackground,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
@@ -144,7 +145,12 @@ fun StepIndicator() {
         modifier = Modifier
             .size(32.dp)
             .clip(CircleShape)
-            .background(brush = Brush.radialGradient(listOf(Color.Green, Color(0xFF1A1A1A)), radius = 24f)),
+            .background(
+                brush = Brush.radialGradient(
+                    listOf(Color.Green, Color(0xFF1A1A1A)),
+                    radius = 24f
+                )
+            ),
         contentAlignment = Alignment.Center
     ) {
         Box(

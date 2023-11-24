@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Rutinas_Fit</string>
-    <string name="login">INGRESAR</string>
-    <string name="logout">SALIR</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="logout">Cerrar sesión</string>
     <string name="get_current_user">OBTENER USUARIO ACTUAL</string>
     <string name="get_all_sports">OBTENER TODOS LOS DEPORTES</string>
     <string name="get_current_sport">OBTENER DEPORTE ACTUAL</string>
@@ -40,5 +40,10 @@
     <string name="lastname">Apellido</string>
     <string name="email">Email</string>
     <string name="you">Tu</string>
+    <string name="description">Descripción</string>
+    <string name="how_to_do_it">Cómo hacerlo</string>
+    <string name="what_is_your_goal">¿Cuál es tu meta?</string>
+    <string name="this_will_help_us">Esto nos ayudará a elegir el mejor plan para vos</string>
+    <string name="confirm">Confirmar</string>
 
 </resources>

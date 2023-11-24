@@ -217,7 +217,7 @@ fun LoginRegisterScreen(navController: NavController, mainViewModel: MainViewMod
             colors = ButtonDefaults.buttonColors(containerColor = Color.Green),
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(if (isLoginMode) "Inicia sesión" else "Regístrate")
+            Text(stringResource(R.string.login))
         }
 /*
         Spacer(modifier = Modifier.height(8.dp))

@@ -46,7 +46,6 @@ import androidx.compose.material3.MaterialTheme
 
 @Composable
 fun ReviewScreen(navController: NavController, mainViewModel: MainViewModel = viewModel(factory = getViewModelFactory())){
-    Log.d("ReviewScreen", "routineId: ${mainViewModel.uiState.currentRoutine?.id}")
     val routine = mainViewModel.uiState.currentRoutine
     val scope = rememberCoroutineScope()
     var rating by remember { mutableIntStateOf(0) }

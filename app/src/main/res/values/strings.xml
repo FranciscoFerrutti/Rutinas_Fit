@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Rutinas_Fit</string>
-    <string name="login">LOGIN</string>
-    <string name="logout">LOGOUT</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
     <string name="get_current_user">GET CURRENT USER</string>
     <string name="get_all_sports">GET ALL SPORTS</string>
     <string name="get_current_sport">GET CURRENT SPORT</string>
@@ -25,7 +25,7 @@
     <string name="language">Language</string>
     <string name="darkmode">Dark Mode</string>
     <string name="execute">Execute</string>
-    <string name="next">Next</string>
+    <string name="Next">Next</string>
     <string name="timerstart">Click here to start countdown</string>
     <string name="resttimerstart">Click here to start rest countdown</string>
     <string name="exercisereps">Number of reps:</string>
@@ -39,5 +39,10 @@
     <string name="lastname">Last name</string>
     <string name="email">Email</string>
     <string name="you">You</string>
+    <string name="description">Description</string>
+    <string name="how_to_do_it">How to do it</string>
+    <string name="what_is_your_goal">What is your goal?</string>
+    <string name="this_will_help_us">This will help us choose the best plan for you</string>
+    <string name="confirm">Confirm</string>
 
 </resources>
