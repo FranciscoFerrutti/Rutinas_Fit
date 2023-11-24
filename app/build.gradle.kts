@@ -38,7 +38,7 @@ android {
             // del emulador. La forma de salir del emulador para acceder al localhost
             // de host del mismo es usando la IP 10.0.2.2.
             buildConfigField("String", "API_BASE_URL",
-                "\"http://192.168.0.4:8080/api/\"")
+                "\"http://localhost:8080/api/\"")
         }
         debug {
             debug {
@@ -46,7 +46,7 @@ android {
                 // del emulador. La forma de salir del emulador para acceder al localhost
                 // de host del mismo es usando la IP 10.0.2.2.
                 buildConfigField("String", "API_BASE_URL",
-                    "\"http://192.168.0.4:8080/api/\"")
+                    "\"http://localhost:8080/api/\"")
             }
         }
     }

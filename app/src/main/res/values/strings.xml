@@ -25,7 +25,6 @@
     <string name="language">Language</string>
     <string name="darkmode">Dark Mode</string>
     <string name="execute">Execute</string>
-    <string name="Next">Next</string>
     <string name="timerstart">Click here to start countdown</string>
     <string name="resttimerstart">Click here to start rest countdown</string>
     <string name="exercisereps">Number of reps:</string>
@@ -44,5 +43,6 @@
     <string name="what_is_your_goal">What is your goal?</string>
     <string name="this_will_help_us">This will help us choose the best plan for you</string>
     <string name="confirm">Confirm</string>
+    <string name="next">Next</string>
 
 </resources>
