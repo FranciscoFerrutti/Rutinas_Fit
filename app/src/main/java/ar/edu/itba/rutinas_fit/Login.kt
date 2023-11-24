@@ -219,7 +219,7 @@ fun LoginRegisterScreen(navController: NavController, mainViewModel: MainViewMod
         ) {
             Text(if (isLoginMode) "Inicia sesión" else "Regístrate")
         }
-
+/*
         Spacer(modifier = Modifier.height(8.dp))
 
         TextButton(
@@ -228,6 +228,7 @@ fun LoginRegisterScreen(navController: NavController, mainViewModel: MainViewMod
         ) {
             Text(if (isLoginMode) "¿No tienes una cuenta? Regístrate" else "¿Ya tienes una cuenta? Inicia sesión")
         }
+        */
 
         // Display error message
         if (errorMessage.isNotBlank()) {
