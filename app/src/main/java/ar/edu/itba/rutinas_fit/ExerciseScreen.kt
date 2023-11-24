@@ -246,6 +246,7 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                     var countdownSeconds by remember { mutableStateOf(cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].duration) }
 
                     var isCountdownRunning by remember { mutableStateOf(false) }
+                    var countDownTimer: CountDownTimer? by remember { mutableStateOf(null) }
                     Text(
                         text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise!!.name,
                         color = MaterialTheme.colorScheme.inverseOnSurface,
@@ -278,7 +279,7 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                     Button(
                         onClick = {
                             isCountdownRunning = true
-                            object :
+                            countDownTimer = object :
                                 CountDownTimer((countdownSeconds * 1000).toLong(), 1000) {
                                 override fun onTick(millisUntilFinished: Long) {
                                     countdownSeconds = (millisUntilFinished / 1000).toInt()
@@ -317,12 +318,30 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                                     currentCycleIndex += 1
                                     currentExerciseIndex = 0
                                     totalCount = cycleExercisesList[currentCycleIndex].exercises.size
+
+                                    try {
+                                        countdownSeconds = 0
+                                        isCountdownRunning = false
+                                        countDownTimer?.cancel()
+                                        countdownSeconds = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].duration
+                                    } catch (e : Exception){
+
+                                    }
                                 } else {
                                     navigateToRoutine(navController, routineId)
                                     // back to routine screen
                                 }
                             } else {
                                 currentExerciseIndex +=1
+                                try {
+                                    countdownSeconds = 0
+                                    isCountdownRunning = false
+                                    countDownTimer?.cancel()
+                                    countdownSeconds = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].duration
+
+                                } catch (e : Exception){
+
+                                }
                             }
                         },
                         modifier = Modifier
@@ -440,6 +459,8 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                 } else {
                     var countdownSeconds by remember { mutableStateOf(cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].duration) }
                     var isCountdownRunning by remember { mutableStateOf(false) }
+                    var countDownTimer: CountDownTimer? by remember { mutableStateOf(null) }
+
                     Column (modifier = Modifier.fillMaxSize()){
                         Text(
                             text = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].exercise?.name ?: "N/A",
@@ -462,7 +483,7 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                         Button(
                             onClick = {
                                 isCountdownRunning = true
-                                object :
+                                countDownTimer = object :
                                     CountDownTimer((countdownSeconds * 1000).toLong(), 1000) {
                                     override fun onTick(millisUntilFinished: Long) {
                                         countdownSeconds = (millisUntilFinished / 1000).toInt()
@@ -500,14 +521,32 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                                 if (currentExerciseIndex >= totalCount - 1){
                                     if (currentCycleIndex < 2) {
                                         currentCycleIndex += 1
-                                        currentExerciseIndex = 1
+                                        currentExerciseIndex = 0
                                         totalCount = cycleExercisesList[currentCycleIndex].exercises.size
+
+                                        try {
+                                            countdownSeconds = 0
+                                            isCountdownRunning = false
+                                            countDownTimer?.cancel()
+                                            countdownSeconds = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].duration
+                                        } catch (e : Exception){
+
+                                        }
                                     } else {
                                         navigateToRoutine(navController, routineId)
                                         // back to routine screen
                                     }
                                 } else {
                                     currentExerciseIndex +=1
+                                    try {
+                                        countdownSeconds = 0
+                                        isCountdownRunning = false
+                                        countDownTimer?.cancel()
+                                        countdownSeconds = cycleExercisesList[currentCycleIndex].exercises[currentExerciseIndex].duration
+
+                                    } catch (e : Exception){
+
+                                    }
                                 }
                             },
                             modifier = Modifier
