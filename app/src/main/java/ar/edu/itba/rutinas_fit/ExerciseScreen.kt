@@ -217,8 +217,10 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                         )
                     }
                     if (mode){
-                        if (currentCycleIndex < cycleExercisesList.size) {
+                        if (currentCycleIndex < 2) {
                             CycleComp(cycleExercisesList[currentCycleIndex].exercises)
+                        } else {
+                            CycleComp(cycleExercisesList[2].exercises)
                         }
                     }
                     Box (modifier = Modifier.fillMaxWidth()){
@@ -360,7 +362,11 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                         )
                     }
                     if (mode){
-                        CycleComp(cycleExercisesList[currentCycleIndex].exercises)
+                        if (currentCycleIndex < 2) {
+                            CycleComp(cycleExercisesList[currentCycleIndex].exercises)
+                        } else {
+                            CycleComp(cycleExercisesList[2].exercises)
+                        }
                     }
 
                 }
@@ -453,7 +459,11 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                             )
                         }
                         if (mode){
-                            CycleComp(cycleExercisesList[currentCycleIndex].exercises)
+                            if (currentCycleIndex < 2) {
+                                CycleComp(cycleExercisesList[currentCycleIndex].exercises)
+                            } else {
+                                CycleComp(cycleExercisesList[2].exercises)
+                            }
                         }
                     }
                 } else {
@@ -565,7 +575,11 @@ fun ExerciseScreen(navController : NavController, routineId : String, routineCyc
                             )
                         }
                         if (mode){
-                            CycleComp(cycleExercisesList[currentCycleIndex].exercises)
+                            if (currentCycleIndex < 2) {
+                                CycleComp(cycleExercisesList[currentCycleIndex].exercises)
+                            } else {
+                                CycleComp(cycleExercisesList[2].exercises)
+                            }
                         }
                     }
 
